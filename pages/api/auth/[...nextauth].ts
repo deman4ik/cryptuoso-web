@@ -9,7 +9,6 @@ export const client = createClient({
 });
 
 export default NextAuth({
-    // Configure one or more authentication providers
     providers: [
         CredentialsProvider({
             name: "email",
