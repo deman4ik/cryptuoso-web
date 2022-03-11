@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useForm } from "@mantine/hooks";
+import { useForm } from "@mantine/form";
 import { EnvelopeClosedIcon, LockClosedIcon } from "@modulz/radix-icons";
 import {
     TextInput,
@@ -11,10 +11,13 @@ import {
     Text,
     LoadingOverlay,
     Anchor,
-    useMantineTheme
+    useMantineTheme,
+    Title,
+    Container
 } from "@mantine/core";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
+import { SimpleLink } from "../Link/SimpleLink";
 
 export interface AuthenticationFormProps {
     style?: React.CSSProperties;
@@ -41,18 +44,16 @@ export function AuthenticationForm({ style }: AuthenticationFormProps) {
             termsOfService: true
         },
 
-        validationRules: {
-            name: (value) => formType === "login" || value.trim().length >= 2,
-            email: (value) => /^\S+@\S+$/.test(value),
-            password: (value) => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/.test(value),
-            confirmPassword: (val, values) => formType === "login" || val === values?.password
-        }, //TODO: fastest-validator
-
-        errorMessages: {
-            email: "Invalid email",
-            password: "Password should contain 1 number, 1 letter and at least 6 characters",
-            confirmPassword: "Passwords don't match. Try again"
-        }
+        validate: {
+            name: (value) => (formType === "login" || value.trim().length >= 2 ? null : "Invalid name"),
+            email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
+            password: (value) =>
+                /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/.test(value)
+                    ? null
+                    : "Password should contain 1 number, 1 letter and at least 6 characters",
+            confirmPassword: (val, values) =>
+                formType === "login" || val === values?.password ? null : "Passwords don't match. Try again"
+        } //TODO: fastest-validator
     });
 
     const handleSubmit = async () => {
@@ -77,80 +78,98 @@ export function AuthenticationForm({ style }: AuthenticationFormProps) {
     };
 
     return (
-        <Paper
-            padding="lg"
-            shadow="sm"
-            style={{
-                position: "relative",
-                backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.white,
-                ...style
-            }}
-        >
-            <form onSubmit={form.onSubmit(handleSubmit)}>
-                <LoadingOverlay visible={loading} />
-                {formType === "register" && (
+        <Container size="sm">
+            <Title
+                align="center"
+                sx={(theme) => ({ fontFamily: `Greycliff CF, ${theme.fontFamily}`, fontWeight: 900 })}
+            >
+                {formType === "login" ? "Welcome back!" : "Welcome!"}
+            </Title>
+
+            {formType === "login" ? (
+                <Text color="dimmed" size="sm" align="center" mt={5}>
+                    Do not have an account yet?{" "}
+                    <Anchor<"a"> href="#" size="sm" onClick={toggleFormType}>
+                        Create account
+                    </Anchor>
+                </Text>
+            ) : (
+                <Text color="dimmed" size="sm" align="center" mt={5}>
+                    Already have an account?{" "}
+                    <Anchor<"a"> href="#" size="sm" onClick={toggleFormType}>
+                        Sign in
+                    </Anchor>
+                </Text>
+            )}
+            <Paper withBorder shadow="md" p={20} mt={20} radius="md">
+                <form onSubmit={form.onSubmit(handleSubmit)}>
+                    <LoadingOverlay visible={loading} />
+                    {formType === "register" && (
+                        <TextInput
+                            data-autofocus
+                            required
+                            placeholder="Your  name"
+                            label="Name"
+                            {...form.getInputProps("name")}
+                        />
+                    )}
+
                     <TextInput
-                        data-autofocus
+                        mt="md"
                         required
-                        placeholder="Your  name"
-                        label="Name"
-                        {...form.getInputProps("name")}
+                        placeholder="Your email"
+                        label="Email"
+                        icon={<EnvelopeClosedIcon />}
+                        {...form.getInputProps("email")}
                     />
-                )}
 
-                <TextInput
-                    mt="md"
-                    required
-                    placeholder="Your email"
-                    label="Email"
-                    icon={<EnvelopeClosedIcon />}
-                    {...form.getInputProps("email")}
-                />
-
-                <PasswordInput
-                    mt="md"
-                    required
-                    placeholder="Password"
-                    label="Password"
-                    icon={<LockClosedIcon />}
-                    {...form.getInputProps("password")}
-                />
-
-                {formType === "register" && (
                     <PasswordInput
                         mt="md"
                         required
-                        label="Confirm Password"
-                        placeholder="Confirm password"
+                        placeholder="Password"
+                        label="Password"
                         icon={<LockClosedIcon />}
-                        {...form.getInputProps("confirmPassword")}
+                        {...form.getInputProps("password")}
                     />
-                )}
 
-                {formType === "register" && (
-                    <Checkbox
-                        mt="xl"
-                        label="I agree to sell my soul and privacy to this corporation"
-                        {...form.getInputProps("termsOfService", { type: "checkbox" })}
-                    />
-                )}
+                    {formType === "register" && (
+                        <PasswordInput
+                            mt="md"
+                            required
+                            label="Confirm Password"
+                            placeholder="Confirm password"
+                            icon={<LockClosedIcon />}
+                            {...form.getInputProps("confirmPassword")}
+                        />
+                    )}
 
-                {error && (
-                    <Text color="red" size="sm" mt="sm">
-                        {error}
-                    </Text>
-                )}
+                    {formType === "register" && (
+                        <Checkbox
+                            mt="xl"
+                            label="I agree to the terms of conditions and the privacy policy"
+                            {...form.getInputProps("termsOfService", { type: "checkbox" })}
+                        />
+                    )}
 
-                <Group position="apart" mt="xl">
-                    <Anchor component="button" type="button" color="gray" onClick={toggleFormType} size="sm">
-                        {formType === "register" ? "Have an account? Login" : "Don't have an account? Register"}
-                    </Anchor>
+                    {error && (
+                        <Text color="red" size="sm" mt="sm">
+                            {error}
+                        </Text>
+                    )}
 
-                    <Button color="blue" type="submit">
-                        {formType === "register" ? "Register" : "Login"}
-                    </Button>
-                </Group>
-            </form>
-        </Paper>
+                    <Group position="right" mt="md">
+                        {formType === "login" && (
+                            <Anchor component={SimpleLink} href="/auth/forgotpassword" size="sm">
+                                Forgot password?
+                            </Anchor>
+                        )}{" "}
+                        {/** TODO: forgot password and link */}
+                        <Button type="submit" fullWidth mt="sm">
+                            {formType === "register" ? "Register" : "Login"}
+                        </Button>
+                    </Group>
+                </form>
+            </Paper>
+        </Container>
     );
 }

@@ -32,6 +32,8 @@ export default function App(props: AppProps) {
                 <URQLProvider value={client}>
                     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
                         <MantineProvider
+                            withGlobalStyles
+                            withNormalizeCSS
                             theme={{
                                 /** Put your mantine theme override here */
                                 colorScheme,
@@ -63,8 +65,6 @@ export default function App(props: AppProps) {
                                 }
                             }}
                         >
-                            <NormalizeCSS />
-                            <GlobalStyles />
                             <NotificationsProvider>
                                 <Component {...pageProps} />
                             </NotificationsProvider>

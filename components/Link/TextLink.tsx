@@ -5,14 +5,14 @@ export function TextLink({ href, children, onClick, ...others }: TextProps<"a"> 
     if (href)
         return (
             <Link href={href}>
-                <Text<"a"> component="a" weight={700} href={href} {...others}>
+                <Text<"a"> component="a" href={href} {...others}>
                     {children}
                 </Text>
             </Link>
         );
     else
         return (
-            <Text<"a"> component="a" weight={700} href="#" {...others} onClick={onClick}>
+            <Text<"a"> component="a" href="#" {...others} onClick={onClick}>
                 {children}
             </Text>
         );
