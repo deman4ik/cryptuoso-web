@@ -1,121 +1,113 @@
 import React from "react";
-import { createStyles, Container, Title, Text, Button } from "@mantine/core";
+import { createStyles, Container, Text, Button, Group, useMantineTheme } from "@mantine/core";
+import { SimpleLink } from "../../Link/SimpleLink";
+
+const BREAKPOINT = "@media (max-width: 755px)";
 
 const useStyles = createStyles((theme) => ({
-    root: {
-        marginTop: 60,
-        backgroundColor: "#11284b",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundImage: `linear-gradient(250deg, rgba(130, 201, 30, 0) 0%, ${theme.colors.dark[7]} 85%), url(./hero-bg.png)`,
-        paddingTop: theme.spacing.xl * 4,
-        paddingBottom: theme.spacing.xl * 4,
-        [theme.fn.smallerThan("lg")]: {
-            paddingTop: theme.spacing.xl * 2,
-            paddingBottom: theme.spacing.xl * 2
-        },
-        [theme.fn.smallerThan("md")]: {
-            paddingTop: theme.spacing.xl,
-            paddingBottom: theme.spacing.xl
-        }
+    wrapper: {
+        position: "relative",
+        boxSizing: "border-box",
+        backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.white
     },
 
     inner: {
-        display: "flex",
-        justifyContent: "space-between",
+        position: "relative",
+        paddingTop: 200,
+        paddingBottom: 120,
 
-        [theme.fn.smallerThan("md")]: {
-            flexDirection: "column"
-        }
-    },
-
-    image: {
-        [theme.fn.smallerThan("md")]: {
-            display: "none"
-        }
-    },
-
-    content: {
-        paddingTop: theme.spacing.xl * 2,
-        paddingBottom: theme.spacing.xl * 2,
-        marginRight: theme.spacing.xl * 3,
-
-        [theme.fn.smallerThan("md")]: {
-            marginRight: 0
+        [BREAKPOINT]: {
+            paddingBottom: 80,
+            paddingTop: 80
         }
     },
 
     title: {
-        color: theme.white,
         fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+        fontSize: 62,
         fontWeight: 900,
-        lineHeight: 1.05,
-        maxWidth: 500,
-        fontSize: 48,
+        lineHeight: 1.1,
+        margin: 0,
+        padding: 0,
+        color: theme.colorScheme === "dark" ? theme.white : theme.black,
 
-        [theme.fn.smallerThan("md")]: {
-            maxWidth: "100%",
-            fontSize: 34,
-            lineHeight: 1.15
+        [BREAKPOINT]: {
+            fontSize: 42,
+            lineHeight: 1.2
         }
     },
 
     description: {
-        color: theme.white,
-        opacity: 0.75,
-        maxWidth: 500,
+        marginTop: theme.spacing.xl,
+        fontSize: 24,
 
-        [theme.fn.smallerThan("md")]: {
-            maxWidth: "100%"
+        [BREAKPOINT]: {
+            fontSize: 18
+        }
+    },
+
+    controls: {
+        marginTop: theme.spacing.xl * 2,
+
+        [BREAKPOINT]: {
+            marginTop: theme.spacing.xl
         }
     },
 
     control: {
-        paddingLeft: 50,
-        paddingRight: 50,
-        fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-        fontSize: 22,
+        height: 54,
+        paddingLeft: 38,
+        paddingRight: 38,
 
-        [theme.fn.smallerThan("md")]: {
-            width: "50%"
+        [BREAKPOINT]: {
+            height: 54,
+            paddingLeft: 18,
+            paddingRight: 18,
+            flex: 1
+        }
+    },
+
+    githubControl: {
+        borderWidth: 2,
+        borderColor: theme.colorScheme === "dark" ? "transparent" : theme.colors.dark[9],
+        backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[5] : "transparent",
+
+        "&:hover": {
+            backgroundColor: `${theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.colors.gray[0]} !important`
         }
     }
 }));
 
 export function Hero() {
-    const { classes } = useStyles();
+    const { classes, cx } = useStyles();
+    const theme = useMantineTheme();
+
     return (
-        <div className={classes.root}>
-            <Container size="lg">
-                <div className={classes.inner}>
-                    <div className={classes.content}>
-                        <Title className={classes.title}>
-                            <Text
-                                component="span"
-                                inherit
-                                variant="gradient"
-                                gradient={{ from: "teal", to: "blue", deg: 45 }}
-                            >
-                                CRYPTUOSO
-                            </Text>{" "}
-                            Cryptocurrency Trading Automation Platform
-                        </Title>
+        <div className={classes.wrapper}>
+            <Container size={700} className={classes.inner}>
+                <h1 className={classes.title}>
+                    <Text component="span" variant="gradient" gradient={{ from: "blue", to: "cyan" }} inherit>
+                        CRYPTUOSO
+                    </Text>{" "}
+                    Cryptocurrency Trading Automation Platform
+                </h1>
 
-                        <Text className={classes.description} mt={30} size="xl">
-                            Just invest – robots do the rest
-                        </Text>
+                <Text className={classes.description} color="dimmed">
+                    Just invest – robots do the rest
+                </Text>
 
-                        <Button
-                            variant="gradient"
-                            gradient={{ from: "teal", to: "blue", deg: 45 }}
-                            size="xl"
-                            className={classes.control}
-                            mt={40}
-                        >
-                            Get started
-                        </Button>
-                    </div>
-                </div>
+                <Group className={classes.controls}>
+                    <Button
+                        component={SimpleLink}
+                        href="/app"
+                        size="xl"
+                        className={classes.control}
+                        variant="gradient"
+                        gradient={{ from: "blue", to: "cyan" }}
+                    >
+                        Get started
+                    </Button>
+                </Group>
             </Container>
         </div>
     );

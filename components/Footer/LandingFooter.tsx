@@ -8,8 +8,8 @@ import { SimpleLink } from "../Link/SimpleLink";
 const useStyles = createStyles((theme) => ({
     footer: {
         marginTop: 120,
-        width: "100%",
-        borderTop: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[2]}`
+        width: "100%"
+        // borderTop: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[2]}`
     },
 
     inner: {

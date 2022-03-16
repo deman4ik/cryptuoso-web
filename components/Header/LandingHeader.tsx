@@ -9,6 +9,9 @@ import { ColorSchemeToggle } from "../Button/ColorSchemeToggle";
 const HEADER_HEIGHT = 60;
 
 const useStyles = createStyles((theme) => ({
+    header: {
+        borderBottom: "0px"
+    },
     inner: {
         height: HEADER_HEIGHT,
         display: "flex",
@@ -23,6 +26,7 @@ const useStyles = createStyles((theme) => ({
     },
 
     burger: {
+        marginRight: "20px",
         [theme.fn.largerThan("sm")]: {
             display: "none"
         }
@@ -31,7 +35,7 @@ const useStyles = createStyles((theme) => ({
     link: {
         display: "block",
         lineHeight: 1,
-        padding: "8px 6px",
+        padding: "10px 8px",
         borderRadius: theme.radius.sm,
         textDecoration: "none",
         color: theme.colorScheme === "dark" ? theme.colors.dark[0] : theme.colors.gray[7],
@@ -62,7 +66,6 @@ const useStyles = createStyles((theme) => ({
         borderTopLeftRadius: 0,
         borderTopWidth: 0,
         overflow: "hidden",
-
         [theme.fn.largerThan("sm")]: {
             display: "none"
         }
@@ -87,14 +90,14 @@ export function LandingHeader({ links }: HeaderActionProps) {
     });
 
     return (
-        <Header height={HEADER_HEIGHT} fixed>
+        <Header height={HEADER_HEIGHT} fixed className={classes.header}>
             <Container size="xl" className={classes.inner}>
+                <Burger opened={opened} onClick={() => toggleOpened()} className={classes.burger} size="sm" />
                 <Group spacing={4}>
-                    <Burger opened={opened} onClick={() => toggleOpened()} className={classes.burger} size="sm" />
                     <Logo href="/" />
-                    <TextLink href="/" transform="uppercase" className={classes.link}>
+                    {/*  <TextLink href="/" transform="uppercase" className={classes.link}>
                         Cryptuoso
-                    </TextLink>
+    </TextLink> */}
                 </Group>
 
                 <Group spacing={4} className={classes.links}>

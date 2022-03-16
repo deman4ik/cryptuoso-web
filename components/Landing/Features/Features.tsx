@@ -84,7 +84,7 @@ export function Feature({ icon: Icon, title, description, color }: FeatureProps)
 
 const useStyles = createStyles((theme) => ({
     wrapper: {
-        paddingTop: theme.spacing.xl,
+        paddingTop: 60,
         paddingBottom: theme.spacing.xl * 2
     },
 
@@ -115,7 +115,7 @@ export function FeaturesGrid() {
     const features = DATA.map((feature, index) => <Feature {...feature} key={index} />);
 
     return (
-        <Container className={classes.wrapper}>
+        <Container className={classes.wrapper} id="features">
             <Title className={classes.title}>
                 Still trading manually and constantly watching news, trying to catch the trend?{" "}
             </Title>

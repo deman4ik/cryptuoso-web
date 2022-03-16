@@ -101,7 +101,7 @@ export function AuthenticationForm({ style }: AuthenticationFormProps) {
                     </Anchor>
                 </Text>
             )}
-            <Paper withBorder shadow="md" p={20} mt={20} radius="md">
+            <Paper shadow="md" p={20} mt={20} radius="md">
                 <form onSubmit={form.onSubmit(handleSubmit)}>
                     <LoadingOverlay visible={loading} />
                     {formType === "register" && (
