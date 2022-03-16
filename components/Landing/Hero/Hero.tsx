@@ -1,6 +1,6 @@
 import React from "react";
 import { createStyles, Container, Text, Button, Group, useMantineTheme } from "@mantine/core";
-import { SimpleLink } from "../../Link/SimpleLink";
+import { SimpleLink } from "@cryptuoso/components/Link/SimpleLink";
 
 const BREAKPOINT = "@media (max-width: 755px)";
 

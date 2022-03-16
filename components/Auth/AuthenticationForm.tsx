@@ -17,7 +17,7 @@ import {
 } from "@mantine/core";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
-import { SimpleLink } from "../Link/SimpleLink";
+import { SimpleLink } from "@cryptuoso/components/Link/SimpleLink";
 
 export interface AuthenticationFormProps {
     style?: React.CSSProperties;

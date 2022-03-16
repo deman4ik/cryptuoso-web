@@ -1,11 +1,12 @@
 import { createStyles } from "@mantine/core";
-import { LandingHeader } from "../components/Header/LandingHeader";
-import { footerLinks, headerLinks } from "../components/Layout/Layout";
-import { Hero } from "../components/Landing/Hero/Hero";
-import { LandingFooter } from "../components/Footer/LandingFooter";
-import { FeaturesGrid } from "../components/Landing/Features/Features";
-import { FAQ } from "../components/Landing/FAQ/FAQ";
-import { About } from "../components/Landing/About/About";
+import { LandingHeader } from "@cryptuoso/components/Landing/Layout/Header";
+import { footerLinks, headerLinks } from "@cryptuoso/components/Landing/Layout/Layout";
+import { Hero } from "@cryptuoso/components/Landing/Hero/Hero";
+import { LandingFooter } from "@cryptuoso/components/Landing/Layout/Footer";
+import { FeaturesGrid } from "@cryptuoso/components/Landing/Features/Features";
+import { FAQ } from "@cryptuoso/components/Landing/FAQ/FAQ";
+import { About } from "@cryptuoso/components/Landing/About/About";
+import Head from "next/head";
 
 const useStyles = createStyles((theme) => ({
     root: {
@@ -21,6 +22,9 @@ export default function HomePage() {
 
     return (
         <div className={classes.root}>
+            <Head>
+                <title>CRYPTUOSO - Cryptocurrency trading automation</title>
+            </Head>
             <LandingHeader links={headerLinks} />
             <Hero />
 

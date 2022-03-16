@@ -2,8 +2,8 @@ import React from "react";
 import { createStyles, Anchor, Group, ActionIcon, Text } from "@mantine/core";
 import { BrandTwitter, BrandYoutube, BrandInstagram, BrandTelegram } from "tabler-icons-react";
 
-import { Logo } from "../Images/Logo";
-import { SimpleLink } from "../Link/SimpleLink";
+import { Logo } from "@cryptuoso/components/Images/Logo";
+import { SimpleLink } from "@cryptuoso/components/Link/SimpleLink";
 
 const useStyles = createStyles((theme) => ({
     footer: {

@@ -2,9 +2,10 @@ import React from "react";
 import { createStyles, Header, Container, Group, Burger, Transition, Paper, Grid } from "@mantine/core";
 import { useBooleanToggle } from "@mantine/hooks";
 import { signOut, useSession } from "next-auth/react";
-import { Logo } from "../Images/Logo";
-import { TextLink } from "../Link/TextLink";
-import { ColorSchemeToggle } from "../Button/ColorSchemeToggle";
+import { Logo } from "@cryptuoso/components/Images/Logo";
+import { TextLink } from "@cryptuoso/components/Link/TextLink";
+import { ColorSchemeToggle } from "@cryptuoso/components/Button/ColorSchemeToggle";
+import { SimpleLink } from "@cryptuoso/components/Link/SimpleLink";
 
 const HEADER_HEIGHT = 60;
 
@@ -94,7 +95,9 @@ export function LandingHeader({ links }: HeaderActionProps) {
             <Container size="xl" className={classes.inner}>
                 <Burger opened={opened} onClick={() => toggleOpened()} className={classes.burger} size="sm" />
                 <Group spacing={4}>
-                    <Logo href="/" />
+                    <SimpleLink href="/">
+                        <Logo />
+                    </SimpleLink>
                     {/*  <TextLink href="/" transform="uppercase" className={classes.link}>
                         Cryptuoso
     </TextLink> */}
