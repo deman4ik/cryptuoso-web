@@ -40,7 +40,7 @@ export const DATA = [
         icon: Gauge,
         title: "Instant",
         description: "Robots instantly react to market fluctuations and execute orders faster than human could.",
-        color: "violet"
+        color: "green"
     },
     {
         icon: Lock,
@@ -72,7 +72,12 @@ export function Feature({ icon: Icon, title, description, color }: FeatureProps)
             <ThemeIcon variant="light" size={50} radius={40} color={color}>
                 <Icon style={{ width: 30, height: 30 }} />
             </ThemeIcon>
-            <Text style={{ marginTop: theme.spacing.sm, marginBottom: 7 }} size="lg">
+            <Text
+                variant="gradient"
+                gradient={{ from: color, to: "blue", deg: 45 }}
+                style={{ marginTop: theme.spacing.sm, marginBottom: 7 }}
+                size="lg"
+            >
                 {title}
             </Text>
             <Text size="md" color="dimmed" style={{ lineHeight: 1.6 }}>

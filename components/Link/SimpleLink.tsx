@@ -8,10 +8,8 @@ export function SimpleLink({
     ...others
 }: { href: LinkProps["href"] } & DetailedHTMLProps<AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>) {
     return (
-        <Link href={href}>
-            <a href={href} {...others}>
-                {children}
-            </a>
+        <Link href={href} passHref>
+            <a {...others}>{children}</a>
         </Link>
     );
 }

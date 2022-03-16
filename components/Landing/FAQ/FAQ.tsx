@@ -26,10 +26,10 @@ const useStyles = createStyles((theme, _params, getRef) => {
         },
 
         item: {
-            //   borderRadius: theme.radius.md,
+            //  borderRadius: theme.radius.md,
             marginBottom: theme.spacing.lg,
             border: "1px solid transparent"
-            //     border: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[3] : theme.colors.gray[3]}`
+            //  border: `0.5px solid ${theme.colorScheme === "dark" ? theme.colors.dark[3] : theme.colors.gray[3]}`
         },
 
         itemOpened: {
@@ -60,8 +60,10 @@ export function FAQ() {
                             control: classes.control
                         }}
                     >
-                        {leftFaqContent.map((c) => (
-                            <Accordion.Item label={c.title}>{c.text}</Accordion.Item>
+                        {leftFaqContent.map((c, i) => (
+                            <Accordion.Item label={c.title} key={i}>
+                                {c.text}
+                            </Accordion.Item>
                         ))}
                     </Accordion>
                 </Grid.Col>
@@ -74,8 +76,10 @@ export function FAQ() {
                             control: classes.control
                         }}
                     >
-                        {rightFaqContent.map((c) => (
-                            <Accordion.Item label={c.title}>{c.text}</Accordion.Item>
+                        {rightFaqContent.map((c, i) => (
+                            <Accordion.Item label={c.title} key={i}>
+                                {c.text}
+                            </Accordion.Item>
                         ))}
                     </Accordion>
                 </Grid.Col>

@@ -41,8 +41,10 @@ export function TeamCard({ image, avatar, name, job, info }: TeamCardProps) {
                 {job}
             </Text>
             <List mt={10} spacing="xs">
-                {info.map((t) => (
-                    <List.Item color="dimmed">{t}</List.Item>
+                {info.map((t, i) => (
+                    <List.Item color="dimmed" key={i}>
+                        {t}
+                    </List.Item>
                 ))}
             </List>
         </Card>
