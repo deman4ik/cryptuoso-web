@@ -7,6 +7,7 @@ import { Hero } from "../components/Landing/Hero/Hero";
 import { LandingFooter } from "../components/Footer/LandingFooter";
 import { FeaturesGrid } from "../components/Landing/Features/Features";
 import { FAQ } from "../components/Landing/FAQ/FAQ";
+import { About } from "../components/Landing/About/About";
 
 const useStyles = createStyles((theme) => ({
     root: {
@@ -52,9 +53,11 @@ export default function HomePage() {
             <Hero />
 
             <FeaturesGrid />
+            <About />
             <div className={classes.darkBg}>
                 <FAQ />
             </div>
+
             <LandingFooter links={footerLinks} />
         </div>
     );
