@@ -8,9 +8,13 @@ import {
     TwoFA,
     DatabaseImport,
     Receipt2,
-    SwitchHorizontal,
-    Logout
+    Dashboard,
+    Logout,
+    UserCircle
 } from "tabler-icons-react";
+import { signOut } from "next-auth/react";
+import { ColorSchemeToggleBig } from "@cryptuoso/components/Button/ColorSchemeToggle";
+import { SimpleLink } from "@cryptuoso/components/Link/SimpleLink";
 
 const useStyles = createStyles((theme, _params, getRef) => {
     const icon = getRef("icon");
@@ -74,21 +78,19 @@ const useStyles = createStyles((theme, _params, getRef) => {
 });
 
 const data = [
-    { link: "", label: "Notifications", icon: BellRinging },
-    { link: "", label: "Billing", icon: Receipt2 },
-    { link: "", label: "Security", icon: Fingerprint },
-    { link: "", label: "SSH Keys", icon: Key },
-    { link: "", label: "Databases", icon: DatabaseImport },
-    { link: "", label: "Authentication", icon: TwoFA },
-    { link: "", label: "Other Settings", icon: Settings }
+    { link: "/app/dashboard", label: "Dashboard", icon: Dashboard },
+    { link: "/app/notifications", label: "Notifications", icon: BellRinging },
+    { link: "/app/profile", label: "Profile", icon: UserCircle },
+    { link: "/app/exchange-coount", label: "Exchange Account", icon: UserCircle },
+    { link: "/app/billing", label: "Billing", icon: Receipt2 }
 ];
 
 export function AppNavbar({ ...others }) {
     const { classes, cx } = useStyles();
-    const [active, setActive] = useState("Billing");
+    const [active, setActive] = useState("Dashboard");
 
     const links = data.map((item) => (
-        <a
+        <SimpleLink
             className={cx(classes.link, { [classes.linkActive]: item.label === active })}
             href={item.link}
             key={item.label}
@@ -99,7 +101,7 @@ export function AppNavbar({ ...others }) {
         >
             <item.icon className={classes.linkIcon} />
             <span>{item.label}</span>
-        </a>
+        </SimpleLink>
     ));
 
     return (
@@ -107,14 +109,22 @@ export function AppNavbar({ ...others }) {
             <Navbar.Section grow>{links}</Navbar.Section>
 
             <Navbar.Section className={classes.footer}>
-                <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
-                    <SwitchHorizontal className={classes.linkIcon} />
-                    <span>Change account</span>
-                </a>
+                <ColorSchemeToggleBig />
+                <SimpleLink href="/app/profile" className={classes.link}>
+                    <UserCircle className={classes.linkIcon} />
+                    <span>Profile</span>
+                </SimpleLink>
 
-                <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
+                <a
+                    href="#"
+                    className={classes.link}
+                    onClick={(event) => {
+                        event.preventDefault();
+                        signOut();
+                    }}
+                >
                     <Logout className={classes.linkIcon} />
-                    <span>Logout</span>
+                    <span>Sign Out</span>
                 </a>
             </Navbar.Section>
         </Navbar>

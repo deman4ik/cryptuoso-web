@@ -19,15 +19,10 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import { SimpleLink } from "@cryptuoso/components/Link/SimpleLink";
 
-export interface AuthenticationFormProps {
-    style?: React.CSSProperties;
-}
-
-export function AuthenticationForm({ style }: AuthenticationFormProps) {
+export function AuthenticationForm() {
     const [formType, setFormType] = useState<"register" | "login">("login");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const theme = useMantineTheme();
     const router = useRouter();
 
     const toggleFormType = () => {
@@ -78,7 +73,8 @@ export function AuthenticationForm({ style }: AuthenticationFormProps) {
     };
 
     return (
-        <Container size="sm">
+        <Container size="sm" style={{ position: "relative" }}>
+            <LoadingOverlay visible={loading} />
             <Title
                 align="center"
                 sx={(theme) => ({ fontFamily: `Greycliff CF, ${theme.fontFamily}`, fontWeight: 900 })}
@@ -103,7 +99,6 @@ export function AuthenticationForm({ style }: AuthenticationFormProps) {
             )}
             <Paper shadow="md" p={20} mt={20} radius="md">
                 <form onSubmit={form.onSubmit(handleSubmit)}>
-                    <LoadingOverlay visible={loading} />
                     {formType === "register" && (
                         <TextInput
                             data-autofocus

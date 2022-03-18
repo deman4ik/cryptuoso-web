@@ -2,7 +2,7 @@ import React from "react";
 import { createStyles, Header, Container, Group, Burger, Transition, Paper, Grid } from "@mantine/core";
 import { useBooleanToggle } from "@mantine/hooks";
 import { signOut, useSession } from "next-auth/react";
-import { Logo } from "@cryptuoso/components/Images/Logo";
+import { Logo } from "@cryptuoso/components/Image/Logo";
 import { TextLink } from "@cryptuoso/components/Link/TextLink";
 import { ColorSchemeToggle } from "@cryptuoso/components/Button/ColorSchemeToggle";
 import { SimpleLink } from "@cryptuoso/components/Link/SimpleLink";
@@ -111,7 +111,7 @@ export function LandingHeader({ links }: HeaderActionProps) {
                     {session ? (
                         <>
                             <TextLink
-                                href="/app/trading"
+                                href="/app"
                                 transform="uppercase"
                                 variant="gradient"
                                 className={classes.link}
@@ -119,7 +119,14 @@ export function LandingHeader({ links }: HeaderActionProps) {
                             >
                                 TRADING
                             </TextLink>
-                            <TextLink onClick={() => signOut()} className={classes.link} transform="uppercase">
+                            <TextLink
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    signOut();
+                                }}
+                                className={classes.link}
+                                transform="uppercase"
+                            >
                                 SIGN OUT
                             </TextLink>
                         </>

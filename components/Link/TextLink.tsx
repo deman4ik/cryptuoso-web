@@ -12,7 +12,7 @@ export function TextLink({ href, children, onClick, ...others }: TextProps<"a"> 
         );
     else
         return (
-            <Text<"a"> component="a" {...others} onClick={onClick}>
+            <Text component="a" href="#" {...others} onClick={onClick}>
                 {children}
             </Text>
         );

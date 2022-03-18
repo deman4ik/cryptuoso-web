@@ -2,7 +2,7 @@ import React from "react";
 import { createStyles, Anchor, Group, ActionIcon, Text } from "@mantine/core";
 import { BrandTwitter, BrandYoutube, BrandInstagram, BrandTelegram } from "tabler-icons-react";
 
-import { Logo } from "@cryptuoso/components/Images/Logo";
+import { Logo } from "@cryptuoso/components/Image/Logo";
 import { SimpleLink } from "@cryptuoso/components/Link/SimpleLink";
 
 const useStyles = createStyles((theme) => ({

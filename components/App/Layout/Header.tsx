@@ -14,7 +14,7 @@ import {
     HeaderProps,
     ContainerProps
 } from "@mantine/core";
-import { Logo } from "@cryptuoso/components/Images/Logo";
+import { Logo } from "@cryptuoso/components/Image/Logo";
 import { SimpleLink } from "@cryptuoso/components/Link/SimpleLink";
 import { TextLink } from "@cryptuoso/components/Link/TextLink";
 import { ColorSchemeToggle } from "@cryptuoso/components/Button/ColorSchemeToggle";
@@ -57,7 +57,6 @@ export function AppHeader({
             </Group>
             <Group spacing={12}>
                 <Button>Action</Button>
-                <ColorSchemeToggle />
             </Group>
         </div>
     );
