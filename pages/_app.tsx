@@ -3,7 +3,7 @@ import Head from "next/head";
 import { MantineProvider, NormalizeCSS, GlobalStyles, ColorSchemeProvider, ColorScheme } from "@mantine/core";
 import { NotificationsProvider } from "@mantine/notifications";
 import { Provider as URQLProvider } from "urql";
-import { client } from "../libs/graphql";
+import { client } from "@cryptuoso/libs/graphql";
 import { SessionProvider } from "next-auth/react";
 import { useHotkeys, useLocalStorageValue } from "@mantine/hooks";
 

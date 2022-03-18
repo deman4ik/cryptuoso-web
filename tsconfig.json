@@ -16,7 +16,8 @@
         "incremental": true,
         "baseUrl": "",
         "paths": {
-            "@cryptuoso/components/*": ["components/*"]
+            "@cryptuoso/components/*": ["components/*"],
+            "@cryptuoso/libs/*": ["libs/*"]
         }
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
