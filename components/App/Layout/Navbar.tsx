@@ -1,20 +1,10 @@
 import React, { useState } from "react";
 import { createStyles, Navbar, Group, Text } from "@mantine/core";
-import {
-    BellRinging,
-    Fingerprint,
-    Key,
-    Settings,
-    TwoFA,
-    DatabaseImport,
-    Receipt2,
-    Dashboard,
-    Logout,
-    UserCircle
-} from "tabler-icons-react";
+import { BellRinging, Key, Receipt2, Dashboard, Logout, UserCircle, BrandTelegram } from "tabler-icons-react";
 import { signOut } from "next-auth/react";
 import { ColorSchemeToggleBig } from "@cryptuoso/components/Button/ColorSchemeToggle";
 import { SimpleLink } from "@cryptuoso/components/Link/SimpleLink";
+import { useRouter } from "next/router";
 
 const useStyles = createStyles((theme, _params, getRef) => {
     const icon = getRef("icon");
@@ -78,26 +68,22 @@ const useStyles = createStyles((theme, _params, getRef) => {
 });
 
 const data = [
-    { link: "/app/dashboard", label: "Dashboard", icon: Dashboard },
+    { link: "/app", label: "Dashboard", icon: Dashboard },
     { link: "/app/notifications", label: "Notifications", icon: BellRinging },
     { link: "/app/profile", label: "Profile", icon: UserCircle },
-    { link: "/app/exchange-coount", label: "Exchange Account", icon: UserCircle },
+    { link: "/app/exchange-account", label: "Exchange Account", icon: Key },
     { link: "/app/billing", label: "Billing", icon: Receipt2 }
 ];
 
 export function AppNavbar({ ...others }) {
     const { classes, cx } = useStyles();
-    const [active, setActive] = useState("Dashboard");
+    const router = useRouter();
 
     const links = data.map((item) => (
         <SimpleLink
-            className={cx(classes.link, { [classes.linkActive]: item.label === active })}
+            className={cx(classes.link, { [classes.linkActive]: item.link === router.pathname })}
             href={item.link}
             key={item.label}
-            onClick={(event) => {
-                event.preventDefault();
-                setActive(item.label);
-            }}
         >
             <item.icon className={classes.linkIcon} />
             <span>{item.label}</span>
@@ -109,11 +95,11 @@ export function AppNavbar({ ...others }) {
             <Navbar.Section grow>{links}</Navbar.Section>
 
             <Navbar.Section className={classes.footer}>
-                <ColorSchemeToggleBig />
-                <SimpleLink href="/app/profile" className={classes.link}>
-                    <UserCircle className={classes.linkIcon} />
-                    <span>Profile</span>
+                <SimpleLink href="https://t.me/cryptuoso_bot" className={classes.link}>
+                    <BrandTelegram className={classes.linkIcon} />
+                    <span>Telegram Trading Bot</span>
                 </SimpleLink>
+                <ColorSchemeToggleBig />
 
                 <a
                     href="#"
