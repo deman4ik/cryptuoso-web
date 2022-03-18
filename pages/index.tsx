@@ -17,6 +17,7 @@ const useStyles = createStyles((theme) => ({
         backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.white
     }
 }));
+
 export default function HomePage() {
     const { classes } = useStyles();
 

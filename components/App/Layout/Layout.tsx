@@ -5,6 +5,9 @@ import { AppHeader } from "./Header";
 import { BorderBottom } from "tabler-icons-react";
 
 const useStyles = createStyles((theme) => ({
+    shell: {
+        position: "relative"
+    },
     header: {
         borderBottom: "1px solid transparent",
         backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.colors.gray[0]
@@ -34,13 +37,13 @@ export function Layout({ children, title }: { children: ReactNode; title: string
     return (
         <AppShell
             // navbarOffsetBreakpoint controls when navbar should no longer be offset with padding-left
-            navbarOffsetBreakpoint="sm"
+            navbarOffsetBreakpoint="md"
             // fixed prop on AppShell will be automatically added to Header and Navbar
             fixed
             navbar={
                 <AppNavbar
                     hidden={!opened}
-                    hiddenBreakpoint="sm"
+                    hiddenBreakpoint="md"
                     width={{ sm: 250 }}
                     p="md"
                     position={{ top: 0, left: 0 }}
@@ -51,6 +54,7 @@ export function Layout({ children, title }: { children: ReactNode; title: string
                     <AppHeader opened={opened} setOpened={setOpened} />
                 </Header>
             }
+            className={classes.shell}
         >
             {children}
         </AppShell>

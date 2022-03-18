@@ -1,4 +1,4 @@
-import NextAuth from "next-auth";
+import NextAuth, { Awaitable } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { getToken, JWT } from "next-auth/jwt";
 import { createClient, gql } from "urql";
@@ -41,12 +41,18 @@ export default NextAuth({
                         throw result.error;
                     }
                     //TODO: get user from gql
-                    return {
-                        id: 1,
-                        name: "deman4ik",
-                        email: "deman4ik@gmail.com",
-                        accessToken: result?.data?.result.accessToken
-                    };
+                    const accessToken = result?.data?.result.accessToken;
+                    if (accessToken) {
+                        const token = jwt.decode(accessToken) as jwt.JwtPayload;
+
+                        return {
+                            id: token.userId,
+                            accessToken: result?.data?.result.accessToken,
+
+                            ...token
+                        };
+                    }
+                    throw new Error("Failed to authorize. Please try again later.");
                 } catch (err) {
                     console.error(err);
                     throw err;
@@ -70,6 +76,7 @@ export default NextAuth({
         async jwt(params) {
             //    console.log("jwt callback", params);
             const { token, user } = params;
+
             // TODO: check for expiration and refresh access token
             //https://next-auth.js.org/tutorials/refresh-token-rotation
 

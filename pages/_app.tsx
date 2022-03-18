@@ -2,10 +2,10 @@ import { AppProps } from "next/app";
 import Head from "next/head";
 import { MantineProvider, NormalizeCSS, GlobalStyles, ColorSchemeProvider, ColorScheme } from "@mantine/core";
 import { NotificationsProvider } from "@mantine/notifications";
-import { Provider as URQLProvider } from "urql";
-import { client } from "@cryptuoso/libs/graphql";
+
 import { SessionProvider } from "next-auth/react";
 import { useHotkeys, useLocalStorageValue } from "@mantine/hooks";
+import GraphqlProvider from "@cryptuoso/libs/graphql/provider";
 
 export default function App(props: AppProps) {
     const { Component, pageProps } = props;
@@ -29,7 +29,7 @@ export default function App(props: AppProps) {
                 <link rel="shortcut icon" type="image/x-icon" href="/favicon.png" />
             </Head>
             <SessionProvider session={pageProps.session}>
-                <URQLProvider value={client}>
+                <GraphqlProvider>
                     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
                         <MantineProvider
                             withGlobalStyles
@@ -70,7 +70,7 @@ export default function App(props: AppProps) {
                             </NotificationsProvider>
                         </MantineProvider>
                     </ColorSchemeProvider>
-                </URQLProvider>
+                </GraphqlProvider>
             </SessionProvider>
         </>
     );

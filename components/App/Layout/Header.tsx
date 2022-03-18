@@ -28,7 +28,7 @@ const useStyles = createStyles((theme) => ({
     },
 
     burger: {
-        [theme.fn.largerThan("sm")]: {
+        [theme.fn.largerThan("md")]: {
             display: "none"
         }
     }
