@@ -65,7 +65,8 @@ export function AuthenticationForm() {
                 setLoading(false);
                 setError(result.error);
             } else if (result?.ok) {
-                router.replace("/");
+                //TODO: check router path callbackUrl
+                router.replace("/app");
             }
         } else {
             setError("Not implemented"); //TODO

@@ -1,5 +1,6 @@
-import { createClient } from "@urql/core";
-import { useSession } from "next-auth/react";
+import { cacheExchange, createClient, dedupExchange, fetchExchange } from "@urql/core";
+import { errorExchange } from "urql";
+import { signIn, useSession } from "next-auth/react";
 import * as React from "react";
 
 /**
@@ -8,7 +9,10 @@ import * as React from "react";
  * If the user has an active session, it will add an accessToken to all requests
  */
 const useClient = (options?: RequestInit) => {
-    const { data: session }: any = useSession();
+    const { data: session }: any = useSession({
+        required: true
+        //   redirectTo: "/auth/signin?error=InvalidSession"
+    });
 
     const token = session?.user?.accessToken;
     // const handleError = useErrorHandler();
@@ -28,7 +32,25 @@ const useClient = (options?: RequestInit) => {
                     return {
                         headers: { ...(options?.headers ? options.headers : {}) }
                     };
-            }
+            },
+            exchanges: [
+                dedupExchange,
+                cacheExchange,
+                errorExchange({
+                    onError: (error) => {
+                        // we only get an auth error here when the auth exchange had attempted to refresh auth and getting an auth error again for the second time
+                        const isAuthError = error.graphQLErrors.some(
+                            (e) => e.extensions?.code === "FORBIDDEN" || e.message.includes("JWTExpired")
+                        );
+
+                        if (isAuthError) {
+                            signIn(); //TODO: disable redirects? or just log out?
+                            // clear storage, log the user out etc
+                        }
+                    }
+                }),
+                fetchExchange
+            ]
         });
 
         return client;

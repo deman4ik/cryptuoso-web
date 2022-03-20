@@ -77,7 +77,7 @@ export default NextAuth({
             //    console.log("jwt callback", params);
             const { token, user } = params;
 
-            // TODO: check for expiration and refresh access token
+            // TODO: check for expiration and refresh access token if "remember me" is set
             //https://next-auth.js.org/tutorials/refresh-token-rotation
 
             if (user) {
@@ -88,3 +88,4 @@ export default NextAuth({
     }
     // debug: true
 });
+//TODO: sync expiration date
