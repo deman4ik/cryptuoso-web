@@ -9,7 +9,8 @@ import {
     createStyles,
     Mark,
     Group,
-    DefaultMantineColor
+    DefaultMantineColor,
+    Box
 } from "@mantine/core";
 import { Icon as TablerIcon } from "tabler-icons-react";
 import { SettingsAutomation, Gauge, Briefcase, Cloud, Bulb, Lock } from "tabler-icons-react";
@@ -63,13 +64,14 @@ interface FeatureProps {
     title: React.ReactNode;
     description: React.ReactNode;
     color: DefaultMantineColor;
+    className: string;
 }
 
-export function Feature({ icon: Icon, title, description, color }: FeatureProps) {
+export function Feature({ icon: Icon, title, description, color, className }: FeatureProps) {
     const theme = useMantineTheme();
     return (
-        <div>
-            <ThemeIcon variant="light" size={50} radius={40} color={color}>
+        <Box>
+            <ThemeIcon variant="light" size={50} radius={40} color={color} className={className}>
                 <Icon style={{ width: 30, height: 30 }} />
             </ThemeIcon>
             <Text
@@ -83,7 +85,7 @@ export function Feature({ icon: Icon, title, description, color }: FeatureProps)
             <Text size="md" color="dimmed" style={{ lineHeight: 1.6 }}>
                 {description}
             </Text>
-        </div>
+        </Box>
     );
 }
 
@@ -111,13 +113,19 @@ const useStyles = createStyles((theme) => ({
         [theme.fn.smallerThan("sm")]: {
             textAlign: "left"
         }
+    },
+
+    feature: {
+        "&:hover": {
+            transform: "scale(1.1)"
+        }
     }
 }));
 
 export function FeaturesGrid() {
     const { classes } = useStyles();
     const theme = useMantineTheme();
-    const features = DATA.map((feature, index) => <Feature {...feature} key={index} />);
+    const features = DATA.map((feature, index) => <Feature {...feature} key={index} className={classes.feature} />);
 
     return (
         <Container className={classes.wrapper} id="features">

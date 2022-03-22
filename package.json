@@ -17,6 +17,7 @@
         "@mantine/next": "^4.0.0",
         "@mantine/notifications": "^4.0.0",
         "@modulz/radix-icons": "^4.0.0",
+        "cookies-next": "^2.0.4",
         "dayjs": "^1.10.8",
         "graphql": "^16.3.0",
         "jsonwebtoken": "^8.5.1",

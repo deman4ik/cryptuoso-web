@@ -21,7 +21,7 @@ export function About() {
     const { classes } = useStyles();
 
     return (
-        <Container size="xl" my="md">
+        <Container id="about" size="xl" my="md">
             <Title align="center" className={classes.title}>
                 About us
             </Title>

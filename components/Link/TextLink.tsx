@@ -1,19 +1,17 @@
-import { Text, TextProps } from "@mantine/core";
+import { Anchor, AnchorProps } from "@mantine/core";
 import Link, { LinkProps } from "next/link";
 
-export function TextLink({ href, children, onClick, ...others }: TextProps<"a"> & { href?: LinkProps["href"] }) {
+export function TextLink({ href, children, onClick, ...others }: AnchorProps<"a"> & { href?: LinkProps["href"] }) {
     if (href)
         return (
             <Link href={href} passHref>
-                <Text<"a"> component="a" {...others}>
-                    {children}
-                </Text>
+                <Anchor {...others}>{children}</Anchor>
             </Link>
         );
     else
         return (
-            <Text component="a" href="#" {...others} onClick={onClick}>
+            <Anchor href="#" {...others} onClick={onClick}>
                 {children}
-            </Text>
+            </Anchor>
         );
 }

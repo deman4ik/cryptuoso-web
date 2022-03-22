@@ -1,22 +1,25 @@
-import { AppProps } from "next/app";
+import App, { AppContext, AppProps } from "next/app";
 import Head from "next/head";
-import { MantineProvider, NormalizeCSS, GlobalStyles, ColorSchemeProvider, ColorScheme } from "@mantine/core";
+import { MantineProvider, ColorSchemeProvider, ColorScheme } from "@mantine/core";
 import { NotificationsProvider } from "@mantine/notifications";
-
-import { SessionProvider } from "next-auth/react";
-import { useHotkeys, useLocalStorageValue } from "@mantine/hooks";
+import { getCookie, setCookies } from "cookies-next";
+import { getSession, SessionProvider } from "next-auth/react";
+import { useHotkeys } from "@mantine/hooks";
 import GraphqlProvider from "@cryptuoso/libs/graphql/provider";
+import { useState } from "react";
+import { Session } from "next-auth";
 
-export default function App(props: AppProps) {
+export default function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
     const { Component, pageProps } = props;
 
-    const [colorScheme, setColorScheme] = useLocalStorageValue<ColorScheme>({
-        key: "cryptuoso-color-scheme",
-        defaultValue: "light"
-    });
+    const [colorScheme, setColorScheme] = useState<ColorScheme>(props.colorScheme);
 
-    const toggleColorScheme = (value?: ColorScheme) =>
-        setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
+    const toggleColorScheme = (value?: ColorScheme) => {
+        const nextColorScheme = value || (colorScheme === "dark" ? "light" : "dark");
+        setColorScheme(nextColorScheme);
+        // when color scheme is updated save it to cookie
+        setCookies("mantine-color-scheme", nextColorScheme, { maxAge: 60 * 60 * 24 * 30 });
+    };
 
     useHotkeys([["mod+J", () => toggleColorScheme()]]);
 
@@ -75,3 +78,17 @@ export default function App(props: AppProps) {
         </>
     );
 }
+
+MyApp.getInitialProps = async (appContext: AppContext) => {
+    let session: Session | null | undefined = undefined;
+    // getSession works both server-side and client-side but we want to avoid any calls to /api/auth/session
+    // on page load, so we only call it server-side.
+    if (typeof window === "undefined") session = await getSession(appContext.ctx);
+    const appProps = await App.getInitialProps(appContext);
+    return {
+        ...appProps,
+        ...(session !== undefined ? { session } : {}),
+        colorScheme: getCookie("mantine-color-scheme", appContext.ctx) || "dark"
+    };
+};
+// get color scheme from cookie

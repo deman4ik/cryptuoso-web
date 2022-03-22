@@ -9,10 +9,7 @@ import * as React from "react";
  * If the user has an active session, it will add an accessToken to all requests
  */
 const useClient = (options?: RequestInit) => {
-    const { data: session }: any = useSession({
-        required: true
-        //   redirectTo: "/auth/signin?error=InvalidSession"
-    });
+    const { data: session }: any = useSession();
 
     const token = session?.user?.accessToken;
     // const handleError = useErrorHandler();

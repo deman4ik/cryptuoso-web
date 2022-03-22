@@ -7,6 +7,7 @@ import { FeaturesGrid } from "@cryptuoso/components/Landing/Features/Features";
 import { FAQ } from "@cryptuoso/components/Landing/FAQ/FAQ";
 import { About } from "@cryptuoso/components/Landing/About/About";
 import Head from "next/head";
+import { Roadmap } from "@cryptuoso/components/Landing/Roadmap/Roadmap";
 
 const useStyles = createStyles((theme) => ({
     root: {
@@ -31,6 +32,7 @@ export default function HomePage() {
 
             <FeaturesGrid />
             <About />
+            <Roadmap />
             <div className={classes.darkBg}>
                 <FAQ />
             </div>
