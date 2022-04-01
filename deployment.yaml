@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    labels:
+        app: cryptuoso-web-<ENV>
+        env: <ENV>
+    name: cryptuoso-web-<ENV>
+    namespace: <ENV>
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: cryptuoso-web-<ENV>
+            env: <ENV>
+    template:
+        metadata:
+            labels:
+                app: cryptuoso-web-<ENV>
+                env: <ENV>
+        spec:
+            imagePullSecrets:
+                - name: cpz-registry
+            containers:
+                - image: <IMAGE>
+                  imagePullPolicy: IfNotPresent
+                  name: cryptuoso-web-<ENV>
+                  ports:
+                      - containerPort: 80
+                        protocol: TCP
+                  resources:
+                      requests:
+                          memory: 128Mi
+                          cpu: "100m"
+                      limits:
+                          memory: 256Mi
+                          cpu: "200m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+    labels:
+        app: cryptuoso-web-<ENV>
+        env: <ENV>
+    name: cryptuoso-web-<ENV>
+    namespace: <ENV>
+spec:
+    ports:
+        - port: 80
+          targetPort: 80
+    selector:
+        app: cryptuoso-web-<ENV>
+        env: <ENV>
+    type: ClusterIP
+---
+kind: HorizontalPodAutoscaler
+apiVersion: autoscaling/v2beta1
+metadata:
+    name: cryptuoso-web-<ENV>
+    namespace: <ENV>
+spec:
+    scaleTargetRef:
+        kind: Deployment
+        name: cryptuoso-web-<ENV>
+        apiVersion: apps/v1
+    minReplicas: 1
+    maxReplicas: 3
+    metrics:
+        - type: Resource
+          resource:
+              name: cpu
+              targetAverageUtilization: 150
+        - type: Resource
+          resource:
+              name: memory
+              targetAverageUtilization: 150
