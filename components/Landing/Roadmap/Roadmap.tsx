@@ -1,4 +1,4 @@
-import { Timeline, Text, createStyles, Container, Title } from "@mantine/core";
+import { Timeline, Text, createStyles, Container, Title, Stepper } from "@mantine/core";
 import { BrandTelegram, Urgent, Engine, Browser, Briefcase, Robot } from "tabler-icons-react";
 
 const items = [
@@ -39,6 +39,10 @@ const useStyles = createStyles((theme) => {
         title: {
             fontWeight: 900,
             marginBottom: theme.spacing.xl * 1.5
+        },
+        inner: {
+            marginTop: `${theme.spacing.xl * 3}px`,
+            marginBottom: `${theme.spacing.xl * 5}px`
         }
     };
 });
@@ -50,7 +54,12 @@ export function Roadmap() {
             <Title align="center" className={classes.title}>
                 Roadmap
             </Title>
-            <Timeline active={4} bulletSize={26} lineWidth={4}>
+            <Stepper size="md" active={5} breakpoint="lg" className={classes.inner}>
+                {items.map(({ title, text, icon }) => (
+                    <Stepper.Step key={title} label={title} description={text} icon={icon} completedIcon={icon} />
+                ))}
+            </Stepper>
+            {/* <Timeline active={4} bulletSize={26} lineWidth={4}>
                 {items.map(({ title, text, icon }) => (
                     <Timeline.Item
                         bullet={icon}
@@ -63,7 +72,7 @@ export function Roadmap() {
                         </Text>
                     </Timeline.Item>
                 ))}
-            </Timeline>
+                </Timeline> */}
         </Container>
     );
 }
