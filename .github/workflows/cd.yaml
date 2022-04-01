@@ -13,16 +13,13 @@ jobs:
             - name: Checkout
               uses: actions/checkout@main
 
-            - name: Update SHA
-              run: echo $GITHUB_SHA > $GITHUB_WORKSPACE/_meta
-
             - name: Build container image dev
               if: contains(github.ref, 'dev')
-              run: docker build --build-arg NEXT_PUBLIC_HASURA_URL=${{ secrets.NEXT_PUBLIC_HASURA_URL_DEV }} --build-arg NEXT_PUBLIC_TELEGRAM_BOT_NAME=${{ secrets.NEXT_PUBLIC_TELEGRAM_BOT_NAME_DEV }} --build-arg NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET_DEV }} -t registry.digitalocean.com/cpz/cryptuoso-web:$(echo $GITHUB_SHA | head -c7) .
+              run: docker build --build-arg NEXT_PUBLIC_HASURA_URL=${{ secrets.NEXT_PUBLIC_HASURA_URL_DEV }} --build-arg NEXT_PUBLIC_TELEGRAM_BOT_NAME=${{ secrets.NEXT_PUBLIC_TELEGRAM_BOT_NAME_DEV }} --build-arg NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET_DEV }} --build-arg NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL_DEV }} -t registry.digitalocean.com/cpz/cryptuoso-web:$(echo $GITHUB_SHA | head -c7) .
 
             - name: Build container image prod
               if: contains(github.ref, 'main')
-              run: docker build --build-arg NEXT_PUBLIC_HASURA_URL=${{ secrets.NEXT_PUBLIC_HASURA_URL_PROD }} --build-arg NEXT_PUBLIC_TELEGRAM_BOT_NAME=${{ secrets.NEXT_PUBLIC_TELEGRAM_BOT_NAME_PROD }} --build-arg NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET_PROD }} -t registry.digitalocean.com/cpz/cryptuoso-web:$(echo $GITHUB_SHA | head -c7) .
+              run: docker build --build-arg NEXT_PUBLIC_HASURA_URL=${{ secrets.NEXT_PUBLIC_HASURA_URL_PROD }} --build-arg NEXT_PUBLIC_TELEGRAM_BOT_NAME=${{ secrets.NEXT_PUBLIC_TELEGRAM_BOT_NAME_PROD }} --build-arg NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET_PROD }} --build-arg NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL_PROD }} -t registry.digitalocean.com/cpz/cryptuoso-web:$(echo $GITHUB_SHA | head -c7) .
 
             - name: Install doctl
               uses: digitalocean/action-doctl@v2
