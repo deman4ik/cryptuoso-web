@@ -12,7 +12,8 @@ import {
     Group,
     Button,
     HeaderProps,
-    ContainerProps
+    ContainerProps,
+    Anchor
 } from "@mantine/core";
 import { Logo } from "@cryptuoso/components/Image/Logo";
 import { SimpleLink } from "@cryptuoso/components/Link/SimpleLink";
@@ -51,9 +52,9 @@ export function AppHeader({
                 <SimpleLink href="/app">
                     <Logo />
                 </SimpleLink>
-                <TextLink transform="uppercase" weight={700} size="lg" href="/app">
+                <Text component={SimpleLink} transform="uppercase" weight={700} size="lg" href="/app">
                     Cryptuoso
-                </TextLink>
+                </Text>
             </Group>
             <Group spacing={12}>
                 <Button>Action</Button>
