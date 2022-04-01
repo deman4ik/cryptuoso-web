@@ -2,7 +2,7 @@ name: CD
 
 on:
     push:
-        branches: [dev, master]
+        branches: [dev, main]
 
 jobs:
     build:
@@ -11,7 +11,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
-              uses: actions/checkout@master
+              uses: actions/checkout@main
 
             - name: Update SHA
               run: echo $GITHUB_SHA > $GITHUB_WORKSPACE/src/_meta
@@ -21,7 +21,7 @@ jobs:
               run: docker build --build-arg NEXT_PUBLIC_HASURA_URL=${{ secrets.NEXT_PUBLIC_HASURA_URL_DEV }} --build-arg NEXT_PUBLIC_TELEGRAM_BOT_NAME=${{ secrets.NEXT_PUBLIC_TELEGRAM_BOT_NAME_DEV }} --build-arg NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET_DEV }} -t registry.digitalocean.com/cpz/cryptuoso-web:$(echo $GITHUB_SHA | head -c7) .
 
             - name: Build container image prod
-              if: contains(github.ref, 'master')
+              if: contains(github.ref, 'main')
               run: docker build --build-arg NEXT_PUBLIC_HASURA_URL=${{ secrets.NEXT_PUBLIC_HASURA_URL_PROD }} --build-arg NEXT_PUBLIC_TELEGRAM_BOT_NAME=${{ secrets.NEXT_PUBLIC_TELEGRAM_BOT_NAME_PROD }} --build-arg NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET_PROD }} -t registry.digitalocean.com/cpz/cryptuoso-web:$(echo $GITHUB_SHA | head -c7) .
 
             - name: Install doctl
@@ -43,7 +43,7 @@ jobs:
               run: sed -i 's|<ENV>|dev|' $GITHUB_WORKSPACE/deployment.yaml
 
             - name: Update deployment file ENV prod
-              if: contains(github.ref, 'master')
+              if: contains(github.ref, 'main')
               run: sed -i 's|<ENV>|prod|' $GITHUB_WORKSPACE/deployment.yaml
 
             - name: Save DigitalOcean kubeconfig
@@ -57,5 +57,5 @@ jobs:
               run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig --namespace=dev rollout status deployment/cryptuoso-web-dev
 
             - name: Verify deployment prod
-              if: contains(github.ref, 'master')
+              if: contains(github.ref, 'main')
               run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig --namespace=prod rollout status deployment/cryptuoso-web-prod
