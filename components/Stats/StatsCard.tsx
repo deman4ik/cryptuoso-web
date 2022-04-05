@@ -44,7 +44,7 @@ export interface StatsCardProps {
     title: string;
     desc: string;
     Icon: TablerIcon;
-    value: string;
+    value: string | number;
     diff?: number;
 }
 
@@ -55,7 +55,7 @@ export function StatsCard({ title, desc, Icon, value, diff }: StatsCardProps) {
     return (
         <Paper withBorder p="md" radius="md" key={title}>
             <Group position="apart">
-                <Text size="xs" color="dimmed" className={classes.title}>
+                <Text size="md" color="dimmed" className={classes.title}>
                     {title}
                 </Text>
                 <Icon className={classes.icon} size={22} />
@@ -71,7 +71,7 @@ export function StatsCard({ title, desc, Icon, value, diff }: StatsCardProps) {
                 )}
             </Group>
 
-            <Text size="xs" color="dimmed" mt={7}>
+            <Text size="sm" color="dimmed" mt={7}>
                 {desc}
             </Text>
         </Paper>

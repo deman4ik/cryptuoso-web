@@ -55,3 +55,7 @@ const useClient = (options?: RequestInit) => {
 };
 
 export default useClient;
+
+export const publicClient = createClient({
+    url: `${process.env.NEXT_PUBLIC_HASURA_URL}`
+});

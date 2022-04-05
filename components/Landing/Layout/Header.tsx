@@ -108,7 +108,7 @@ export function LandingHeader({ links }: HeaderActionProps) {
                 </Group>
 
                 <Group spacing={4}>
-                    {session ? (
+                    {/*session ? (
                         <>
                             <TextLink
                                 href="/app"
@@ -140,7 +140,7 @@ export function LandingHeader({ links }: HeaderActionProps) {
                         >
                             SIGN IN
                         </TextLink>
-                    )}
+                    ) */}
                     <ColorSchemeToggle />
                 </Group>
 
