@@ -17,11 +17,7 @@ const items = [
         text: "Trading Telegram Bot",
         icon: <BrandTelegram size={20} />
     },
-    {
-        title: "2020",
-        text: "Trading Web App",
-        icon: <Browser size={20} />
-    },
+
     {
         title: "2021",
         text: "Portfolio management",
@@ -29,12 +25,17 @@ const items = [
     },
     {
         title: "2022",
-        text: "More Robots",
+        text: "Trading Web App",
+        icon: <Browser size={20} />
+    },
+    {
+        title: "2023",
+        text: "More Coins and Robots",
         icon: <Robot size={20} />
     }
 ];
 
-const useStyles = createStyles((theme) => {
+const useStyles = createStyles((theme, params, getRef) => {
     return {
         title: {
             fontWeight: 900,
@@ -43,6 +44,24 @@ const useStyles = createStyles((theme) => {
         inner: {
             marginTop: `${theme.spacing.xl * 3}px`,
             marginBottom: `${theme.spacing.xl * 5}px`
+        },
+
+        separatorActive: {
+            borderWidth: 0,
+            backgroundImage: theme.fn.linearGradient(45, theme.colors.blue[6], theme.colors.cyan[6])
+        },
+        stepProgress: {
+            transform: "scale(1.05)",
+
+            [`& .${getRef("stepIcon")}`]: {}
+        },
+
+        stepCompleted: {
+            [`& .${getRef("stepIcon")}`]: {
+                borderWidth: 0,
+                backgroundColor: "transparent",
+                backgroundImage: theme.fn.linearGradient(45, theme.colors.blue[6], theme.colors.cyan[6])
+            }
         }
     };
 });
@@ -54,7 +73,17 @@ export function Roadmap() {
             <Title align="center" className={classes.title}>
                 Roadmap
             </Title>
-            <Stepper size="md" active={5} breakpoint="lg" className={classes.inner}>
+            <Stepper
+                size="md"
+                active={4}
+                breakpoint="lg"
+                className={classes.inner}
+                classNames={{
+                    separatorActive: classes.separatorActive,
+                    stepProgress: classes.stepProgress,
+                    stepCompleted: classes.stepCompleted
+                }}
+            >
                 {items.map(({ title, text, icon }) => (
                     <Stepper.Step key={title} label={title} description={text} icon={icon} completedIcon={icon} />
                 ))}

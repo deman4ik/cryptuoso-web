@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Title, Accordion, createStyles, Grid } from "@mantine/core";
+import { Container, Title, Accordion, createStyles, Grid, Text } from "@mantine/core";
 import { faqContent } from "./content";
 
 const useStyles = createStyles((theme, _params, getRef) => {
@@ -36,6 +36,10 @@ const useStyles = createStyles((theme, _params, getRef) => {
             [`& .${control}`]: {
                 color: theme.colors[theme.primaryColor][theme.colorScheme === "dark" ? 4 : 6]
             }
+        },
+
+        text: {
+            marginTop: theme.spacing.sm
         }
     };
 });
@@ -62,7 +66,11 @@ export function FAQ() {
                     >
                         {leftFaqContent.map((c, i) => (
                             <Accordion.Item label={c.title} key={i}>
-                                {c.text}
+                                {c.text.map((t, i) => (
+                                    <Text className={classes.text} key={i}>
+                                        {t}
+                                    </Text>
+                                ))}
                             </Accordion.Item>
                         ))}
                     </Accordion>
@@ -78,7 +86,11 @@ export function FAQ() {
                     >
                         {rightFaqContent.map((c, i) => (
                             <Accordion.Item label={c.title} key={i}>
-                                {c.text}
+                                {c.text.map((t, i) => (
+                                    <Text className={classes.text} key={i}>
+                                        {t}
+                                    </Text>
+                                ))}
                             </Accordion.Item>
                         ))}
                     </Accordion>

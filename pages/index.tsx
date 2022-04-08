@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { createStyles } from "@mantine/core";
 import { LandingHeader } from "@cryptuoso/components/Landing/Layout/Header";
 import { footerLinks, headerLinks } from "@cryptuoso/components/Landing/Layout/Layout";
@@ -6,9 +7,9 @@ import { LandingFooter } from "@cryptuoso/components/Landing/Layout/Footer";
 import { FeaturesGrid } from "@cryptuoso/components/Landing/Features/Features";
 import { FAQ } from "@cryptuoso/components/Landing/FAQ/FAQ";
 import { About } from "@cryptuoso/components/Landing/About/About";
-import Head from "next/head";
 import { Roadmap } from "@cryptuoso/components/Landing/Roadmap/Roadmap";
 import { Portfolios } from "@cryptuoso/components/Landing/Portfolios/Portfolios";
+import { TelegramBot } from "@cryptuoso/components/Landing/TelegramBot/TelegramBot";
 
 const useStyles = createStyles((theme) => ({
     root: {
@@ -35,6 +36,7 @@ export default function HomePage() {
             <div className={classes.darkBg}>
                 <Portfolios />
             </div>
+            <TelegramBot />
             <About />
             <Roadmap />
             <div className={classes.darkBg}>

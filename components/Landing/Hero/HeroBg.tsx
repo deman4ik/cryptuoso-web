@@ -101,7 +101,7 @@ export function Hero() {
                             >
                                 CRYPTUOSO
                             </Text>{" "}
-                            Cryptocurrency Trading Automation Platform
+                            Cryptocurrency Trading Automation Bot
                         </Title>
 
                         <Text className={classes.description} mt={30} size="xl">

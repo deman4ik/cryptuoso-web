@@ -89,7 +89,7 @@ export function Hero() {
                     <Text component="span" variant="gradient" gradient={{ from: "blue", to: "cyan" }} inherit>
                         CRYPTUOSO
                     </Text>{" "}
-                    Cryptocurrency Trading Automation Platform
+                    Cryptocurrency Trading Automation Bot
                 </h1>
 
                 <Text className={classes.description} color="dimmed">
@@ -99,7 +99,7 @@ export function Hero() {
                 <Group className={classes.controls}>
                     <Button
                         component={SimpleLink}
-                        href="/app"
+                        href="https://t.me/cryptuoso_bot"
                         size="xl"
                         className={classes.control}
                         variant="gradient"
