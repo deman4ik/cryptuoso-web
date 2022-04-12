@@ -3,35 +3,15 @@ export const faqContent = [
         title: "What is Cryptuoso?",
         text: [
             "Cryptuoso is a cloud service that helps traders and investors automate cryptocurrency trading by using trading robots.",
-            "All of our 135+ trading robots use pre-configured strategies and do not require any additional settings."
-        ]
-    },
-    {
-        title: "Do you have free plan or trial version?",
-        text: [
-            "Yes, we have both :)",
-
-            "After registering you will get all free plan features.",
-
-            "If you want to try robots before switching to paid plans - activate free trial."
-        ]
-    },
-    {
-        title: "How your free trial works?",
-        text: [
-            "Usually trial periods are limited in time. But trading is like a rollercoaster - today you get a profit, tomorrow you don't.  You can evaluate the result only at a distance.",
-
-            "Our robots use a variety of strategies and perform trades at different intervals, so it's hard to predict how many trades will occur during the trial period.",
-
-            "That's why we will let you use our robots for free until they earn you at least $15. After that the robots will continue to trade for an additional 5 days. If after the trial you decide not to switch to a paid plan, robots will close all positions and you will automatically switch to free plan."
+            "All of our 200+ trading robots use pre-configured strategies and do not require any additional settings."
         ]
     },
     {
         title: "How your free plan works?",
         text: [
-            "On free plan you have access to trading signals. A signal for opening a deal tells you the deal type (short/long) and asset price to open a position. A close signal tells you what to do with the asset, depending on the type of position (sell/buy), and  price to close trade.",
+            "On free plan you have access to trading signals. A signal for opening a deal tells you the deal type (short/long) and asset price to open a position. A close signal tells you what to do with the asset, depending on the type of position (sell/buy), and price to close trade.",
 
-            "There are more than 135 signals available for you to subscribe to. Yes, every signal you see is used by our robots that trade automatically (available on paid plan)."
+            "There are more than 200 signals available for you to subscribe to. Yes, every signal you see is used by our robots that trade automatically (available on paid plan)."
         ]
     },
     {
@@ -41,11 +21,11 @@ export const faqContent = [
 
             "- Registration on the exchange (if needed)",
             "- Connecting the exchange to Cryptuoso",
-            "- Selecting and launching trading robot",
+            "- Selecting and launching you trading portfolio",
 
             "Our support service and community chat are always ready to help you.",
 
-            "Please note that if you choose the free plan you will need to execute trades by yourself. To do this you will need to explore interface and  features of your's exchange."
+            "Please note that if you choose the free plan you will need to execute trades by yourself. To do this you will need to explore interface and features of your's exchange."
         ]
     },
     {
@@ -81,7 +61,7 @@ export const faqContent = [
 
             "1 - Our robots are all based on preconfigured and well tested strategies. So you don't need to invent a strategy every time, backtest it hundreds of times and only then start trading.  Needless to say, that it is impossible to create a truly advanced trading algorithm in any service, as we do through coding.",
 
-            "2 - With Cryptuoso you have access to over 135+ trading robots: they use various strategies, exchanges, currency pairs and timeframes. It would be hard to find such a wide selection anywhere else.",
+            "2 - With Cryptuoso you have access to over 200+ trading robots: they use various strategies, exchanges, currency pairs and timeframes. It would be hard to find such a wide selection anywhere else.",
 
             "3 - Cryptuoso users have no restrictions on:",
 
@@ -119,7 +99,7 @@ export const faqContent = [
 
             "We have a completely transparent trading history - most of our robots have been trading since 2017.  We do not hide bad trades or even unprofitable robots - everything stays in the history.",
 
-            "If you will run several robots and distribute your assets among them, you will diversify the risks and increase the chances of getting the desired profit."
+            "We run several robots and distribute assets among them, so we're diversifying the risks and increase the chances of getting the desired profit."
         ]
     }
 ];

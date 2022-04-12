@@ -10,6 +10,9 @@ import { About } from "@cryptuoso/components/Landing/About/About";
 import { Roadmap } from "@cryptuoso/components/Landing/Roadmap/Roadmap";
 import { Portfolios } from "@cryptuoso/components/Landing/Portfolios/Portfolios";
 import { TelegramBot } from "@cryptuoso/components/Landing/TelegramBot/TelegramBot";
+import { Pricing } from "@cryptuoso/components/Landing/Pricing/Pricing";
+import { gql, useQuery } from "urql";
+import { NextUrqlPageContext, withUrqlClient } from "next-urql";
 
 const useStyles = createStyles((theme) => ({
     root: {
@@ -21,7 +24,7 @@ const useStyles = createStyles((theme) => ({
     }
 }));
 
-export default function HomePage() {
+function HomePage() {
     const { classes } = useStyles();
 
     return (
@@ -37,6 +40,11 @@ export default function HomePage() {
                 <Portfolios />
             </div>
             <TelegramBot />
+
+            <div className={classes.darkBg}>
+                <Pricing />
+            </div>
+
             <About />
             <Roadmap />
             <div className={classes.darkBg}>
@@ -47,3 +55,7 @@ export default function HomePage() {
         </div>
     );
 }
+
+export default withUrqlClient((_ssrExchange, ctx) => ({
+    url: `${process.env.NEXT_PUBLIC_HASURA_URL}`
+}))(HomePage);
