@@ -15,21 +15,25 @@ export const headerLinks = [
     {
         link: "/#faq",
         label: "FAQ"
+    },
+    {
+        link: "/docs/getting-started",
+        label: "DOCS"
     }
 ];
 
 export const footerLinks = [
     ...headerLinks,
     {
-        link: "/terms",
+        link: "/info/terms",
         label: "TERMS"
     },
     {
-        link: "/privacy",
+        link: "/info/privacy",
         label: "PRIVACY"
     },
     {
-        link: "/support",
+        link: "/docs/support",
         label: "SUPPORT"
     }
 ];

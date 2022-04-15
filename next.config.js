@@ -4,6 +4,15 @@ const nextConfig = {
     i18n: {
         locales: ["en"],
         defaultLocale: "en"
+    },
+    async redirects() {
+        return [
+            {
+                source: "/docs",
+                destination: "/docs/getting-started",
+                permanent: true
+            }
+        ];
     }
 };
 
