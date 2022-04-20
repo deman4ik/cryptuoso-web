@@ -43,7 +43,7 @@ const features = [
     {
         icon: SettingsAutomation,
         title: "Automated",
-        description: "Fully automated trading on a poll of 200+ robots. Start and forget.",
+        description: "Fully automated trading on a pull of 200+ robots. Start and forget.",
         color: "indigo"
     },
     {

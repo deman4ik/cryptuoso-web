@@ -91,7 +91,7 @@ export function TelegramBot() {
                             }
                         >
                             <List.Item>
-                                <b>Inspect</b> public tarding statistics we&apos;ve collected in over 4 years of trading
+                                <b>Inspect</b> public trading statistics we&apos;ve collected in over 4 years of trading
                                 on the cryptocurrency market.
                             </List.Item>
                             <List.Item>
