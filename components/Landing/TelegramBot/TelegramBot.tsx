@@ -67,11 +67,6 @@ export function TelegramBot() {
     const { classes } = useStyles();
     return (
         <Container size="xl" className={classes.wrapper}>
-            <Title className={classes.title} align="center">
-                Cryptuoso
-                <span className={classes.highlight}>Telegram</span>
-                Trading Bot
-            </Title>
             <Grid grow gutter="xl" justify="center" align="center">
                 <Grid.Col span={4}>
                     <div className={classes.imageWrapper}>
@@ -80,6 +75,9 @@ export function TelegramBot() {
                 </Grid.Col>
                 <Grid.Col span={8}>
                     <div className={classes.content}>
+                        <Title className={classes.title} align="center">
+                            Cryptuoso Telegram Trading Bot
+                        </Title>
                         <List
                             mt={30}
                             spacing="lg"

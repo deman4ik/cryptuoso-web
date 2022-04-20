@@ -30,7 +30,7 @@ const useStyles = createStyles((theme) => {
             paddingTop: theme.spacing.xl * 2,
             paddingBottom: theme.spacing.xl * 2,
             minHeight: 650,
-            display: "relative"
+            position: "relative"
         },
 
         title: {

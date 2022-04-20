@@ -25,6 +25,11 @@ Look at the section for your Exchange.
 
 -   [Binance Futures](./binance-futures)
 
+Coming Soon
+
+-   KuCoin Futures
+-   Huobi Futures
+
 ## Using an API Key
 
 API keys consist of a public/private key(secret) pair, both of which must be provided to our software.

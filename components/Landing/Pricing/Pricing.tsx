@@ -14,7 +14,8 @@ import {
     ThemeIcon,
     SimpleGrid,
     Paper,
-    Button
+    Button,
+    Box
 } from "@mantine/core";
 import { gql, useQuery } from "urql";
 import { SimpleLink } from "@cryptuoso/components/Link/SimpleLink";
@@ -35,6 +36,9 @@ const useStyles = createStyles((theme) => {
         },
         price: {
             fontSize: 34
+        },
+        priceTotalBox: {
+            minHeight: 50
         }
     };
 });
@@ -144,16 +148,18 @@ export function Pricing() {
                         <Grid grow gutter="xl" align="center" mt="lg">
                             <Grid.Col span={4}>
                                 <Stack>
-                                    {option?.discount && (
-                                        <>
+                                    <Stack className={classes.priceTotalBox}>
+                                        {option?.discount && (
                                             <Text align="center" size="lg" weight={900}>
                                                 ${option?.priceTotal}
                                             </Text>
+                                        )}
+                                        {option?.discount && (
                                             <Text align="center" color="dimmed" size="md" mt={-20}>
                                                 for {option?.name}
                                             </Text>
-                                        </>
-                                    )}
+                                        )}
+                                    </Stack>
 
                                     <Text
                                         align="center"

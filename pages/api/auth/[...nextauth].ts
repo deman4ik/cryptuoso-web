@@ -23,8 +23,8 @@ export default NextAuth({
                     const result = await client
                         .mutation<{ result: { accessToken: string } }, { email: string; password: string }>(
                             gql`
-                                mutation login($email: String!, $password: String!) {
-                                    result: login(email: $email, password: $password) {
+                                mutation authLogin($email: String!, $password: String!) {
+                                    result: authLogin(email: $email, password: $password) {
                                         accessToken
                                     }
                                 }

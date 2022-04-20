@@ -13,6 +13,7 @@ import { TelegramBot } from "@cryptuoso/components/Landing/TelegramBot/TelegramB
 import { Pricing } from "@cryptuoso/components/Landing/Pricing/Pricing";
 import { gql, useQuery } from "urql";
 import { NextUrqlPageContext, withUrqlClient } from "next-urql";
+import { Exchanges } from "@cryptuoso/components/Landing/Exchanges/Exchanges";
 
 const useStyles = createStyles((theme) => ({
     root: {
@@ -37,19 +38,20 @@ function HomePage() {
 
             <FeaturesGrid />
             <div className={classes.darkBg}>
-                <Portfolios />
-            </div>
-            <TelegramBot />
-
-            <div className={classes.darkBg}>
-                <Pricing />
+                <Exchanges />
             </div>
 
-            <About />
-            <Roadmap />
+            <Portfolios />
             <div className={classes.darkBg}>
-                <FAQ />
+                <TelegramBot />
             </div>
+            <Pricing />
+            <div className={classes.darkBg}>
+                <About />
+                <Roadmap />
+            </div>
+
+            <FAQ />
 
             <LandingFooter links={footerLinks} />
         </div>

@@ -30,6 +30,11 @@ export default function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
             <Head>
                 <title>CRYPTUOSO</title>
                 <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
+                <meta name="description" content="Cryptuoso Cryptocurrency Trading Bot" />
+                <meta
+                    name="keywords"
+                    content="cryptocurrency, bitcoin, trading, signals, robots, btc, crypto, mining, binance, nft, eth, bnb"
+                />
                 <link rel="shortcut icon" type="image/x-icon" href="/favicon.svg" />
                 <link rel="shortcut icon" type="image/x-icon" href="/favicon.png" />
             </Head>
