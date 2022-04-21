@@ -5,6 +5,7 @@
     "scripts": {
         "dev": "next dev -p 80",
         "build": "next build",
+        "postbuild": "next-sitemap",
         "start": "next start -p 80",
         "lint": "next lint"
     },
@@ -41,6 +42,7 @@
         "eslint-config-next": "^12.1.2",
         "eslint-config-prettier": "^8.5.0",
         "eslint-plugin-prettier": "^4.0.0",
+        "next-sitemap": "^2.5.20",
         "prettier": "^2.5.1",
         "typescript": "^4.6.3"
     }
