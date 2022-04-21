@@ -1,4 +1,4 @@
-import { Timeline, Text, createStyles, Container, Title, Stepper } from "@mantine/core";
+import { createStyles, Container, Title, Stepper } from "@mantine/core";
 import { BrandTelegram, Urgent, Engine, Browser, Briefcase, Robot } from "tabler-icons-react";
 
 const items = [
@@ -37,6 +37,11 @@ const items = [
 
 const useStyles = createStyles((theme, params, getRef) => {
     return {
+        wrapper: {
+            display: "flex",
+
+            justifyContent: "center"
+        },
         title: {
             fontWeight: 900,
             marginBottom: theme.spacing.xl * 1.5
@@ -73,35 +78,23 @@ export function Roadmap() {
             <Title align="center" className={classes.title}>
                 Roadmap
             </Title>
-            <Stepper
-                size="md"
-                active={4}
-                breakpoint="lg"
-                className={classes.inner}
-                classNames={{
-                    separatorActive: classes.separatorActive,
-                    stepProgress: classes.stepProgress,
-                    stepCompleted: classes.stepCompleted
-                }}
-            >
-                {items.map(({ title, text, icon }) => (
-                    <Stepper.Step key={title} label={title} description={text} icon={icon} completedIcon={icon} />
-                ))}
-            </Stepper>
-            {/* <Timeline active={4} bulletSize={26} lineWidth={4}>
-                {items.map(({ title, text, icon }) => (
-                    <Timeline.Item
-                        bullet={icon}
-                        title={title}
-                        key={title}
-                        lineVariant={title === "2021" ? "dotted" : "solid"}
-                    >
-                        <Text color="dimmed" size="md">
-                            {text}
-                        </Text>
-                    </Timeline.Item>
-                ))}
-                </Timeline> */}
+            <div className={classes.wrapper}>
+                <Stepper
+                    size="md"
+                    active={4}
+                    breakpoint="lg"
+                    className={classes.inner}
+                    classNames={{
+                        separatorActive: classes.separatorActive,
+                        stepProgress: classes.stepProgress,
+                        stepCompleted: classes.stepCompleted
+                    }}
+                >
+                    {items.map(({ title, text, icon }) => (
+                        <Stepper.Step key={title} label={title} description={text} icon={icon} completedIcon={icon} />
+                    ))}
+                </Stepper>
+            </div>
         </Container>
     );
 }

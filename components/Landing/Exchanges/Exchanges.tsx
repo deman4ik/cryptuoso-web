@@ -44,7 +44,7 @@ export function Exchanges() {
     return (
         <Container size="xl" className={classes.wrapper} id="faq">
             <Grid justify="center" grow>
-                <Grid.Col span={5}>
+                <Grid.Col md={4}>
                     <Text
                         variant="gradient"
                         gradient={{ from: "green", to: "blue", deg: 45 }}
@@ -60,7 +60,7 @@ export function Exchanges() {
                         </div>
                     </Group>
                 </Grid.Col>
-                <Grid.Col span={7}>
+                <Grid.Col md={7}>
                     <Text
                         variant="gradient"
                         gradient={{ from: "yellow", to: "blue", deg: 45 }}
