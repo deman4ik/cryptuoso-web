@@ -65,8 +65,7 @@ export default function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
                 )}
             </Head>
             <SessionProvider session={pageProps.session}>
-                {/* <GraphqlProvider> */}
-                <URQLProvider value={publicClient}>
+                <GraphqlProvider>
                     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
                         <MantineProvider
                             withGlobalStyles
@@ -107,8 +106,7 @@ export default function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
                             </NotificationsProvider>
                         </MantineProvider>
                     </ColorSchemeProvider>
-                    {/*  </GraphqlProvider> */}
-                </URQLProvider>
+                </GraphqlProvider>
             </SessionProvider>
         </>
     );

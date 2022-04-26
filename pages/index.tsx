@@ -11,8 +11,7 @@ import { Roadmap } from "@cryptuoso/components/Landing/Roadmap/Roadmap";
 import { Portfolios } from "@cryptuoso/components/Landing/Portfolios/Portfolios";
 import { TelegramBot } from "@cryptuoso/components/Landing/TelegramBot/TelegramBot";
 import { Pricing } from "@cryptuoso/components/Landing/Pricing/Pricing";
-import { gql, useQuery } from "urql";
-import { NextUrqlPageContext, withUrqlClient } from "next-urql";
+import { withUrqlClient } from "next-urql";
 import { Exchanges } from "@cryptuoso/components/Landing/Exchanges/Exchanges";
 
 const useStyles = createStyles((theme) => ({
