@@ -39,6 +39,10 @@ const useStyles = createStyles((theme) => {
         },
         priceTotalBox: {
             minHeight: 50
+        },
+        controlActive: {
+            backgroundColor: "transparent",
+            backgroundImage: theme.fn.linearGradient(45, theme.colors.indigo[6], theme.colors.cyan[6])
         }
     };
 });
@@ -140,9 +144,10 @@ export function Pricing() {
                             onChange={setValue}
                             data={options.map(({ code, name }) => ({ label: name, value: code }))}
                             size="lg"
-                            color="blue"
+                            color="indigo"
                             transitionDuration={500}
                             transitionTimingFunction="linear"
+                            classNames={{ controlActive: classes.controlActive }}
                         />
 
                         <Grid grow gutter="xl" align="center" mt="lg">
@@ -180,7 +185,7 @@ export function Pricing() {
                                         href="https://t.me/cryptuoso_bot"
                                         size="md"
                                         variant="gradient"
-                                        gradient={{ from: "blue", to: "cyan" }}
+                                        gradient={{ from: "indigo", to: "cyan", deg: 45 }}
                                     >
                                         Subscribe
                                     </Button>

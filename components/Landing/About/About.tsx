@@ -58,7 +58,12 @@ export function About() {
                     </Text>
                     <Text color="dimmed">
                         That&apos;s how and why we created{" "}
-                        <Text component="span" variant="gradient" gradient={{ from: "blue", to: "cyan" }} inherit>
+                        <Text
+                            component="span"
+                            variant="gradient"
+                            gradient={{ from: "indigo", to: "cyan", deg: 45 }}
+                            inherit
+                        >
                             Cryptuoso
                         </Text>{" "}
                         - a service for automated cryptocurrency trading. Our robots use{" "}
@@ -74,7 +79,12 @@ export function About() {
                     </Text>
                     <Text color="dimmed">
                         We shared our service with our friends, and they convinced us that{" "}
-                        <Text component="span" variant="gradient" gradient={{ from: "blue", to: "cyan" }} inherit>
+                        <Text
+                            component="span"
+                            variant="gradient"
+                            gradient={{ from: "indigo", to: "cyan", deg: 45 }}
+                            inherit
+                        >
                             Cryptuoso
                         </Text>{" "}
                         should be useful for other crypto-enthusiasts - both for beginners and experienced traders.

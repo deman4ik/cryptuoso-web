@@ -97,7 +97,7 @@ export function Hero() {
                                 component="span"
                                 inherit
                                 variant="gradient"
-                                gradient={{ from: "teal", to: "blue", deg: 45 }}
+                                gradient={{ from: "indigo", to: "cyan", deg: 45 }}
                             >
                                 CRYPTUOSO
                             </Text>{" "}
@@ -110,7 +110,7 @@ export function Hero() {
 
                         <Button
                             variant="gradient"
-                            gradient={{ from: "teal", to: "blue", deg: 45 }}
+                            gradient={{ from: "indigo", to: "cyan", deg: 45 }}
                             size="xl"
                             className={classes.control}
                             mt={40}

@@ -38,6 +38,9 @@ const items = [
 const useStyles = createStyles((theme, params, getRef) => {
     return {
         wrapper: {
+            paddingTop: theme.spacing.xl * 2
+        },
+        inner: {
             display: "flex",
 
             justifyContent: "center"
@@ -46,14 +49,14 @@ const useStyles = createStyles((theme, params, getRef) => {
             fontWeight: 900,
             marginBottom: theme.spacing.xl * 1.5
         },
-        inner: {
+        stepper: {
             marginTop: `${theme.spacing.xl * 3}px`,
             marginBottom: `${theme.spacing.xl * 5}px`
         },
 
         separatorActive: {
             borderWidth: 0,
-            backgroundImage: theme.fn.linearGradient(45, theme.colors.blue[6], theme.colors.cyan[6])
+            backgroundImage: theme.fn.linearGradient(45, theme.colors.indigo[6], theme.colors.cyan[6])
         },
         stepProgress: {
             transform: "scale(1.05)",
@@ -65,7 +68,7 @@ const useStyles = createStyles((theme, params, getRef) => {
             [`& .${getRef("stepIcon")}`]: {
                 borderWidth: 0,
                 backgroundColor: "transparent",
-                backgroundImage: theme.fn.linearGradient(45, theme.colors.blue[6], theme.colors.cyan[6])
+                backgroundImage: theme.fn.linearGradient(45, theme.colors.indigo[6], theme.colors.cyan[6])
             }
         }
     };
@@ -74,16 +77,17 @@ const useStyles = createStyles((theme, params, getRef) => {
 export function Roadmap() {
     const { classes } = useStyles();
     return (
-        <Container size="xl" my="xl" id="roadmap">
+        <Container size="xl" id="roadmap" className={classes.wrapper}>
             <Title align="center" className={classes.title}>
                 Roadmap
             </Title>
-            <div className={classes.wrapper}>
+            <div className={classes.inner}>
                 <Stepper
                     size="md"
                     active={4}
                     breakpoint="lg"
-                    className={classes.inner}
+                    color="indigo"
+                    className={classes.stepper}
                     classNames={{
                         separatorActive: classes.separatorActive,
                         stepProgress: classes.stepProgress,

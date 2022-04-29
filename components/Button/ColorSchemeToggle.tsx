@@ -12,7 +12,7 @@ export function ColorSchemeToggle({ ...others }) {
             //size="lg"
             sx={(theme) => ({
                 //backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.colors.gray[0],
-                color: theme.colorScheme === "dark" ? theme.colors.yellow[4] : theme.colors.blue[6]
+                color: theme.colorScheme === "dark" ? theme.colors.yellow[4] : theme.colors.indigo[6]
             })}
             onClick={() => toggleColorScheme()}
         >
@@ -29,7 +29,6 @@ export function ColorSchemeToggleBig({ ...others }) {
             <SegmentedControl
                 sx={(theme) => ({
                     backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.colors.gray[1]
-                    // color: theme.colorScheme === "dark" ? theme.colors.yellow[4] : theme.colors.blue[6]
                 })}
                 value={colorScheme}
                 onChange={toggleColorScheme as (value: string) => void}

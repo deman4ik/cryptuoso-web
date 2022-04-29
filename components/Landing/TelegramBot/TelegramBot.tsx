@@ -1,8 +1,22 @@
 import React from "react";
-import { createStyles, Image, Container, Title, Button, Group, Text, List, ThemeIcon, Grid, Box } from "@mantine/core";
+import {
+    createStyles,
+    Container,
+    Title,
+    Button,
+    Group,
+    Text,
+    List,
+    ThemeIcon,
+    Grid,
+    Box,
+    useMantineTheme,
+    MantineTheme
+} from "@mantine/core";
 import { Check } from "tabler-icons-react";
 import { SimpleLink } from "@cryptuoso/components/Link/SimpleLink";
-//import Image from "next/image";
+import Image from "next/image";
+import phoneTgImage from "../../../public/phone-tg.png";
 
 const useStyles = createStyles((theme) => ({
     wrapper: {
@@ -63,17 +77,34 @@ const useStyles = createStyles((theme) => ({
     }
 }));
 
+/*export function TelegramWidget({ colorScheme }: { colorScheme: string }) {
+    const script = `<script async src="https://telegram.org/js/telegram-widget.js?19"
+    data-telegram-post="cryptuoso/451" data-width="100%" 
+    data-userpic="true" data-color="343638" 
+    data-dark="${colorScheme}"
+     data-dark-color="FFFFFF"></script>`;
+    return (
+        <div
+            key={new Date().getTime()}
+            dangerouslySetInnerHTML={{
+                __html: script
+            }}
+        />
+    );
+}
+*/
 export function TelegramBot() {
     const { classes } = useStyles();
+
     return (
         <Container size="xl" className={classes.wrapper}>
-            <Grid grow gutter="xl" justify="center" align="center">
-                <Grid.Col span={4}>
+            <Grid gutter="xl" justify="center" align="center">
+                <Grid.Col sm={3}>
                     <div className={classes.imageWrapper}>
-                        <Image src="/phone-tg.png" alt="Cryptuoso Telegram Bot" className={classes.image} />
+                        <Image src={phoneTgImage} alt="Cryptuoso Telegram Bot" />
                     </div>
                 </Grid.Col>
-                <Grid.Col span={8}>
+                <Grid.Col sm={6}>
                     <div className={classes.content}>
                         <Title className={classes.title} align="center">
                             Cryptuoso Telegram Trading Bot
@@ -110,7 +141,7 @@ export function TelegramBot() {
                                 size="xl"
                                 className={classes.control}
                                 variant="gradient"
-                                gradient={{ from: "blue", to: "cyan" }}
+                                gradient={{ from: "indigo", to: "cyan", deg: 45 }}
                             >
                                 Get started
                             </Button>

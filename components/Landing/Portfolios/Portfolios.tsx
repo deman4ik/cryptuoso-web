@@ -288,7 +288,7 @@ export function Portfolios() {
                     )}
                 </Grid.Col>
             </Grid>
-            <Alert icon={<AlertCircle size={16} />} title="Notice" mt="lg" color="yellow">
+            <Alert icon={<AlertCircle size={16} />} title="Notice" mt="lg" color="yellow" variant="outline">
                 This information shows approximate trading results and we cannot guarantee them exactly in the future.
                 Actual results are highly dependent on the current market situation.
             </Alert>

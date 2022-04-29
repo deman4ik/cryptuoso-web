@@ -28,7 +28,7 @@ export const DATA = [
         title: "Portfolio management",
         description:
             "We combine our robots into profitable portfolios to maximize profit and to minimize potential drawdown.",
-        color: "cyan"
+        color: "teal"
     },
     {
         icon: Cloud,
@@ -76,7 +76,7 @@ export function Feature({ icon: Icon, title, description, color, className }: Fe
             </ThemeIcon>
             <Text
                 variant="gradient"
-                gradient={{ from: color, to: "blue", deg: 45 }}
+                gradient={{ from: color, to: "cyan", deg: 45 }}
                 style={{ marginTop: theme.spacing.sm, marginBottom: 7 }}
                 size="lg"
             >
