@@ -20,7 +20,7 @@ const useStyles = createStyles((theme) => ({
         flexDirection: "column"
     },
     darkBg: {
-        backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.white
+        backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.colors.gray[0]
     }
 }));
 
@@ -33,8 +33,9 @@ function HomePage() {
                 <title>CRYPTUOSO - Cryptocurrency trading automation</title>
             </Head>
             <LandingHeader links={headerLinks} />
-            <Hero />
-
+            <div className={classes.darkBg}>
+                <Hero />
+            </div>
             <FeaturesGrid />
             <div className={classes.darkBg}>
                 <Exchanges />

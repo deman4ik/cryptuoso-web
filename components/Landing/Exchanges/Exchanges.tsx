@@ -42,12 +42,12 @@ export function Exchanges() {
     const theme = useMantineTheme();
 
     return (
-        <Container size="xl" className={classes.wrapper} id="faq">
+        <Container className={classes.wrapper} id="faq">
             <Grid justify="center" grow>
                 <Grid.Col md={4}>
                     <Text
                         variant="gradient"
-                        gradient={{ from: "green", to: "cyan", deg: 45 }}
+                        gradient={{ from: "yellow", to: theme.white, deg: 45 }}
                         size="xl"
                         align="center"
                         weight={700}
@@ -63,7 +63,7 @@ export function Exchanges() {
                 <Grid.Col md={7}>
                     <Text
                         variant="gradient"
-                        gradient={{ from: "yellow", to: "cyan", deg: 45 }}
+                        gradient={{ from: theme.primaryColor, to: "gray", deg: 45 }}
                         size="xl"
                         align="center"
                         weight={700}
@@ -74,7 +74,7 @@ export function Exchanges() {
                         <div className={classes.imageWrapper}>
                             <Overlay
                                 opacity={0.6}
-                                color={theme.colorScheme === "dark" ? theme.colors.dark[8] : "white"}
+                                color={theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.colors.gray[0]}
                                 zIndex={5}
                             />
                             <Image src="/kucoin_futures.svg" alt="KuCoin Futures" height="100" width="150" />
@@ -82,7 +82,7 @@ export function Exchanges() {
                         <div className={classes.imageWrapper}>
                             <Overlay
                                 opacity={0.6}
-                                color={theme.colorScheme === "dark" ? theme.colors.dark[8] : "white"}
+                                color={theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.colors.gray[0]}
                                 zIndex={5}
                             />
                             <Image src="/huobi_futures.svg" alt="Huobi Futures" height="100" width="200" />
