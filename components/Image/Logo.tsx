@@ -1,5 +1,15 @@
-import { Image } from "@mantine/core";
+import { useMantineColorScheme } from "@mantine/core";
+import Image from "next/image";
 
 export function Logo({ width, height, ...other }: { width?: number; height?: number }) {
-    return <Image src="/logo-accent.png" alt="Cryptuoso logo" width={width || 31} height={height || 30} {...other} />;
+    const { colorScheme } = useMantineColorScheme();
+    return (
+        <Image
+            src={`/logo-mini-${colorScheme}.svg`}
+            alt="Cryptuoso logo"
+            width={width || 35}
+            height={height || 35}
+            {...other}
+        />
+    );
 }

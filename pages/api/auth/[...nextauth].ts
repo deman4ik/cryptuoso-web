@@ -85,7 +85,9 @@ export default NextAuth({
             }
             return token;
         }
+    },
+    jwt: {
+        maxAge: 1000 * 60 * 60 // 1 hour
     }
     // debug: true
 });
-//TODO: sync expiration date

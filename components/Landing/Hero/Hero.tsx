@@ -86,7 +86,12 @@ export function Hero() {
         <div className={classes.wrapper}>
             <Container size={700} className={classes.inner}>
                 <h1 className={classes.title}>
-                    <Text component="span" variant="gradient" gradient={{ from: "blue", to: "cyan" }} inherit>
+                    <Text
+                        component="span"
+                        variant="gradient"
+                        gradient={{ from: "indigo", to: "cyan", deg: 45 }}
+                        inherit
+                    >
                         CRYPTUOSO
                     </Text>{" "}
                     Cryptocurrency Trading Automation Bot
@@ -103,7 +108,7 @@ export function Hero() {
                         size="xl"
                         className={classes.control}
                         variant="gradient"
-                        gradient={{ from: "blue", to: "cyan" }}
+                        gradient={{ from: "indigo", to: "cyan", deg: 45 }}
                     >
                         Get started
                     </Button>

@@ -65,8 +65,7 @@ export default function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
                 )}
             </Head>
             <SessionProvider session={pageProps.session}>
-                {/* <GraphqlProvider> */}
-                <URQLProvider value={publicClient}>
+                <GraphqlProvider>
                     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
                         <MantineProvider
                             withGlobalStyles
@@ -74,7 +73,21 @@ export default function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
                             theme={{
                                 /** Put your mantine theme override here */
                                 colorScheme,
+                                primaryColor: "indigo",
+                                primaryShade: 9,
                                 colors: {
+                                    dark: [
+                                        "#C1C2C5",
+                                        "#A6A7AB",
+                                        "#909296",
+                                        "#5C5F66",
+                                        "#313643",
+                                        "#2A2D3A",
+                                        "#252834",
+                                        "#1D202B",
+                                        "#191C26",
+                                        "#161924"
+                                    ],
                                     coolGray: [
                                         "#f9fafb",
                                         "#f3f4f6",
@@ -107,8 +120,7 @@ export default function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
                             </NotificationsProvider>
                         </MantineProvider>
                     </ColorSchemeProvider>
-                    {/*  </GraphqlProvider> */}
-                </URQLProvider>
+                </GraphqlProvider>
             </SessionProvider>
         </>
     );

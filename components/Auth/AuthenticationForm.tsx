@@ -63,7 +63,7 @@ export function AuthenticationForm() {
 
             if (result?.error) {
                 setLoading(false);
-                setError(result.error);
+                setError(result.error.replace("[GraphQL] ", ""));
             } else if (result?.ok) {
                 //TODO: check router path callbackUrl
                 router.replace("/app");

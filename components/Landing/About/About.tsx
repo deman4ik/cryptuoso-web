@@ -19,7 +19,7 @@ const useStyles = createStyles((theme) => {
 
 export function About() {
     const { classes } = useStyles();
-
+    const theme = useMantineTheme();
     return (
         <Container id="about" size="xl" my="md">
             <Title align="center" className={classes.title}>
@@ -34,7 +34,7 @@ export function About() {
                         We started long ago by trading on the stock exchange and was always looking for opportunities to{" "}
                         <Text
                             variant="gradient"
-                            gradient={{ from: "indigo", to: "violet", deg: 45 }}
+                            gradient={{ from: theme.primaryColor, to: "violet", deg: 45 }}
                             inherit
                             component="span"
                         >
@@ -58,7 +58,12 @@ export function About() {
                     </Text>
                     <Text color="dimmed">
                         That&apos;s how and why we created{" "}
-                        <Text component="span" variant="gradient" gradient={{ from: "blue", to: "cyan" }} inherit>
+                        <Text
+                            component="span"
+                            variant="gradient"
+                            gradient={{ from: theme.primaryColor, to: "cyan", deg: 45 }}
+                            inherit
+                        >
                             Cryptuoso
                         </Text>{" "}
                         - a service for automated cryptocurrency trading. Our robots use{" "}
@@ -74,7 +79,12 @@ export function About() {
                     </Text>
                     <Text color="dimmed">
                         We shared our service with our friends, and they convinced us that{" "}
-                        <Text component="span" variant="gradient" gradient={{ from: "blue", to: "cyan" }} inherit>
+                        <Text
+                            component="span"
+                            variant="gradient"
+                            gradient={{ from: theme.primaryColor, to: "cyan", deg: 45 }}
+                            inherit
+                        >
                             Cryptuoso
                         </Text>{" "}
                         should be useful for other crypto-enthusiasts - both for beginners and experienced traders.

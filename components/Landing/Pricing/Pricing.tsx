@@ -15,11 +15,13 @@ import {
     SimpleGrid,
     Paper,
     Button,
-    Box
+    Box,
+    useMantineTheme,
+    Card
 } from "@mantine/core";
 import { gql, useQuery } from "urql";
 import { SimpleLink } from "@cryptuoso/components/Link/SimpleLink";
-import { Briefcase, LockAccess, ReceiptTax, SettingsAutomation } from "tabler-icons-react";
+import { Briefcase, LockAccess, ReceiptTax, SettingsAutomation, ManualGearbox } from "tabler-icons-react";
 
 const useStyles = createStyles((theme) => {
     return {
@@ -39,17 +41,32 @@ const useStyles = createStyles((theme) => {
         },
         priceTotalBox: {
             minHeight: 50
+        },
+        controlActive: {
+            backgroundColor: "transparent",
+            backgroundImage: theme.fn.linearGradient(45, theme.colors[theme.primaryColor][6], theme.colors.cyan[6])
         }
     };
 });
 
-const features = [
+const freeFeatures = [
+    {
+        icon: ManualGearbox,
+        title: "Manual",
+        description: "Traid manually using free signals published to Telegram Channel.",
+        color: "yellow"
+    }
+];
+const paidFeatures = [
     {
         icon: SettingsAutomation,
         title: "Automated",
         description: "Fully automated trading on a pull of 200+ robots. Start and forget.",
         color: "indigo"
-    },
+    }
+];
+
+const features = [
     {
         icon: LockAccess,
         title: "No Limits",
@@ -70,21 +87,31 @@ const features = [
     }
 ];
 
+interface Option {
+    code: string;
+    name: string;
+    priceMonth: number;
+    priceTotal: number;
+    discount: number | null;
+    highlight: boolean;
+}
+
+const freeOption: Option = {
+    code: "free",
+    name: "Free Plan",
+    priceMonth: 0,
+    priceTotal: 0,
+    discount: null,
+    highlight: false
+};
+
 export function Pricing() {
+    const theme = useMantineTheme();
     const [value, setValue] = useState("6m");
     const { classes } = useStyles();
 
     const [result] = useQuery<{
-        options: [
-            {
-                code: string;
-                name: string;
-                priceMonth: number;
-                priceTotal: number;
-                discount: number;
-                highlight: boolean;
-            }
-        ];
+        options: Option[];
     }>({
         query: gql`
             query PricingOptions {
@@ -100,11 +127,13 @@ export function Pricing() {
         `
     });
     const { data, fetching, error } = result;
-    const options = data?.options;
+    const options = [freeOption, ...(data?.options || [])];
     const option = options?.find((option) => option.code === value);
+    console.log(options);
     if (error) console.error(error);
 
-    const items = features.map((feature) => (
+    const currentFeatures = option?.code === "free" ? freeFeatures : paidFeatures;
+    const items = [...currentFeatures, ...features].map((feature) => (
         <div key={feature.title}>
             <ThemeIcon size={44} radius="md" color={feature.color}>
                 <feature.icon size={26} />
@@ -119,7 +148,7 @@ export function Pricing() {
     ));
 
     return (
-        <Container size="xl" className={classes.wrapper} id="pricing">
+        <Container size="md" className={classes.wrapper} id="pricing">
             <Title align="center" className={classes.title}>
                 Pricing
             </Title>
@@ -140,31 +169,32 @@ export function Pricing() {
                             onChange={setValue}
                             data={options.map(({ code, name }) => ({ label: name, value: code }))}
                             size="lg"
-                            color="blue"
+                            color={theme.primaryColor}
                             transitionDuration={500}
                             transitionTimingFunction="linear"
+                            classNames={{ controlActive: classes.controlActive }}
                         />
 
-                        <Grid grow gutter="xl" align="center" mt="lg">
+                        <Grid grow gutter="xl" align="center" mt="lg" justify="space-between">
                             <Grid.Col span={4}>
                                 <Stack>
                                     <Stack className={classes.priceTotalBox}>
                                         {option?.discount && (
-                                            <Text align="center" size="lg" weight={900}>
-                                                ${option?.priceTotal}
-                                            </Text>
-                                        )}
-                                        {option?.discount && (
-                                            <Text align="center" color="dimmed" size="md" mt={-20}>
-                                                for {option?.name}
-                                            </Text>
+                                            <>
+                                                <Text align="center" size="lg" weight={900}>
+                                                    ${option?.priceTotal}
+                                                </Text>
+                                                <Text align="center" color="dimmed" size="md" mt={-20}>
+                                                    for {option?.name}
+                                                </Text>
+                                            </>
                                         )}
                                     </Stack>
 
                                     <Text
                                         align="center"
                                         variant="gradient"
-                                        gradient={{ from: "indigo", to: "cyan", deg: 45 }}
+                                        gradient={{ from: theme.primaryColor, to: "cyan", deg: 45 }}
                                         size="xl"
                                         weight={900}
                                         className={classes.price}
@@ -177,17 +207,21 @@ export function Pricing() {
 
                                     <Button
                                         component={SimpleLink}
-                                        href="https://t.me/cryptuoso_bot"
+                                        href={
+                                            option?.code === "free"
+                                                ? "https://t.me/cryptuoso"
+                                                : "https://t.me/cryptuoso_bot"
+                                        }
                                         size="md"
                                         variant="gradient"
-                                        gradient={{ from: "blue", to: "cyan" }}
+                                        gradient={{ from: theme.primaryColor, to: "cyan", deg: 45 }}
                                     >
                                         Subscribe
                                     </Button>
                                 </Stack>
                             </Grid.Col>
                             <Grid.Col span={8}>
-                                <SimpleGrid cols={2} spacing={30} breakpoints={[{ maxWidth: "md", cols: 1 }]}>
+                                <SimpleGrid cols={2} spacing={40} breakpoints={[{ maxWidth: "md", cols: 1 }]}>
                                     {items}
                                 </SimpleGrid>
                             </Grid.Col>
