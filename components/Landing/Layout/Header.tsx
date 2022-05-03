@@ -33,6 +33,12 @@ const useStyles = createStyles((theme) => ({
         }
     },
 
+    flex: {
+        flex: 1
+    },
+    right: {
+        justifyContent: "flex-end"
+    },
     link: {
         display: "block",
         lineHeight: 1,
@@ -78,7 +84,7 @@ interface HeaderActionProps {
 }
 
 export function LandingHeader({ links }: HeaderActionProps) {
-    const { classes } = useStyles();
+    const { classes, cx } = useStyles();
     const [opened, toggleOpened] = useBooleanToggle(false);
     const { data: session } = useSession();
 
@@ -94,7 +100,7 @@ export function LandingHeader({ links }: HeaderActionProps) {
         <Header height={HEADER_HEIGHT} fixed className={classes.header}>
             <Container size="xl" className={classes.inner}>
                 <Burger opened={opened} onClick={() => toggleOpened()} className={classes.burger} size="sm" />
-                <Group spacing={4}>
+                <Group spacing={4} className={classes.flex}>
                     <SimpleLink href="/">
                         <Logo />
                     </SimpleLink>
@@ -107,7 +113,7 @@ export function LandingHeader({ links }: HeaderActionProps) {
                     {items}
                 </Group>
 
-                <Group spacing={4}>
+                <Group spacing={4} className={cx(classes.flex, classes.right)}>
                     {/****** 
                     DISABLE AUTH FOR NOW
                     ******
