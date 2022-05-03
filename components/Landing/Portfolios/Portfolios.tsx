@@ -199,41 +199,41 @@ export function Portfolios() {
                                 onChange={(val) => setOptions(val as Option[])}
                                 size="xl"
                                 spacing="lg"
-                                align=""
+                                align="center"
                             >
                                 <Chip value={Option.profit}>
-                                    <Tooltip wrapLines label="Profit maximization" withArrow>
-                                        Profit
-                                    </Tooltip>
+                                    {/*  <Tooltip wrapLines label="Profit maximization" withArrow> */}
+                                    Profit
+                                    {/*   </Tooltip>*/}
                                 </Chip>
 
                                 <Chip value={Option.winRate}>
-                                    <Tooltip wrapLines label="Maximizing the number of profitable trades" withArrow>
-                                        Win Rate
-                                    </Tooltip>
+                                    {/*   <Tooltip wrapLines label="Maximizing the number of profitable trades" withArrow>*/}
+                                    Win Rate
+                                    {/*  </Tooltip>*/}
                                 </Chip>
                                 <Chip value={Option.risk}>
-                                    <Tooltip wrapLines label="Earnings with minimal risk" withArrow>
-                                        Risk
-                                    </Tooltip>
+                                    {/*   <Tooltip wrapLines label="Earnings with minimal risk" withArrow>*/}
+                                    Risk
+                                    {/*  </Tooltip>*/}
                                 </Chip>
                                 <Chip value={Option.moneyManagement}>
-                                    <Tooltip
+                                    {/*   <Tooltip
                                         wrapLines
                                         label="Increase the ratio between the size of the win and the loss's size"
                                         withArrow
-                                    >
-                                        Money Management
-                                    </Tooltip>
+                                    >*/}
+                                    Money Management
+                                    {/*   </Tooltip>*/}
                                 </Chip>
                                 <Chip value={Option.efficiency}>
-                                    <Tooltip
+                                    {/*    <Tooltip
                                         wrapLines
                                         label="The return of an investment compared to it's risk"
                                         withArrow
-                                    >
-                                        Efficiency
-                                    </Tooltip>
+                                    >*/}
+                                    Efficiency
+                                    {/*    </Tooltip>*/}
                                 </Chip>
                             </Chips>
                         </Stack>

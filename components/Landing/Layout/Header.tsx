@@ -98,9 +98,9 @@ export function LandingHeader({ links }: HeaderActionProps) {
                     <SimpleLink href="/">
                         <Logo />
                     </SimpleLink>
-                    {/*  <TextLink href="/" transform="uppercase" className={classes.link}>
+                    <TextLink href="/" transform="uppercase" className={classes.link}>
                         Cryptuoso
-    </TextLink> */}
+                    </TextLink>
                 </Group>
 
                 <Group spacing={4} className={classes.links}>
@@ -108,7 +108,10 @@ export function LandingHeader({ links }: HeaderActionProps) {
                 </Group>
 
                 <Group spacing={4}>
-                    {session ? (
+                    {/****** 
+                    DISABLE AUTH FOR NOW
+                    ******
+                    session ? (
                         <>
                             <TextLink
                                 href="/app"
@@ -140,7 +143,7 @@ export function LandingHeader({ links }: HeaderActionProps) {
                         >
                             SIGN IN
                         </TextLink>
-                    )}
+                    )*/}
                     <ColorSchemeToggle />
                 </Group>
 

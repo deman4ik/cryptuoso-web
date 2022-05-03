@@ -25,7 +25,7 @@ You can [contact us](mailto:support@cryptuoso.com) and we are ready to discuss s
 
 ### Manual Trading
 
-You can use **Cryptuoso Trading Signals** provided by **Cryptuoso Trading Bot** in our [Telegram Channel](https://t.me/cryptuoso) as indicators in your trading and make your trades manually.
+You can use **Cryptuoso Trading Signals** provided by **Cryptuoso Trading Bot** in our [**Telegram Channel @cryptuoso**](https://t.me/cryptuoso) as indicators in your trading and make your trades manually.
 
 ### Automatic Trading
 

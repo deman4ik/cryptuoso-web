@@ -37,7 +37,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
             fontWeight: 500,
 
             "&:hover": {
-                backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.colors.gray[0],
+                backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.colors.gray[1],
                 color: theme.colorScheme === "dark" ? theme.white : theme.black,
 
                 [`& .${icon}`]: {
@@ -54,13 +54,11 @@ const useStyles = createStyles((theme, _params, getRef) => {
 
         linkActive: {
             "&, &:hover": {
-                backgroundColor:
-                    theme.colorScheme === "dark"
-                        ? theme.fn.rgba(theme.colors[theme.primaryColor][8], 0.25)
-                        : theme.colors[theme.primaryColor][0],
-                color: theme.colorScheme === "dark" ? theme.white : theme.colors[theme.primaryColor][7],
+                backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.white,
+
+                color: theme.colorScheme === "dark" ? theme.white : theme.black,
                 [`& .${icon}`]: {
-                    color: theme.colors[theme.primaryColor][theme.colorScheme === "dark" ? 5 : 7]
+                    color: theme.colorScheme === "dark" ? theme.white : theme.black
                 }
             }
         }

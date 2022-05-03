@@ -35,7 +35,7 @@ export default function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
                     name="keywords"
                     content="cryptocurrency, bitcoin, trading, signals, robots, btc, crypto, mining, binance, nft, eth, bnb"
                 />
-                <link rel="shortcut icon" type="image/x-icon" href="/logo.svg" />
+                <link rel="shortcut icon" type="image/x-icon" href="/favicon.svg" />
                 <link rel="shortcut icon" type="image/x-icon" href="/favicon.png" />
                 {process.env.NEXT_DISABLE_ANALYTICS ? null : (
                     <>
@@ -74,6 +74,7 @@ export default function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
                                 /** Put your mantine theme override here */
                                 colorScheme,
                                 primaryColor: "indigo",
+                                primaryShade: 9,
                                 colors: {
                                     dark: [
                                         "#C1C2C5",

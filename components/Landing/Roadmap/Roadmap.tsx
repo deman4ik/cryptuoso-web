@@ -1,4 +1,4 @@
-import { createStyles, Container, Title, Stepper } from "@mantine/core";
+import { createStyles, Container, Title, Stepper, useMantineTheme } from "@mantine/core";
 import { BrandTelegram, Urgent, Engine, Browser, Briefcase, Robot } from "tabler-icons-react";
 
 const items = [
@@ -56,7 +56,7 @@ const useStyles = createStyles((theme, params, getRef) => {
 
         separatorActive: {
             borderWidth: 0,
-            backgroundImage: theme.fn.linearGradient(45, theme.colors.indigo[6], theme.colors.cyan[6])
+            backgroundImage: theme.fn.linearGradient(45, theme.colors[theme.primaryColor][6], theme.colors.cyan[6])
         },
         stepProgress: {
             transform: "scale(1.05)",
@@ -68,7 +68,7 @@ const useStyles = createStyles((theme, params, getRef) => {
             [`& .${getRef("stepIcon")}`]: {
                 borderWidth: 0,
                 backgroundColor: "transparent",
-                backgroundImage: theme.fn.linearGradient(45, theme.colors.indigo[6], theme.colors.cyan[6])
+                backgroundImage: theme.fn.linearGradient(45, theme.colors[theme.primaryColor][6], theme.colors.cyan[6])
             }
         }
     };
@@ -76,6 +76,7 @@ const useStyles = createStyles((theme, params, getRef) => {
 
 export function Roadmap() {
     const { classes } = useStyles();
+    const theme = useMantineTheme();
     return (
         <Container size="xl" id="roadmap" className={classes.wrapper}>
             <Title align="center" className={classes.title}>
@@ -86,7 +87,7 @@ export function Roadmap() {
                     size="md"
                     active={4}
                     breakpoint="lg"
-                    color="indigo"
+                    color={theme.primaryColor}
                     className={classes.stepper}
                     classNames={{
                         separatorActive: classes.separatorActive,

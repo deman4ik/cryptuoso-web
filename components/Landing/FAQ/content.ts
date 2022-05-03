@@ -9,8 +9,8 @@ export const faqContent = [
     {
         title: "How your free plan works?",
         text: [
-            "On free plan you have access to trading signals. A signal for opening a deal tells you the deal type (short/long) and asset price to open a position. A close signal tells you what to do with the asset, depending on the type of position (sell/buy), and price to close trade.",
-
+            "On free plan you have access to trading signals. Signals are published automatically to Telegram Channel.",
+            "A signal for opening a deal tells you the deal type (short/long) and asset price to open a position. A close signal tells you what to do with the asset, depending on the type of position (sell/buy), and price to close trade.",
             "There are more than 200 signals available for you to subscribe to. Yes, every signal you see is used by our robots that trade automatically (available on paid plan)."
         ]
     },

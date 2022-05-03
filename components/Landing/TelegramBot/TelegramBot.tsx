@@ -95,7 +95,7 @@ const useStyles = createStyles((theme) => ({
 */
 export function TelegramBot() {
     const { classes } = useStyles();
-
+    const theme = useMantineTheme();
     return (
         <Container size="xl" className={classes.wrapper}>
             <Grid gutter="xl" justify="center" align="center">
@@ -141,7 +141,7 @@ export function TelegramBot() {
                                 size="xl"
                                 className={classes.control}
                                 variant="gradient"
-                                gradient={{ from: "indigo", to: "cyan", deg: 45 }}
+                                gradient={{ from: theme.primaryColor, to: "cyan", deg: 45 }}
                             >
                                 Get started
                             </Button>
