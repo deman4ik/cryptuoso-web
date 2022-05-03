@@ -22,6 +22,7 @@ import {
 import { gql, useQuery } from "urql";
 import { SimpleLink } from "@cryptuoso/components/Link/SimpleLink";
 import { Briefcase, LockAccess, ReceiptTax, SettingsAutomation, ManualGearbox } from "tabler-icons-react";
+import { useMediaQuery } from "@mantine/hooks";
 
 const useStyles = createStyles((theme) => {
     return {
@@ -146,7 +147,7 @@ export function Pricing() {
             </Text>
         </div>
     ));
-
+    const smallScreen = useMediaQuery("(max-width:576px)");
     return (
         <Container size="md" className={classes.wrapper} id="pricing">
             <Title align="center" className={classes.title}>
@@ -168,7 +169,7 @@ export function Pricing() {
                             value={value}
                             onChange={setValue}
                             data={options.map(({ code, name }) => ({ label: name, value: code }))}
-                            size="lg"
+                            size={smallScreen ? "sm" : "lg"}
                             color={theme.primaryColor}
                             transitionDuration={500}
                             transitionTimingFunction="linear"
