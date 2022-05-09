@@ -13,6 +13,11 @@ jobs:
             - name: Checkout
               uses: actions/checkout@main
 
+            - name: Save YC CA
+              env:
+                  YC_CA: ${{ secrets.YC_CA }}
+              run: echo $YC_CA > $GITHUB_WORKSPACE/ca.pem
+
             - name: Save YC kubeconfig
               env:
                   YC_KUBECONFIG: ${{ secrets.YC_KUBECONFIG }}
