@@ -13,12 +13,17 @@ jobs:
             - name: Checkout
               uses: actions/checkout@main
 
+            - name: Save YC kubeconfig
+              run: echo ${{ secrets.YC_KUBECONFIG }} > $GITHUB_WORKSPACE/.kubeconfig
+
+            - name: TEST YC Kubernetes
+              run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig get pods
+
             - name: Login to Yandex Cloud Container Registry
               id: login-cr
               uses: yc-actions/yc-cr-login@v1
               with:
                   yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
-              run: yc managed-kubernetes cluster get-credentials cryptuoso-k8s --external
 
             - name: Build container image
               run: docker build --build-arg NEXT_PUBLIC_HASURA_URL=${{ secrets.NEXT_PUBLIC_HASURA_URL_DEV }} --build-arg NEXT_PUBLIC_TELEGRAM_BOT_NAME=${{ secrets.NEXT_PUBLIC_TELEGRAM_BOT_NAME_DEV }} --build-arg NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET_DEV }} --build-arg NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL_DEV }} -t cr.yandex/crpcpbvo3bat5t2m515o/cryptuoso-web-prod:$(echo $GITHUB_SHA | head -c7) .
