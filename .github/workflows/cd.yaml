@@ -16,10 +16,10 @@ jobs:
             - name: Save YC kubeconfig
               env:
                   YC_KUBECONFIG: ${{ secrets.YC_KUBECONFIG }}
-              run: echo "$YC_KUBECONFIG" > $GITHUB_WORKSPACE/.kubeconfig
+              run: echo $YC_KUBECONFIG | base64 -d > $GITHUB_WORKSPACE/.kubeconfig
 
             - name: TEST YC Kubernetes
-              run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig get pods
+              run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig --namespace=prod get pods
 
             - name: Login to Yandex Cloud Container Registry
               id: login-cr
