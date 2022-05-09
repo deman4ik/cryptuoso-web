@@ -14,7 +14,9 @@ jobs:
               uses: actions/checkout@main
 
             - name: Save YC kubeconfig
-              run: echo ${{ secrets.YC_KUBECONFIG }} > $GITHUB_WORKSPACE/.kubeconfig
+              env:
+                  YC_KUBECONFIG: ${{ secrets.YC_KUBECONFIG }}
+              run: echo "$YC_KUBECONFIG" > $GITHUB_WORKSPACE/.kubeconfig
 
             - name: TEST YC Kubernetes
               run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig get pods
