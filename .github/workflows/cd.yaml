@@ -13,19 +13,6 @@ jobs:
             - name: Checkout
               uses: actions/checkout@main
 
-            - name: Save YC CA
-              env:
-                  YC_CA: ${{ secrets.YC_CA }}
-              run: echo $YC_CA | base64 -d > $GITHUB_WORKSPACE/ca.pem
-
-            - name: Save YC kubeconfig
-              env:
-                  YC_KUBECONFIG: ${{ secrets.YC_KUBECONFIG }}
-              run: echo $YC_KUBECONFIG | base64 -d > $GITHUB_WORKSPACE/.kubeconfig
-
-            - name: TEST YC Kubernetes
-              run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig --namespace=prod get pods
-
             - name: Login to Yandex Cloud Container Registry
               id: login-cr
               uses: yc-actions/yc-cr-login@v1
@@ -42,8 +29,17 @@ jobs:
               run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|cr.yandex/crpcpbvo3bat5t2m515o/cryptuoso-web-prod:'${TAG}'|' $GITHUB_WORKSPACE/deployment.yaml
 
             - name: Update deployment file ENV
-              if: contains(github.ref, 'main')
               run: sed -i 's|<ENV>|prod|' $GITHUB_WORKSPACE/deployment.yaml
+
+            - name: Save YC CA
+              env:
+                  YC_CA: ${{ secrets.YC_CA }}
+              run: echo $YC_CA | base64 -d > $GITHUB_WORKSPACE/ca.pem
+
+            - name: Save YC kubeconfig
+              env:
+                  YC_KUBECONFIG: ${{ secrets.YC_KUBECONFIG }}
+              run: echo $YC_KUBECONFIG | base64 -d > $GITHUB_WORKSPACE/.kubeconfig
 
             - name: Deploy to YC Kubernetes
               run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig apply -f $GITHUB_WORKSPACE/deployment.yaml
