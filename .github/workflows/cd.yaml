@@ -2,7 +2,7 @@ name: CD
 
 on:
     push:
-        branches: [dev, main]
+        branches: [main]
 
 jobs:
     build:
@@ -13,46 +13,36 @@ jobs:
             - name: Checkout
               uses: actions/checkout@main
 
-            - name: Build container image dev
-              if: contains(github.ref, 'dev')
-              run: docker build --build-arg NEXT_PUBLIC_HASURA_URL=${{ secrets.NEXT_PUBLIC_HASURA_URL_DEV }} --build-arg NEXT_PUBLIC_TELEGRAM_BOT_NAME=${{ secrets.NEXT_PUBLIC_TELEGRAM_BOT_NAME_DEV }} --build-arg NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET_DEV }} --build-arg NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL_DEV }} -t registry.digitalocean.com/cpz/cryptuoso-web:$(echo $GITHUB_SHA | head -c7) .
-
-            - name: Build container image prod
-              if: contains(github.ref, 'main')
-              run: docker build --build-arg NEXT_PUBLIC_HASURA_URL=${{ secrets.NEXT_PUBLIC_HASURA_URL_PROD }} --build-arg NEXT_PUBLIC_TELEGRAM_BOT_NAME=${{ secrets.NEXT_PUBLIC_TELEGRAM_BOT_NAME_PROD }} --build-arg NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET_PROD }} --build-arg NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL_PROD }} -t registry.digitalocean.com/cpz/cryptuoso-web:$(echo $GITHUB_SHA | head -c7) .
-
-            - name: Install doctl
-              uses: digitalocean/action-doctl@v2
+            - name: Login to Yandex Cloud Container Registry
+              id: login-cr
+              uses: yc-actions/yc-cr-login@v1
               with:
-                  token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+                  yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
 
-            - name: Login to Docker
-              run: doctl registry login --expiry-seconds 180
+            - name: Build container image
+              run: docker build --build-arg NEXT_PUBLIC_HASURA_URL=${{ secrets.NEXT_PUBLIC_HASURA_URL_PROD }} --build-arg NEXT_PUBLIC_TELEGRAM_BOT_NAME=${{ secrets.NEXT_PUBLIC_TELEGRAM_BOT_NAME_PROD }} --build-arg NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET_PROD }} --build-arg NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL_PROD }} -t cr.yandex/crpcpbvo3bat5t2m515o/cryptuoso-web:$(echo $GITHUB_SHA | head -c7) .
 
             - name: Push image to Docker Hub
-              run: docker push registry.digitalocean.com/cpz/cryptuoso-web:$(echo $GITHUB_SHA | head -c7)
+              run: docker push cr.yandex/crpcpbvo3bat5t2m515o/cryptuoso-web:$(echo $GITHUB_SHA | head -c7)
 
             - name: Update deployment file IMAGE and TAG
-              run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|registry.digitalocean.com/cpz/cryptuoso-web:'${TAG}'|' $GITHUB_WORKSPACE/deployment.yaml
+              run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|cr.yandex/crpcpbvo3bat5t2m515o/cryptuoso-web:'${TAG}'|' $GITHUB_WORKSPACE/deployment.yaml
 
-            - name: Update deployment file ENV dev
-              if: contains(github.ref, 'dev')
-              run: sed -i 's|<ENV>|dev|' $GITHUB_WORKSPACE/deployment.yaml
-
-            - name: Update deployment file ENV prod
-              if: contains(github.ref, 'main')
+            - name: Update deployment file ENV
               run: sed -i 's|<ENV>|prod|' $GITHUB_WORKSPACE/deployment.yaml
 
-            - name: Save DigitalOcean kubeconfig
-              run: doctl kubernetes cluster kubeconfig show cpz-cluster > $GITHUB_WORKSPACE/.kubeconfig
+            - name: Save YC CA
+              env:
+                  YC_CA: ${{ secrets.YC_CA }}
+              run: echo $YC_CA | base64 -d > $GITHUB_WORKSPACE/ca.pem
 
-            - name: Deploy to DigitalOcean Kubernetes
+            - name: Save YC kubeconfig
+              env:
+                  YC_KUBECONFIG: ${{ secrets.YC_KUBECONFIG }}
+              run: echo $YC_KUBECONFIG | base64 -d > $GITHUB_WORKSPACE/.kubeconfig
+
+            - name: Deploy to YC Kubernetes
               run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig apply -f $GITHUB_WORKSPACE/deployment.yaml
 
-            - name: Verify deployment dev
-              if: contains(github.ref, 'dev')
-              run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig --namespace=dev rollout status deployment/cryptuoso-web-dev
-
-            - name: Verify deployment prod
-              if: contains(github.ref, 'main')
-              run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig --namespace=prod rollout status deployment/cryptuoso-web-prod
+            - name: Verify deployment
+              run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig --namespace=prod rollout status deployment/cryptuoso-web
