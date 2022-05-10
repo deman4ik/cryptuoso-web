@@ -2,7 +2,7 @@ name: CD
 
 on:
     push:
-        branches: [dev]
+        branches: [main]
 
 jobs:
     build:
@@ -20,13 +20,13 @@ jobs:
                   yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
 
             - name: Build container image
-              run: docker build --build-arg NEXT_PUBLIC_HASURA_URL=${{ secrets.NEXT_PUBLIC_HASURA_URL_DEV }} --build-arg NEXT_PUBLIC_TELEGRAM_BOT_NAME=${{ secrets.NEXT_PUBLIC_TELEGRAM_BOT_NAME_DEV }} --build-arg NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET_DEV }} --build-arg NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL_DEV }} -t cr.yandex/crpcpbvo3bat5t2m515o/cryptuoso-web-prod:$(echo $GITHUB_SHA | head -c7) .
+              run: docker build --build-arg NEXT_PUBLIC_HASURA_URL=${{ secrets.NEXT_PUBLIC_HASURA_URL_PROD }} --build-arg NEXT_PUBLIC_TELEGRAM_BOT_NAME=${{ secrets.NEXT_PUBLIC_TELEGRAM_BOT_NAME_PROD }} --build-arg NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET_PROD }} --build-arg NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL_PROD }} -t cr.yandex/crpcpbvo3bat5t2m515o/cryptuoso-web:$(echo $GITHUB_SHA | head -c7) .
 
             - name: Push image to Docker Hub
-              run: docker push cr.yandex/crpcpbvo3bat5t2m515o/cryptuoso-web-prod:$(echo $GITHUB_SHA | head -c7)
+              run: docker push cr.yandex/crpcpbvo3bat5t2m515o/cryptuoso-web:$(echo $GITHUB_SHA | head -c7)
 
             - name: Update deployment file IMAGE and TAG
-              run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|cr.yandex/crpcpbvo3bat5t2m515o/cryptuoso-web-prod:'${TAG}'|' $GITHUB_WORKSPACE/deployment.yaml
+              run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|cr.yandex/crpcpbvo3bat5t2m515o/cryptuoso-web:'${TAG}'|' $GITHUB_WORKSPACE/deployment.yaml
 
             - name: Update deployment file ENV
               run: sed -i 's|<ENV>|prod|' $GITHUB_WORKSPACE/deployment.yaml
@@ -45,4 +45,4 @@ jobs:
               run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig apply -f $GITHUB_WORKSPACE/deployment.yaml
 
             - name: Verify deployment
-              run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig --namespace=prod rollout status deployment/cryptuoso-web-prod
+              run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig --namespace=prod rollout status deployment/cryptuoso-web
