@@ -2,20 +2,20 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
     labels:
-        app: cryptuoso-web-<ENV>
+        app: cryptuoso-web
         env: <ENV>
-    name: cryptuoso-web-<ENV>
+    name: cryptuoso-web
     namespace: <ENV>
 spec:
     replicas: 1
     selector:
         matchLabels:
-            app: cryptuoso-web-<ENV>
+            app: cryptuoso-web
             env: <ENV>
     template:
         metadata:
             labels:
-                app: cryptuoso-web-<ENV>
+                app: cryptuoso-web
                 env: <ENV>
         spec:
             imagePullSecrets:
@@ -23,7 +23,7 @@ spec:
             containers:
                 - image: <IMAGE>
                   imagePullPolicy: IfNotPresent
-                  name: cryptuoso-web-<ENV>
+                  name: cryptuoso-web
                   ports:
                       - containerPort: 80
                         protocol: TCP
@@ -39,28 +39,28 @@ apiVersion: v1
 kind: Service
 metadata:
     labels:
-        app: cryptuoso-web-<ENV>
+        app: cryptuoso-web
         env: <ENV>
-    name: cryptuoso-web-<ENV>
+    name: cryptuoso-web
     namespace: <ENV>
 spec:
     ports:
         - port: 80
           targetPort: 80
     selector:
-        app: cryptuoso-web-<ENV>
+        app: cryptuoso-web
         env: <ENV>
     type: ClusterIP
 ---
 kind: HorizontalPodAutoscaler
 apiVersion: autoscaling/v2beta1
 metadata:
-    name: cryptuoso-web-<ENV>
+    name: cryptuoso-web
     namespace: <ENV>
 spec:
     scaleTargetRef:
         kind: Deployment
-        name: cryptuoso-web-<ENV>
+        name: cryptuoso-web
         apiVersion: apps/v1
     minReplicas: 1
     maxReplicas: 3
