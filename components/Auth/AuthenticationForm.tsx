@@ -11,7 +11,6 @@ import {
     Text,
     LoadingOverlay,
     Anchor,
-    useMantineTheme,
     Title,
     Container
 } from "@mantine/core";
@@ -65,8 +64,8 @@ export function AuthenticationForm() {
                 setLoading(false);
                 setError(result.error.replace("[GraphQL] ", ""));
             } else if (result?.ok) {
-                //TODO: check router path callbackUrl
-                router.replace("/app");
+                const url = router.query?.callbackUrl as string;
+                router.replace(url || "/app");
             }
         } else {
             setError("Not implemented"); //TODO

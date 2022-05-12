@@ -20,7 +20,11 @@ const useStyles = createStyles((theme) => ({
         flexDirection: "column"
     },
     darkBg: {
-        backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.colors.gray[0]
+        //backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.colors.gray[0]
+        backgroundImage:
+            theme.colorScheme === "dark"
+                ? theme.fn.linearGradient(360, theme.colors.dark[7], theme.colors.dark[6], theme.colors.dark[7])
+                : theme.fn.linearGradient(360, theme.colors.gray[0], theme.colors.gray[1], theme.colors.gray[0])
     }
 }));
 
