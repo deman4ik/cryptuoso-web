@@ -1,5 +1,15 @@
 import React, { ReactNode, useState } from "react";
-import { Header, Navbar, useMantineTheme, Text, MediaQuery, Burger, AppShell, createStyles } from "@mantine/core";
+import {
+    Header,
+    Navbar,
+    useMantineTheme,
+    Text,
+    MediaQuery,
+    Burger,
+    AppShell,
+    createStyles,
+    Container
+} from "@mantine/core";
 import { AppNavbar } from "./Navbar";
 import { AppHeader } from "./Header";
 import { BorderBottom } from "tabler-icons-react";
