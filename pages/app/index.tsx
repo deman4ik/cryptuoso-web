@@ -1,8 +1,10 @@
-import { createStyles, Text } from "@mantine/core";
+import { createStyles, Grid, SimpleGrid, Text } from "@mantine/core";
 import { Layout } from "@cryptuoso/components/App/Layout/Layout";
 import Head from "next/head";
 import { gql, useQuery } from "urql";
 import { useSession } from "next-auth/react";
+import { Section } from "@cryptuoso/components/App/Dashboard/Section";
+import { ExchangeAccountCard } from "@cryptuoso/components/App/ExchangeAccount/ExchangeAccountCard";
 
 const useStyles = createStyles((theme) => ({
     darkBg: {
@@ -117,9 +119,19 @@ export default function DashboardPage() {
             <Head>
                 <title>Dashboard | CRYPTUOSO</title>
             </Head>
-            <Text>Hello App!</Text>
-            <Text>{data && JSON.stringify(data)}</Text>
-            {error && <Text color="red">{error?.message}</Text>}
+            <Grid grow>
+                <Grid.Col span={6}>
+                    <Section title="EXCHANGE ACCOUNT">
+                        <ExchangeAccountCard />
+                    </Section>
+                </Grid.Col>
+                <Grid.Col span={6}>
+                    <Section title="SUBSCRIPTION"></Section>
+                </Grid.Col>
+                <Grid.Col span={12}>
+                    <Section title="PORTFOLIO"></Section>
+                </Grid.Col>
+            </Grid>
         </Layout>
     );
 }

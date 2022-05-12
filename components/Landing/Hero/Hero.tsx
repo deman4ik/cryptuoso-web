@@ -64,22 +64,11 @@ const useStyles = createStyles((theme) => ({
             paddingRight: 18,
             flex: 1
         }
-    },
-
-    githubControl: {
-        borderWidth: 2,
-        borderColor: theme.colorScheme === "dark" ? "transparent" : theme.colors.dark[9],
-        backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[5] : "transparent",
-
-        "&:hover": {
-            backgroundColor: `${theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.colors.gray[0]} !important`
-        }
     }
 }));
 
 export function Hero() {
-    const { classes, cx } = useStyles();
-    const theme = useMantineTheme();
+    const { classes } = useStyles();
 
     return (
         <div className={classes.wrapper}>

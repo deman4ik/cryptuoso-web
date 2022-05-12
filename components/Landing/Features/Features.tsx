@@ -71,12 +71,18 @@ export function Feature({ icon: Icon, title, description, color, className }: Fe
     const theme = useMantineTheme();
     return (
         <Box>
-            <ThemeIcon variant="light" size={50} radius={40} color={color} className={className}>
+            <ThemeIcon
+                size={50}
+                radius="md"
+                variant="gradient"
+                gradient={{ from: color, to: "dark", deg: 180 }}
+                className={className}
+            >
                 <Icon style={{ width: 30, height: 30 }} />
             </ThemeIcon>
             <Text
                 variant="gradient"
-                gradient={{ from: color, to: "cyan", deg: 45 }}
+                gradient={{ from: color, to: "cyan" }}
                 style={{ marginTop: theme.spacing.sm, marginBottom: 7 }}
                 size="lg"
             >
