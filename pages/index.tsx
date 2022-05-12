@@ -41,22 +41,25 @@ function HomePage() {
                 <Hero />
             </div>
             <FeaturesGrid />
+
+            <Exchanges />
+
             <div className={classes.darkBg}>
-                <Exchanges />
+                <Portfolios />
             </div>
 
-            <Portfolios />
+            <TelegramBot />
+
             <div className={classes.darkBg}>
-                <TelegramBot />
-            </div>
-            <Pricing />
-            <div className={classes.darkBg}>
-                <About />
-                <Roadmap />
+                <Pricing />
             </div>
 
-            <FAQ />
+            <About />
+            <Roadmap />
 
+            <div className={classes.darkBg}>
+                <FAQ />
+            </div>
             <LandingFooter links={footerLinks} />
         </div>
     );

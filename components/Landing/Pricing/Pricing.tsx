@@ -45,7 +45,7 @@ const useStyles = createStyles((theme) => {
         },
         controlActive: {
             backgroundColor: "transparent",
-            backgroundImage: theme.fn.linearGradient(45, theme.colors[theme.primaryColor][6], theme.colors.cyan[6])
+            backgroundImage: theme.fn.linearGradient(45, theme.colors[theme.primaryColor][9], theme.colors.cyan[9])
         }
     };
 });
@@ -136,7 +136,12 @@ export function Pricing() {
     const currentFeatures = option?.code === "free" ? freeFeatures : paidFeatures;
     const items = [...currentFeatures, ...features].map((feature) => (
         <div key={feature.title}>
-            <ThemeIcon size={44} radius="md" color={feature.color}>
+            <ThemeIcon
+                size={44}
+                radius="md"
+                variant="gradient"
+                gradient={{ from: feature.color, to: "dark", deg: 180 }}
+            >
                 <feature.icon size={26} />
             </ThemeIcon>
             <Text size="lg" mt="sm" weight={500}>
