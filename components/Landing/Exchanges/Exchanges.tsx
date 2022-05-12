@@ -42,7 +42,7 @@ export function Exchanges() {
     const theme = useMantineTheme();
 
     return (
-        <Container className={classes.wrapper} id="faq">
+        <Container className={classes.wrapper} id="exchanges">
             <Grid justify="center" grow>
                 <Grid.Col md={4}>
                     <Text

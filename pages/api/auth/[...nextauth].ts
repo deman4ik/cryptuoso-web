@@ -8,6 +8,15 @@ export const client = createClient({
     url: `${process.env.NEXT_PUBLIC_HASURA_URL}`
 });
 
+export interface UserAuthData {
+    id: string;
+    accessToken: string;
+    userId: string;
+    allowedRoles: string[];
+    access: number;
+    exp: number;
+}
+
 export default NextAuth({
     providers: [
         CredentialsProvider({
@@ -50,7 +59,7 @@ export default NextAuth({
                             accessToken: result?.data?.result.accessToken,
 
                             ...token
-                        };
+                        } as UserAuthData;
                     }
                     throw new Error("Failed to authorize. Please try again later.");
                 } catch (err) {
