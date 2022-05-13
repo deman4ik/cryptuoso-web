@@ -1,4 +1,4 @@
-import dayjs from "../../libs/dayjs/dayjs";
+import dayjs from "@cryptuoso/libs/dayjs";
 import { withAuth } from "next-auth/middleware";
 import { UserAuthData } from "pages/api/auth/[...nextauth]";
 

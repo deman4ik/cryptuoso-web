@@ -23,6 +23,7 @@ import {
 import { AlertCircle, Coin, CurrencyDollar, ListCheck, Minus, Plus, Scale } from "tabler-icons-react";
 import { gql, useQuery } from "urql";
 import { StatsCard } from "@cryptuoso/components/Stats/StatsCard";
+import { round } from "helpers";
 
 const useStyles = createStyles((theme) => {
     return {
@@ -99,11 +100,11 @@ interface PortfolioStats {
 function addPercent(num: number, perc: number) {
     const number = +num || 0;
     const percent = +perc || 0;
-    return Math.round(number + (number / 100) * percent);
+    return round(number + (number / 100) * percent) || 0;
 }
 
 function calcPercentValue(num: number, percent: number) {
-    return Math.round((percent / 100) * num);
+    return round((percent / 100) * num);
 }
 
 export function Portfolios() {
@@ -246,20 +247,20 @@ export function Portfolios() {
                             <StatsCard
                                 Icon={Coin}
                                 title="Profit"
-                                diff={Math.round(portfolioStats.percentNetProfit)}
+                                diff={round(portfolioStats.percentNetProfit) || 0}
                                 value={`${addPercent(balance, portfolioStats.percentNetProfit) - balance} $`}
                                 desc="Average yearly profit"
                             />
                             <StatsCard
                                 Icon={ListCheck}
                                 title="Trades"
-                                value={Math.round(portfolioStats.tradesCount)}
+                                value={round(portfolioStats.tradesCount) || 0}
                                 desc="Average yearly trades"
                             />
                             <StatsCard
                                 Icon={Plus}
                                 title="Win Rate"
-                                value={`${Math.round(portfolioStats.winRate)} %`}
+                                value={`${round(portfolioStats.winRate)} %`}
                                 desc="Average yearly trades win rate"
                             />
                             <StatsCard
@@ -269,7 +270,7 @@ export function Portfolios() {
                                     addPercent(balance, portfolioStats.percentNetProfit),
                                     portfolioStats.percentMaxDrawdown
                                 )} $`}
-                                diff={Math.round(-portfolioStats.percentMaxDrawdown)}
+                                diff={round(-portfolioStats.percentMaxDrawdown) || 0}
                                 desc="Average yearly maximum balance drawdown"
                             />
                             <StatsCard

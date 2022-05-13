@@ -8,8 +8,8 @@ import {
     Skeleton,
     Badge,
     Tooltip,
-    LoadingOverlay,
-    ActionIcon
+    ActionIcon,
+    LoadingOverlay
 } from "@mantine/core";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
@@ -26,41 +26,68 @@ const useStyles = createStyles((theme) => ({
     }
 }));
 
-const ExchangeAccountQuery = gql`
-    query ExchangeAccount($userId: uuid!) {
-        myUserExAcc: user_exchange_accs(
-            where: { user_id: { _eq: $userId } }
-            limit: 1
-            order_by: { created_at: desc }
-        ) {
+const UserQuery = gql`
+    query UserProfile($userId: uuid!) {
+        myUser: users(where: { id: { _eq: $userId } }) {
             id
-            exchange
+            email
+            name
+            telegramId: telegram_id
+            telegramUsername: telegram_username
+            roles
+            access
             status
-            balance: balances(path: "$.totalUSD")
-            balanceUpdatedAt: balances(path: "$.updatedAt")
+            settings
         }
     }
 `;
 
-export function ExchangeAccountCard() {
+interface User {
+    id: string;
+    email: string;
+    name: string;
+    telegramId: string;
+    telegramUsername: string;
+    roles: { defaultRole: string; allowedRoles: string[] };
+    access: number;
+    status: number;
+    settings: {
+        notifications: {
+            news: {
+                email: boolean;
+                telegram: boolean;
+            };
+            trading: {
+                email: boolean;
+                telegram: boolean;
+            };
+            signals: {
+                email: boolean;
+                telegram: boolean;
+            };
+        };
+    };
+}
+
+export function ProfileCard() {
     const { classes } = useStyles();
 
     const { data: session }: any = useSession();
+
     const [result, reexecuteQuery] = useQuery<
         {
-            myUserExAcc: {
-                id: string;
-                exchange: string;
-                name: string;
-                status: string;
-                balance: number;
-                balanceUpdatedAt: string;
-            }[];
+            myUser: User[];
         },
         { userId: string }
-    >({ query: ExchangeAccountQuery, variables: { userId: session?.user?.userId } });
+    >({
+        query: UserQuery,
+        variables: {
+            userId: session?.user?.userId
+        }
+    });
+
     const { data, fetching, error } = result;
-    const myUserExAcc = data?.myUserExAcc[0];
+    const myUser = data?.myUser[0];
     if (data) console.log(data);
     if (error) console.error(error);
     return (
@@ -68,47 +95,35 @@ export function ExchangeAccountCard() {
             <LoadingOverlay visible={fetching} />
             <Group position="apart" mb="md">
                 <Text size="md" weight={900} transform="uppercase">
-                    Exchange Account
+                    Profile
                 </Text>
                 <ActionIcon variant="hover" onClick={() => reexecuteQuery({ requestPolicy: "network-only" })}>
-                    <Refresh size={18} />
+                    <Refresh size={16} />
                 </ActionIcon>
             </Group>
 
             <Group position="apart">
                 <Text size="md" weight={500} sx={{ lineHeight: 2 }}>
-                    Exchange
+                    Name
                 </Text>
 
-                {myUserExAcc ? (
-                    <Image src={`/${myUserExAcc?.exchange}.svg`} alt={myUserExAcc?.exchange} height={30} width={70} />
-                ) : (
-                    <Skeleton height={8} width="30%" />
-                )}
+                {myUser ? <Text size="md">{myUser?.name}</Text> : <Skeleton height={8} width="30%" />}
             </Group>
             <Group position="apart" mt="md">
                 <Text size="md" weight={500} sx={{ lineHeight: 2 }}>
-                    API Key Status
+                    Email
                 </Text>
 
-                {myUserExAcc ? (
-                    <Badge size="md" color={myUserExAcc?.status === "enabled" ? "green" : "red"}>
-                        {myUserExAcc?.status}
-                    </Badge>
-                ) : (
-                    <Skeleton height={8} width="30%" />
-                )}
+                {myUser ? <Text size="md">{myUser?.email}</Text> : <Skeleton height={8} width="30%" />}
             </Group>
 
             <Group position="apart" mt="md">
                 <Text size="md" weight={500} sx={{ lineHeight: 2 }}>
-                    Current Balance
+                    Telegram
                 </Text>
 
-                {myUserExAcc ? (
-                    <Tooltip label={`Updated ${dayjs.utc().to(myUserExAcc?.balanceUpdatedAt)}`}>
-                        <Text size="md">{round(myUserExAcc?.balance, 2)} $</Text>
-                    </Tooltip>
+                {myUser ? (
+                    <Text size="md">{myUser?.telegramUsername || myUser?.telegramId}</Text>
                 ) : (
                     <Skeleton height={8} width="30%" />
                 )}
