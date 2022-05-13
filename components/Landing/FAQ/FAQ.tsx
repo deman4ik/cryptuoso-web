@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Title, Accordion, createStyles, Grid, Text } from "@mantine/core";
 import { faqContent } from "./content";
+import { round } from "helpers";
 
 const useStyles = createStyles((theme, _params, getRef) => {
     const control = getRef("control");
@@ -46,7 +47,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
 
 export function FAQ() {
     const { classes } = useStyles();
-    const leftFaqContent = faqContent.slice(0, Math.round(faqContent.length / 2));
+    const leftFaqContent = faqContent.slice(0, round(faqContent.length / 2) || 0);
     const rightFaqContent = faqContent.slice(leftFaqContent.length);
     return (
         <Container size="xl" className={classes.wrapper} id="faq">

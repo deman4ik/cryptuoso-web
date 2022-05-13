@@ -121,9 +121,7 @@ export default function DashboardPage() {
             </Head>
             <Grid grow>
                 <Grid.Col span={6}>
-                    <Section title="EXCHANGE ACCOUNT">
-                        <ExchangeAccountCard />
-                    </Section>
+                    <ExchangeAccountCard />
                 </Grid.Col>
                 <Grid.Col span={6}>
                     <Section title="SUBSCRIPTION"></Section>
