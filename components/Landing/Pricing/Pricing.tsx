@@ -55,7 +55,8 @@ const freeFeatures = [
         icon: ManualGearbox,
         title: "Manual",
         description: "Traid manually using free signals published to Telegram Channel.",
-        color: "yellow"
+        fromColor: "orange",
+        toColor: "yellow"
     }
 ];
 const paidFeatures = [
@@ -63,7 +64,8 @@ const paidFeatures = [
         icon: SettingsAutomation,
         title: "Automated",
         description: "Fully automated trading on a pull of 200+ robots. Start and forget.",
-        color: "indigo"
+        fromColor: "indigo",
+        toColor: "cyan"
     }
 ];
 
@@ -72,19 +74,22 @@ const features = [
         icon: LockAccess,
         title: "No Limits",
         description: "Unlimited positions & deals. Unlimited trading volume.",
-        color: "red"
+        fromColor: "red",
+        toColor: "pink"
     },
     {
         icon: ReceiptTax,
         title: "No fees",
         description: "No additional fees on your trades. Fixed subscription pricing.",
-        color: "green"
+        fromColor: "lime",
+        toColor: "cyan"
     },
     {
         icon: Briefcase,
         title: "Portfolio",
         description: "Automated portfolio rebalancing and performance analysis.",
-        color: "cyan"
+        fromColor: "pink",
+        toColor: "grape"
     }
 ];
 
@@ -138,9 +143,9 @@ export function Pricing() {
         <div key={feature.title}>
             <ThemeIcon
                 size={44}
-                radius="md"
+                radius="sm"
                 variant="gradient"
-                gradient={{ from: feature.color, to: "dark", deg: 180 }}
+                gradient={{ from: feature.fromColor, to: feature.toColor, deg: 45 }}
             >
                 <feature.icon size={26} />
             </ThemeIcon>

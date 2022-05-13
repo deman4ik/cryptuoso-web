@@ -21,41 +21,47 @@ export const DATA = [
         title: "Automatic Trading",
         description:
             "Robots execute all deals for you, so you only need to keep track of the current positions and your trading performance.",
-        color: "indigo"
+        colorFrom: "grape",
+        colorTo: "indigo"
     },
     {
         icon: Briefcase,
         title: "Portfolio management",
         description:
             "We combine our robots into profitable portfolios to maximize profit and to minimize potential drawdown.",
-        color: "teal"
+        colorFrom: "pink",
+        colorTo: "grape"
     },
     {
         icon: Cloud,
         title: "Reliable",
         description:
             "Robots are cloud-based and do not require installation of software on your computer. Any trade will never be missed.",
-        color: "blue"
+        colorFrom: "blue",
+        colorTo: "violet"
     },
     {
         icon: Gauge,
         title: "Instant",
         description: "Robots instantly react to market fluctuations and execute orders faster than human could.",
-        color: "green"
+        colorFrom: "lime",
+        colorTo: "cyan"
     },
     {
         icon: Lock,
         title: "Secure",
         description:
             "Our robots use customizable API exchange keys, which allow to make deals, but not to manage your account. We store your keys in a secure, encrypted storage.",
-        color: "red"
+        colorFrom: "red",
+        colorTo: "pink"
     },
     {
         icon: Bulb,
         title: "Simple",
         description:
             "Just add your exchange account and subscribe to robots for transactions. Complete a few steps and you are done.",
-        color: "yellow"
+        colorFrom: "yellow",
+        colorTo: "orange"
     }
 ];
 
@@ -63,26 +69,27 @@ interface FeatureProps {
     icon: TablerIcon;
     title: React.ReactNode;
     description: React.ReactNode;
-    color: DefaultMantineColor;
+    colorFrom: DefaultMantineColor;
+    colorTo: DefaultMantineColor;
     className: string;
 }
 
-export function Feature({ icon: Icon, title, description, color, className }: FeatureProps) {
+export function Feature({ icon: Icon, title, description, colorFrom, colorTo, className }: FeatureProps) {
     const theme = useMantineTheme();
     return (
         <Box>
             <ThemeIcon
                 size={50}
-                radius="md"
+                radius="sm"
                 variant="gradient"
-                gradient={{ from: color, to: "dark", deg: 180 }}
+                gradient={{ from: colorFrom, to: colorTo, deg: 45 }}
                 className={className}
             >
                 <Icon style={{ width: 30, height: 30 }} />
             </ThemeIcon>
             <Text
                 variant="gradient"
-                gradient={{ from: color, to: "cyan" }}
+                gradient={{ from: colorFrom, to: colorTo }}
                 style={{ marginTop: theme.spacing.sm, marginBottom: 7 }}
                 size="lg"
             >
