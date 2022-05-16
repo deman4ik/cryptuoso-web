@@ -24,8 +24,7 @@ const useStyles = createStyles((theme) => ({
     header: {
         display: "flex",
         justifyContent: "space-between",
-        alignItems: "center",
-        height: "100%"
+        alignItems: "center"
     },
 
     burger: {
@@ -49,7 +48,7 @@ export function AppHeader({
         <div className={classes.header}>
             <Group className={classes.header} position="apart" spacing={12}>
                 <Burger opened={opened} onClick={() => setOpened((o) => !o)} size="sm" className={classes.burger} />
-                <SimpleLink href="/app">
+                <SimpleLink href="/app" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                     <Logo />
                 </SimpleLink>
                 <Text component={SimpleLink} transform="uppercase" weight={700} size="lg" href="/app">

@@ -60,7 +60,7 @@ export function Layout({ children, title }: { children: ReactNode; title: string
                 />
             }
             header={
-                <Header height={60} mb={120} p="md" className={classes.header}>
+                <Header height={60} p="md" className={classes.header}>
                     <AppHeader opened={opened} setOpened={setOpened} />
                 </Header>
             }
