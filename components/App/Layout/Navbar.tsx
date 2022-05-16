@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { createStyles, Navbar, Group, Text } from "@mantine/core";
+import { createStyles, Navbar, Group, Text, ScrollArea } from "@mantine/core";
 import { BellRinging, Key, Receipt2, Dashboard, Logout, UserCircle, BrandTelegram } from "tabler-icons-react";
 import { signOut } from "next-auth/react";
-import { ColorSchemeToggleBig } from "@cryptuoso/components/Button/ColorSchemeToggle";
+import { ColorSchemeToggleBig } from "@cryptuoso/components/Landing/Layout/ColorSchemeToggle";
 import { SimpleLink } from "@cryptuoso/components/Link/SimpleLink";
 import { useRouter } from "next/router";
 
@@ -21,7 +21,10 @@ const useStyles = createStyles((theme, _params, getRef) => {
 
         footer: {
             paddingTop: theme.spacing.md,
-            marginTop: theme.spacing.md
+            marginTop: theme.spacing.md,
+            [theme.fn.smallerThan("md")]: {
+                marginBottom: theme.spacing.xl * 5
+            }
             //  borderTop: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[2]}`
         },
 
@@ -89,8 +92,10 @@ export function AppNavbar({ ...others }) {
     ));
 
     return (
-        <Navbar className={classes.navbar} {...others}>
-            <Navbar.Section grow>{links}</Navbar.Section>
+        <Navbar fixed className={classes.navbar} {...others}>
+            <Navbar.Section grow component={ScrollArea} mx="-xs" px="xs">
+                {links}
+            </Navbar.Section>
 
             <Navbar.Section className={classes.footer}>
                 <SimpleLink href="https://t.me/cryptuoso_bot" className={classes.link}>

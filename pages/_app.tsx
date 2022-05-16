@@ -29,7 +29,7 @@ export default function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
         <>
             <Head>
                 <title>CRYPTUOSO</title>
-                <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
+                <meta name="viewport" content="maximum-scale=1, minimum-scale=1, initial-scale=1, width=device-width" />
                 <meta name="description" content="Cryptuoso Cryptocurrency Trading Bot" />
                 <meta
                     name="keywords"

@@ -3,10 +3,8 @@ import { AuthenticationForm } from "@cryptuoso/components/Auth/AuthenticationFor
 
 export default function SignIn() {
     return (
-        <>
-            <Layout>
-                <AuthenticationForm />
-            </Layout>
-        </>
+        <Layout containerSize="sm">
+            <AuthenticationForm />
+        </Layout>
     );
 }

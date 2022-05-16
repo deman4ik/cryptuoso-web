@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { AppShell, Container, createStyles } from "@mantine/core";
+import { AppShell, Container, createStyles, MantineNumberSize } from "@mantine/core";
 import { LandingHeader } from "@cryptuoso/components/Landing/Layout/Header";
 import { LandingFooter } from "@cryptuoso/components/Landing/Layout/Footer";
 
@@ -47,12 +47,12 @@ const useStyles = createStyles((theme) => ({
     }
 }));
 
-export function Layout({ children }: { children: ReactNode }) {
+export function Layout({ children, containerSize }: { children: ReactNode; containerSize?: MantineNumberSize }) {
     const { classes } = useStyles();
     return (
         <div className={classes.root}>
             <AppShell header={<LandingHeader links={headerLinks} />}>
-                <Container size="xl" mt={60} mb={20}>
+                <Container size={containerSize || "lg"} mt={60} mb={20}>
                     {children}
                 </Container>
             </AppShell>

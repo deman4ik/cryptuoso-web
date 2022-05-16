@@ -91,14 +91,18 @@ export function ProfileCard() {
     if (data) console.log(data);
     if (error) console.error(error);
     return (
-        <Card shadow="sm" p="lg" className={classes.card}>
+        <Card shadow="sm" p="sm" radius="lg" className={classes.card}>
             <LoadingOverlay visible={fetching} />
             <Group position="apart" mb="md">
-                <Text size="md" weight={900} transform="uppercase">
+                <Text size="md" weight={900} transform="uppercase" color="dimmed">
                     Profile
                 </Text>
-                <ActionIcon variant="hover" onClick={() => reexecuteQuery({ requestPolicy: "network-only" })}>
-                    <Refresh size={16} />
+                <ActionIcon
+                    color="gray"
+                    variant="hover"
+                    onClick={() => reexecuteQuery({ requestPolicy: "network-only" })}
+                >
+                    <Refresh size={18} />
                 </ActionIcon>
             </Group>
 
