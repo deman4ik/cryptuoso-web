@@ -1,24 +1,7 @@
-import React, { ReactNode, useState } from "react";
-import {
-    Header,
-    Navbar,
-    useMantineTheme,
-    Text,
-    MediaQuery,
-    Burger,
-    AppShell,
-    createStyles,
-    Container,
-    Group,
-    Button,
-    HeaderProps,
-    ContainerProps,
-    Anchor
-} from "@mantine/core";
+import React from "react";
+import { Text, Burger, createStyles, Group, Button } from "@mantine/core";
 import { Logo } from "@cryptuoso/components/Image/Logo";
 import { SimpleLink } from "@cryptuoso/components/Link/SimpleLink";
-import { TextLink } from "@cryptuoso/components/Link/TextLink";
-import { ColorSchemeToggle } from "@cryptuoso/components/Button/ColorSchemeToggle";
 
 const useStyles = createStyles((theme) => ({
     header: {

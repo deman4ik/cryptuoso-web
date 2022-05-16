@@ -73,7 +73,7 @@ export function AuthenticationForm() {
     };
 
     return (
-        <Container size="sm" style={{ position: "relative" }}>
+        <div style={{ position: "relative" }}>
             <LoadingOverlay visible={loading} />
             <Title
                 align="center"
@@ -159,12 +159,18 @@ export function AuthenticationForm() {
                             </Anchor>
                         )}{" "}
                         {/** TODO: forgot password and link */}
-                        <Button type="submit" fullWidth mt="sm">
+                        <Button
+                            type="submit"
+                            fullWidth
+                            mt="sm"
+                            variant="gradient"
+                            gradient={{ from: "indigo", to: "cyan", deg: 45 }}
+                        >
                             {formType === "register" ? "Register" : "Login"}
                         </Button>
                     </Group>
                 </form>
             </Paper>
-        </Container>
+        </div>
     );
 }

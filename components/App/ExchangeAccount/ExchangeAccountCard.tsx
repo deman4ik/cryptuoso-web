@@ -9,7 +9,8 @@ import {
     Badge,
     Tooltip,
     LoadingOverlay,
-    ActionIcon
+    ActionIcon,
+    Button
 } from "@mantine/core";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
@@ -17,7 +18,7 @@ import { gql, useQuery } from "urql";
 import { TextLink } from "@cryptuoso/components/Link/TextLink";
 import { round } from "helpers";
 import dayjs from "@cryptuoso/libs/dayjs";
-import { Refresh } from "tabler-icons-react";
+import { Key, Refresh } from "tabler-icons-react";
 
 const useStyles = createStyles((theme) => ({
     card: {
@@ -38,6 +39,7 @@ const ExchangeAccountQuery = gql`
             status
             balance: balances(path: "$.totalUSD")
             balanceUpdatedAt: balances(path: "$.updatedAt")
+            error
         }
     }
 `;
@@ -55,6 +57,7 @@ export function ExchangeAccountCard() {
                 status: string;
                 balance: number;
                 balanceUpdatedAt: string;
+                error?: string;
             }[];
         },
         { userId: string }
@@ -64,15 +67,24 @@ export function ExchangeAccountCard() {
     if (data) console.log(data);
     if (error) console.error(error);
     return (
-        <Card shadow="sm" p="lg" className={classes.card}>
+        <Card shadow="sm" p="sm" radius="lg" className={classes.card}>
             <LoadingOverlay visible={fetching} />
             <Group position="apart" mb="md">
-                <Text size="md" weight={900} transform="uppercase">
+                <Text size="md" weight={900} transform="uppercase" color="dimmed">
                     Exchange Account
                 </Text>
-                <ActionIcon variant="hover" onClick={() => reexecuteQuery({ requestPolicy: "network-only" })}>
-                    <Refresh size={18} />
-                </ActionIcon>
+                <Group spacing="xs">
+                    <Button color="gray" variant="subtle" compact uppercase rightIcon={<Key size={18} />}>
+                        Edit
+                    </Button>
+                    <ActionIcon
+                        color="gray"
+                        variant="hover"
+                        onClick={() => reexecuteQuery({ requestPolicy: "network-only" })}
+                    >
+                        <Refresh size={18} />
+                    </ActionIcon>
+                </Group>
             </Group>
 
             <Group position="apart">
@@ -92,9 +104,17 @@ export function ExchangeAccountCard() {
                 </Text>
 
                 {myUserExAcc ? (
-                    <Badge size="md" color={myUserExAcc?.status === "enabled" ? "green" : "red"}>
-                        {myUserExAcc?.status}
-                    </Badge>
+                    <Tooltip
+                        transition="fade"
+                        transitionDuration={500}
+                        transitionTimingFunction="ease"
+                        color={myUserExAcc?.status === "enabled" ? "green" : "red"}
+                        label={myUserExAcc?.status === "enabled" ? "Checked" : myUserExAcc?.error}
+                    >
+                        <Badge size="md" color={myUserExAcc?.status === "enabled" ? "green" : "red"}>
+                            {myUserExAcc?.status}
+                        </Badge>
+                    </Tooltip>
                 ) : (
                     <Skeleton height={8} width="30%" />
                 )}
@@ -106,7 +126,12 @@ export function ExchangeAccountCard() {
                 </Text>
 
                 {myUserExAcc ? (
-                    <Tooltip label={`Updated ${dayjs.utc().to(myUserExAcc?.balanceUpdatedAt)}`}>
+                    <Tooltip
+                        transition="fade"
+                        transitionDuration={500}
+                        transitionTimingFunction="ease"
+                        label={`Updated ${dayjs.utc().to(myUserExAcc?.balanceUpdatedAt)}`}
+                    >
                         <Text size="md">{round(myUserExAcc?.balance, 2)} $</Text>
                     </Tooltip>
                 ) : (

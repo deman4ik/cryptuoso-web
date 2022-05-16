@@ -1,6 +1,8 @@
-import { createStyles, Text } from "@mantine/core";
+import { createStyles, Grid, Text } from "@mantine/core";
 import { Layout } from "@cryptuoso/components/App/Layout/Layout";
 import Head from "next/head";
+import { SubscriptionCard } from "@cryptuoso/components/App/Subscription/SubscriptionCard";
+import { PaymentHistory } from "@cryptuoso/components/App/Subscription/PaymentHistory";
 
 const useStyles = createStyles((theme) => ({
     darkBg: {
@@ -15,7 +17,14 @@ export default function DashboardPage() {
             <Head>
                 <title>Billing | CRYPTUOSO</title>
             </Head>
-            <Text>Billing</Text>
+            <Grid>
+                <Grid.Col sm={12} md={6}>
+                    <SubscriptionCard />
+                </Grid.Col>
+                <Grid.Col span={12}>
+                    <PaymentHistory />
+                </Grid.Col>
+            </Grid>
         </Layout>
     );
 }

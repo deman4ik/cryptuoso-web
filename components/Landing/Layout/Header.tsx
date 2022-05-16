@@ -4,7 +4,7 @@ import { useBooleanToggle } from "@mantine/hooks";
 import { signOut, useSession } from "next-auth/react";
 import { Logo } from "@cryptuoso/components/Image/Logo";
 import { TextLink } from "@cryptuoso/components/Link/TextLink";
-import { ColorSchemeToggle } from "@cryptuoso/components/Button/ColorSchemeToggle";
+import { ColorSchemeToggle } from "@cryptuoso/components/Landing/Layout/ColorSchemeToggle";
 import { SimpleLink } from "@cryptuoso/components/Link/SimpleLink";
 
 const HEADER_HEIGHT = 60;

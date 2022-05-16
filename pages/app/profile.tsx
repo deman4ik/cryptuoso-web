@@ -26,9 +26,6 @@ export default function DashboardPage() {
                 <Grid.Col sm={12} md={4}>
                     <ProfileCard />
                 </Grid.Col>
-                <Grid.Col sm={12} md={4}>
-                    <ExchangeAccountCard />
-                </Grid.Col>
             </Grid>
         </Layout>
     );

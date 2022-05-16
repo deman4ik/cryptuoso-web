@@ -1,6 +1,7 @@
-import { createStyles, Text } from "@mantine/core";
+import { createStyles, Grid, Text } from "@mantine/core";
 import { Layout } from "@cryptuoso/components/App/Layout/Layout";
 import Head from "next/head";
+import { ExchangeAccountCard } from "@cryptuoso/components/App/ExchangeAccount/ExchangeAccountCard";
 
 const useStyles = createStyles((theme) => ({
     darkBg: {
@@ -15,7 +16,11 @@ export default function DashboardPage() {
             <Head>
                 <title>Exchange Account | CRYPTUOSO</title>
             </Head>
-            <Text>Exchange Account</Text>
+            <Grid>
+                <Grid.Col sm={12} md={4}>
+                    <ExchangeAccountCard />
+                </Grid.Col>
+            </Grid>
         </Layout>
     );
 }

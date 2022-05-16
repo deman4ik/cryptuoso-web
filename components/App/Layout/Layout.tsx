@@ -50,6 +50,7 @@ export function Layout({ children, title }: { children: ReactNode; title: string
             navbarOffsetBreakpoint="md"
             // fixed prop on AppShell will be automatically added to Header and Navbar
             fixed
+            padding="xs"
             navbar={
                 <AppNavbar
                     hidden={!opened}
