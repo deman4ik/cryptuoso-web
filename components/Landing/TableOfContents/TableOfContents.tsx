@@ -1,7 +1,7 @@
 import React from "react";
 import { createStyles, Box, Text, Group } from "@mantine/core";
 import { ListSearch } from "tabler-icons-react";
-import { SimpleLink } from "@cryptuoso/components/Link/SimpleLink";
+import { SimpleLink } from "@cryptuoso/components/Link";
 
 const useStyles = createStyles((theme) => ({
     link: {

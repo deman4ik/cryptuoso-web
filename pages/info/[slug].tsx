@@ -1,9 +1,9 @@
 import fs from "fs";
 import matter from "gray-matter";
 import md from "markdown-it";
-import { Layout } from "@cryptuoso/components/Landing/Layout/Layout";
-import { TypographyStylesProvider } from "@mantine/core";
 import Head from "next/head";
+import { TypographyStylesProvider } from "@mantine/core";
+import { Layout } from "@cryptuoso/components/Landing/Layout";
 
 export async function getStaticPaths() {
     const files = fs.readdirSync("info");

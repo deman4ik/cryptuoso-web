@@ -1,11 +1,10 @@
 import React from "react";
-import { createStyles, Header, Container, Group, Burger, Transition, Paper, Grid } from "@mantine/core";
+import { createStyles, Header, Container, Group, Burger, Transition, Paper } from "@mantine/core";
 import { useBooleanToggle } from "@mantine/hooks";
-import { signOut, useSession } from "next-auth/react";
-import { Logo } from "@cryptuoso/components/Image/Logo";
-import { TextLink } from "@cryptuoso/components/Link/TextLink";
-import { ColorSchemeToggle } from "@cryptuoso/components/Landing/Layout/ColorSchemeToggle";
-import { SimpleLink } from "@cryptuoso/components/Link/SimpleLink";
+import { useSession, signOut } from "next-auth/react";
+import { Logo } from "@cryptuoso/components/Image";
+import { TextLink, SimpleLink } from "@cryptuoso/components/Link";
+import { ColorSchemeToggle } from "@cryptuoso/components/Landing/Layout";
 
 const HEADER_HEIGHT = 60;
 
@@ -55,7 +54,6 @@ const useStyles = createStyles((theme) => ({
 
         "&:hover": {
             color: theme.colorScheme === "dark" ? theme.colors.dark[2] : theme.colors.gray[8]
-            // backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.colors.gray[0]
         }
     },
 

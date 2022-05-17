@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { createStyles, Navbar, Group, Text, ScrollArea } from "@mantine/core";
 import { BellRinging, Key, Receipt2, Dashboard, Logout, UserCircle, BrandTelegram } from "tabler-icons-react";
 import { signOut } from "next-auth/react";
-import { ColorSchemeToggleBig } from "@cryptuoso/components/Landing/Layout/ColorSchemeToggle";
-import { SimpleLink } from "@cryptuoso/components/Link/SimpleLink";
+import { ColorSchemeToggleBig } from "@cryptuoso/components/Landing/Layout";
+import { SimpleLink } from "@cryptuoso/components/Link";
 import { useRouter } from "next/router";
 
 const useStyles = createStyles((theme, _params, getRef) => {

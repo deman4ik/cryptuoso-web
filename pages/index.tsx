@@ -1,18 +1,16 @@
 import Head from "next/head";
 import { createStyles } from "@mantine/core";
-import { LandingHeader } from "@cryptuoso/components/Landing/Layout/Header";
-import { footerLinks, headerLinks } from "@cryptuoso/components/Landing/Layout/Layout";
-import { Hero } from "@cryptuoso/components/Landing/Hero/Hero";
-import { LandingFooter } from "@cryptuoso/components/Landing/Layout/Footer";
-import { FeaturesGrid } from "@cryptuoso/components/Landing/Features/Features";
-import { FAQ } from "@cryptuoso/components/Landing/FAQ/FAQ";
-import { About } from "@cryptuoso/components/Landing/About/About";
-import { Roadmap } from "@cryptuoso/components/Landing/Roadmap/Roadmap";
-import { Portfolios } from "@cryptuoso/components/Landing/Portfolios/Portfolios";
-import { TelegramBot } from "@cryptuoso/components/Landing/TelegramBot/TelegramBot";
-import { Pricing } from "@cryptuoso/components/Landing/Pricing/Pricing";
 import { withUrqlClient } from "next-urql";
-import { Exchanges } from "@cryptuoso/components/Landing/Exchanges/Exchanges";
+import { LandingHeader, LandingFooter, footerLinks, headerLinks } from "@cryptuoso/components/Landing/Layout";
+import { Hero } from "@cryptuoso/components/Landing/Hero";
+import { FeaturesGrid } from "@cryptuoso/components/Landing/Features";
+import { FAQ } from "@cryptuoso/components/Landing/FAQ";
+import { About } from "@cryptuoso/components/Landing/About";
+import { Roadmap } from "@cryptuoso/components/Landing/Roadmap";
+import { Portfolios } from "@cryptuoso/components/Landing/Portfolios";
+import { TelegramBot } from "@cryptuoso/components/Landing/TelegramBot";
+import { Pricing } from "@cryptuoso/components/Landing/Pricing";
+import { Exchanges } from "@cryptuoso/components/Landing/Exchanges";
 
 const useStyles = createStyles((theme) => ({
     root: {

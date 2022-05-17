@@ -85,7 +85,7 @@ const useStyles = createStyles((theme) => ({
     }
 }));
 
-export function Hero() {
+export function HeroBg() {
     const { classes } = useStyles();
     return (
         <div className={classes.root}>

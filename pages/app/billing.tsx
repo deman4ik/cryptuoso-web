@@ -1,8 +1,7 @@
 import { createStyles, Grid, Text } from "@mantine/core";
-import { Layout } from "@cryptuoso/components/App/Layout/Layout";
+import { Layout } from "@cryptuoso/components/App/Layout";
 import Head from "next/head";
-import { SubscriptionCard } from "@cryptuoso/components/App/Subscription/SubscriptionCard";
-import { PaymentHistory } from "@cryptuoso/components/App/Subscription/PaymentHistory";
+import { SubscriptionCard, PaymentHistory } from "@cryptuoso/components/App/Subscription";
 
 const useStyles = createStyles((theme) => ({
     darkBg: {

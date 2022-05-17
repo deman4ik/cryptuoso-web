@@ -1,7 +1,7 @@
-import { createStyles, Grid, Text } from "@mantine/core";
-import { Layout } from "@cryptuoso/components/App/Layout/Layout";
+import { createStyles, Grid } from "@mantine/core";
 import Head from "next/head";
-import { ExchangeAccountCard } from "@cryptuoso/components/App/ExchangeAccount/ExchangeAccountCard";
+import { Layout } from "@cryptuoso/components/App/Layout";
+import { ExchangeAccountCard } from "@cryptuoso/components/App/ExchangeAccount";
 
 const useStyles = createStyles((theme) => ({
     darkBg: {

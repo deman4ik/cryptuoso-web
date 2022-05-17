@@ -1,5 +1,5 @@
 import React from "react";
-import { createStyles, Card, Avatar, Text, Group, Button, List } from "@mantine/core";
+import { createStyles, Card, Avatar, Text, List } from "@mantine/core";
 
 const useStyles = createStyles((theme) => ({
     card: {

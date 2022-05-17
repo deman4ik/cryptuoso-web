@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
     Container,
     Title,
-    Accordion,
     createStyles,
     Grid,
     Text,
@@ -13,14 +12,11 @@ import {
     Anchor,
     ThemeIcon,
     SimpleGrid,
-    Paper,
     Button,
-    Box,
-    useMantineTheme,
-    Card
+    useMantineTheme
 } from "@mantine/core";
 import { gql, useQuery } from "urql";
-import { SimpleLink } from "@cryptuoso/components/Link/SimpleLink";
+import { SimpleLink } from "@cryptuoso/components/Link";
 import { Briefcase, LockAccess, ReceiptTax, SettingsAutomation, ManualGearbox } from "tabler-icons-react";
 import { useMediaQuery } from "@mantine/hooks";
 
@@ -135,7 +131,6 @@ export function Pricing() {
     const { data, fetching, error } = result;
     const options = [freeOption, ...(data?.options || [])];
     const option = options?.find((option) => option.code === value);
-    console.log(options);
     if (error) console.error(error);
 
     const currentFeatures = option?.code === "free" ? freeFeatures : paidFeatures;

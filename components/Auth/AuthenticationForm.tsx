@@ -11,12 +11,11 @@ import {
     Text,
     LoadingOverlay,
     Anchor,
-    Title,
-    Container
+    Title
 } from "@mantine/core";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
-import { SimpleLink } from "@cryptuoso/components/Link/SimpleLink";
+import { SimpleLink } from "@cryptuoso/components/Link";
 
 export function AuthenticationForm() {
     const [formType, setFormType] = useState<"register" | "login">("login");
