@@ -18,7 +18,8 @@
         "paths": {
             "@cryptuoso/components/*": ["components/*"],
             "@cryptuoso/libs/*": ["libs/*"],
-            "@cryptuoso/helpers/*": ["helpers/*"]
+            "@cryptuoso/helpers/*": ["helpers/*"],
+            "@cryptuoso/public/*": ["public/*"]
         }
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

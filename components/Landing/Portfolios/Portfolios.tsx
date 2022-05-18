@@ -2,13 +2,8 @@ import React, { useState } from "react";
 import {
     Container,
     Title,
-    Accordion,
     createStyles,
     Grid,
-    Group,
-    CheckboxGroup,
-    Tooltip,
-    Checkbox,
     Stack,
     NumberInput,
     Slider,
@@ -22,7 +17,7 @@ import {
 
 import { AlertCircle, Coin, CurrencyDollar, ListCheck, Minus, Plus, Scale } from "tabler-icons-react";
 import { gql, useQuery } from "urql";
-import { StatsCard } from "@cryptuoso/components/Stats/StatsCard";
+import { StatsCard } from "@cryptuoso/components/Stats";
 import { round } from "helpers";
 
 const useStyles = createStyles((theme) => {

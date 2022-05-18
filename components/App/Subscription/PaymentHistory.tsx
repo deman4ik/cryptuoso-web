@@ -1,17 +1,14 @@
 import React from "react";
 import {
     createStyles,
-    Table,
-    Progress,
-    Anchor,
     Text,
     Group,
-    ScrollArea,
     Card,
     LoadingOverlay,
-    Button,
     ActionIcon,
-    Badge
+    Badge,
+    Skeleton,
+    DefaultMantineColor
 } from "@mantine/core";
 import { gql, useQuery } from "urql";
 import { useSession } from "next-auth/react";
@@ -19,6 +16,7 @@ import { IUserPayment } from "./types";
 import { TextLink } from "@cryptuoso/components/Link/TextLink";
 import dayjs from "@cryptuoso/libs/dayjs";
 import { Refresh } from "tabler-icons-react";
+import { ResponsiveTable } from "../Table/Table";
 
 const useStyles = createStyles((theme) => ({
     card: {
@@ -51,6 +49,23 @@ const PaymentHistoryQuery = gql`
     }
 `;
 
+function getPaymentStatusColor(status: IUserPayment["status"]): DefaultMantineColor {
+    switch (status) {
+        case "NEW":
+        case "PENDING":
+        case "UNRESOLVED":
+            return "blue";
+        case "COMPLETED":
+        case "RESOLVED":
+            return "green";
+        case "EXPIRED":
+        case "CANCELED":
+            return "red";
+        default:
+            return "gray";
+    }
+}
+
 export function PaymentHistory() {
     const { classes, theme } = useStyles();
     const { data: session }: any = useSession();
@@ -64,29 +79,32 @@ export function PaymentHistory() {
     const userPayments = data?.userPayments || [];
     if (data) console.log(data);
     if (error) console.error(error);
-    //TODO: Mobile Cards
-    const rows = userPayments.map((payment) => {
-        return (
-            <tr key={payment.id}>
-                <td>
-                    <TextLink href={payment.url}>{payment.code}</TextLink>
-                </td>
-                <td>{payment.price} $</td>
-                <td>
-                    <Badge size="md">{payment.status}</Badge>
-                </td>
-                {/* TODO: Status colors */}
-                <td>{dayjs.utc(payment.createdAt).format("YYYY-MM-DD HH:mm UTC")}</td>
-                <td>{dayjs.utc(payment.expiresAt).format("YYYY-MM-DD HH:mm UTC")}</td>
-                <td>{`${payment?.userSub?.subscription.name} ${payment?.userSub?.subscriptionOption.name}`}</td>
-                <td>
-                    {`${dayjs.utc(payment.subscriptionFrom).format("YYYY-MM-DD")} - ${dayjs
+
+    /* eslint-disable react/jsx-key */
+    const tableData = {
+        titles: ["Charge", "Price", "Status", "Created", "Expires", "Subscription", "Period"],
+        rows: userPayments.map((payment) => {
+            return {
+                id: payment.id,
+                values: [
+                    <TextLink size="sm" href={payment.url} target="_blank">
+                        {payment.code}
+                    </TextLink>,
+                    <Text size="sm">{payment.price} $</Text>,
+                    <Badge size="md" color={getPaymentStatusColor(payment.status)}>
+                        {payment.status}
+                    </Badge>,
+                    <Text size="sm"> {dayjs(payment.createdAt).format("MMM DD, YYYY")}</Text>,
+                    <Text size="sm">{dayjs(payment.expiresAt).format("MMM DD, YYYY")}</Text>,
+                    <Text size="sm">{`${payment?.userSub?.subscription.name} ${payment?.userSub?.subscriptionOption.name}`}</Text>,
+                    <Text size="sm">{`${dayjs.utc(payment.subscriptionFrom).format("YYYY-MM-DD")} - ${dayjs
                         .utc(payment.subscriptionTo)
-                        .format("YYYY-MM-DD")}`}
-                </td>
-            </tr>
-        );
-    });
+                        .format("YYYY-MM-DD")}`}</Text>
+                ]
+            };
+        })
+    };
+    /* eslint-enable react/jsx-key */
 
     return (
         <Card shadow="sm" p="sm" radius="lg" className={classes.card}>
@@ -104,22 +122,11 @@ export function PaymentHistory() {
                     <Refresh size={18} />
                 </ActionIcon>
             </Group>
-            <ScrollArea>
-                <Table sx={{ minWidth: 800 }} verticalSpacing="xs">
-                    <thead>
-                        <tr>
-                            <th>Charge</th>
-                            <th>Price</th>
-                            <th>Status</th>
-                            <th>Created</th>
-                            <th>Expires</th>
-                            <th>Subscription</th>
-                            <th>Period</th>
-                        </tr>
-                    </thead>
-                    <tbody>{rows}</tbody>
-                </Table>
-            </ScrollArea>
+            {userPayments && userPayments.length > 0 ? (
+                <ResponsiveTable data={tableData} />
+            ) : (
+                <Skeleton height={50} width="100%" />
+            )}
         </Card>
     );
 }

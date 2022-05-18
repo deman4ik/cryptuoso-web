@@ -1,21 +1,9 @@
-import { createStyles, Grid, LoadingOverlay, Text } from "@mantine/core";
-import { Layout } from "@cryptuoso/components/App/Layout/Layout";
+import { Grid } from "@mantine/core";
 import Head from "next/head";
-import { gql, useQuery } from "urql";
-import { useSession } from "next-auth/react";
-import { useState } from "react";
-import { ExchangeAccountCard } from "@cryptuoso/components/App/ExchangeAccount/ExchangeAccountCard";
+import { Layout } from "@cryptuoso/components/App/Layout/Layout";
 import { ProfileCard } from "@cryptuoso/components/App/Profile/ProfileCard";
 
-const useStyles = createStyles((theme) => ({
-    darkBg: {
-        backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.white
-    }
-}));
-
-export default function DashboardPage() {
-    const { classes } = useStyles();
-
+export default function ProfilePage() {
     return (
         <Layout title="Profile">
             <Head>

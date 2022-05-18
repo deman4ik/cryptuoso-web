@@ -1,7 +1,6 @@
 import React, { ReactNode } from "react";
 import { AppShell, Container, createStyles, MantineNumberSize } from "@mantine/core";
-import { LandingHeader } from "@cryptuoso/components/Landing/Layout/Header";
-import { LandingFooter } from "@cryptuoso/components/Landing/Layout/Footer";
+import { LandingHeader, LandingFooter } from "@cryptuoso/components/Landing/Layout";
 
 export const headerLinks = [
     {

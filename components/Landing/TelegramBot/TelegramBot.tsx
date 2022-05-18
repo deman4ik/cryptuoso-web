@@ -1,22 +1,9 @@
 import React from "react";
-import {
-    createStyles,
-    Container,
-    Title,
-    Button,
-    Group,
-    Text,
-    List,
-    ThemeIcon,
-    Grid,
-    Box,
-    useMantineTheme,
-    MantineTheme
-} from "@mantine/core";
+import { createStyles, Container, Title, Button, Group, List, ThemeIcon, Grid, useMantineTheme } from "@mantine/core";
 import { Check } from "tabler-icons-react";
-import { SimpleLink } from "@cryptuoso/components/Link/SimpleLink";
+import { SimpleLink } from "@cryptuoso/components/Link";
 import Image from "next/image";
-import phoneTgImage from "../../../public/phone-tg.png";
+import phoneTgImage from "@cryptuoso/public/phone-tg.png";
 
 const useStyles = createStyles((theme) => ({
     wrapper: {

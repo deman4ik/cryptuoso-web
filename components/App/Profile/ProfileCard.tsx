@@ -1,30 +1,9 @@
 import React from "react";
-import {
-    createStyles,
-    Card,
-    Text,
-    Group,
-    RingProgress,
-    Skeleton,
-    Badge,
-    Tooltip,
-    ActionIcon,
-    LoadingOverlay
-} from "@mantine/core";
-import Image from "next/image";
+import { createStyles, ActionIcon } from "@mantine/core";
 import { useSession } from "next-auth/react";
 import { gql, useQuery } from "urql";
-import { TextLink } from "@cryptuoso/components/Link/TextLink";
-import { round } from "helpers";
-import dayjs from "@cryptuoso/libs/dayjs";
 import { Refresh } from "tabler-icons-react";
-
-const useStyles = createStyles((theme) => ({
-    card: {
-        position: "relative",
-        backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.colors.gray[0]
-    }
-}));
+import { BaseCard, CardHeader, CardLine } from "../Card";
 
 const UserQuery = gql`
     query UserProfile($userId: uuid!) {
@@ -70,8 +49,6 @@ interface User {
 }
 
 export function ProfileCard() {
-    const { classes } = useStyles();
-
     const { data: session }: any = useSession();
 
     const [result, reexecuteQuery] = useQuery<
@@ -91,47 +68,23 @@ export function ProfileCard() {
     if (data) console.log(data);
     if (error) console.error(error);
     return (
-        <Card shadow="sm" p="sm" radius="lg" className={classes.card}>
-            <LoadingOverlay visible={fetching} />
-            <Group position="apart" mb="md">
-                <Text size="md" weight={900} transform="uppercase" color="dimmed">
-                    Profile
-                </Text>
-                <ActionIcon
-                    color="gray"
-                    variant="hover"
-                    onClick={() => reexecuteQuery({ requestPolicy: "network-only" })}
-                >
-                    <Refresh size={18} />
-                </ActionIcon>
-            </Group>
+        <BaseCard fetching={fetching}>
+            <CardHeader
+                title="Profile"
+                rightActions={
+                    <ActionIcon
+                        color="gray"
+                        variant="hover"
+                        onClick={() => reexecuteQuery({ requestPolicy: "network-only" })}
+                    >
+                        <Refresh size={18} />
+                    </ActionIcon>
+                }
+            />
 
-            <Group position="apart">
-                <Text size="md" weight={500} sx={{ lineHeight: 2 }}>
-                    Name
-                </Text>
-
-                {myUser ? <Text size="md">{myUser?.name}</Text> : <Skeleton height={8} width="30%" />}
-            </Group>
-            <Group position="apart" mt="md">
-                <Text size="md" weight={500} sx={{ lineHeight: 2 }}>
-                    Email
-                </Text>
-
-                {myUser ? <Text size="md">{myUser?.email}</Text> : <Skeleton height={8} width="30%" />}
-            </Group>
-
-            <Group position="apart" mt="md">
-                <Text size="md" weight={500} sx={{ lineHeight: 2 }}>
-                    Telegram
-                </Text>
-
-                {myUser ? (
-                    <Text size="md">{myUser?.telegramUsername || myUser?.telegramId}</Text>
-                ) : (
-                    <Skeleton height={8} width="30%" />
-                )}
-            </Group>
-        </Card>
+            <CardLine title="Name" loading={!myUser} value={myUser?.name} />
+            <CardLine title="Email" loading={!myUser} value={myUser?.email} />
+            <CardLine title="Telegram" loading={!myUser} value={myUser?.telegramUsername || myUser?.telegramId} />
+        </BaseCard>
     );
 }

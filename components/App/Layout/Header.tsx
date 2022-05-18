@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, Burger, createStyles, Group, Button } from "@mantine/core";
-import { Logo } from "@cryptuoso/components/Image/Logo";
-import { SimpleLink } from "@cryptuoso/components/Link/SimpleLink";
+import { Logo } from "@cryptuoso/components/Image";
+import { SimpleLink } from "@cryptuoso/components/Link";
 
 const useStyles = createStyles((theme) => ({
     header: {

@@ -1,15 +1,13 @@
 import React from "react";
 import { createStyles, Anchor, Group, ActionIcon, Text, useMantineTheme } from "@mantine/core";
 import { BrandTwitter, BrandInstagram, BrandTelegram } from "tabler-icons-react";
-
-import { SimpleLink } from "@cryptuoso/components/Link/SimpleLink";
+import { SimpleLink } from "@cryptuoso/components/Link";
 import Image from "next/image";
 
 const useStyles = createStyles((theme) => ({
     footer: {
         marginTop: 120,
         width: "100%"
-        // borderTop: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[2]}`
     },
     poweredBy: {
         width: "100%",

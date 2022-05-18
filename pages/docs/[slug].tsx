@@ -1,10 +1,10 @@
 import fs from "fs";
 import matter from "gray-matter";
 import md from "markdown-it";
-import { Layout } from "@cryptuoso/components/Landing/Layout/Layout";
-import { Grid, Title, TypographyStylesProvider } from "@mantine/core";
-import { TableOfContents, TableOfContentsProps } from "@cryptuoso/components/Landing/TableOfContents/TableOfContents";
 import Head from "next/head";
+import { Grid, Title, TypographyStylesProvider } from "@mantine/core";
+import { Layout } from "@cryptuoso/components/Landing/Layout";
+import { TableOfContents, TableOfContentsProps } from "@cryptuoso/components/Landing/TableOfContents";
 
 export async function getStaticPaths() {
     const files = fs.readdirSync("docs");

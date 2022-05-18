@@ -1,33 +1,11 @@
 import React from "react";
-import {
-    createStyles,
-    Card,
-    Text,
-    Group,
-    RingProgress,
-    Skeleton,
-    Badge,
-    Tooltip,
-    LoadingOverlay,
-    ActionIcon,
-    Button,
-    Stack
-} from "@mantine/core";
-import Image from "next/image";
+import { Group, Badge, ActionIcon, Button, DefaultMantineColor } from "@mantine/core";
 import { useSession } from "next-auth/react";
 import { gql, useQuery } from "urql";
-import { TextLink } from "@cryptuoso/components/Link/TextLink";
-import { round } from "helpers";
 import dayjs from "@cryptuoso/libs/dayjs";
-import { Key, QuestionMark, Receipt2, Refresh } from "tabler-icons-react";
-import { IUserSub } from "@cryptuoso/components/App/Subscription/types";
-
-const useStyles = createStyles((theme) => ({
-    card: {
-        position: "relative",
-        backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.colors.gray[0]
-    }
-}));
+import { Receipt2, Refresh } from "tabler-icons-react";
+import { IUserSub } from "@cryptuoso/components/App/Subscription";
+import { BaseCard, CardHeader, CardLine } from "@cryptuoso/components/App/Card";
 
 const SubscriptionQuery = gql`
     query Subscription($userId: uuid!) {
@@ -56,9 +34,24 @@ const SubscriptionQuery = gql`
     }
 `;
 
-export function SubscriptionCard() {
-    const { classes } = useStyles();
+function getSubStatusColor(status?: IUserSub["status"]): DefaultMantineColor {
+    switch (status) {
+        case "pending":
+            return "blue";
+        case "expiring":
+            return "yellow";
+        case "active":
+        case "trial":
+            return "green";
+        case "expired":
+        case "canceled":
+            return "red";
+        default:
+            return "gray";
+    }
+}
 
+export function SubscriptionCard() {
     const { data: session }: any = useSession();
     const [result, reexecuteQuery] = useQuery<
         {
@@ -68,7 +61,7 @@ export function SubscriptionCard() {
     >({ query: SubscriptionQuery, variables: { userId: session?.user?.userId } });
     const { data, fetching, error } = result;
     const myUserSub = data?.myUserSub[0];
-    if (data) console.log(data);
+
     if (error) console.error(error);
 
     let expires = "";
@@ -83,81 +76,45 @@ export function SubscriptionCard() {
         }
     }
     return (
-        <Card shadow="sm" p="sm" radius="lg" className={classes.card}>
-            <LoadingOverlay visible={fetching} />
-            <Group position="apart" mb="md">
-                <Text size="md" weight={900} transform="uppercase" color="dimmed">
-                    Subscription
-                </Text>
-                <Group spacing="xs">
-                    <Button color="gray" variant="subtle" compact uppercase rightIcon={<Receipt2 size={18} />}>
-                        Change Plan
-                    </Button>
-                    <ActionIcon
-                        color="gray"
-                        variant="hover"
-                        onClick={() => reexecuteQuery({ requestPolicy: "network-only" })}
-                    >
-                        <Refresh size={18} />
-                    </ActionIcon>
-                </Group>
-            </Group>
+        <BaseCard fetching={fetching}>
+            <CardHeader
+                title="Subscription"
+                rightActions={
+                    <Group spacing="xs">
+                        <Button color="gray" variant="subtle" compact uppercase rightIcon={<Receipt2 size={18} />}>
+                            Change Plan
+                        </Button>
+                        <ActionIcon
+                            color="gray"
+                            variant="hover"
+                            onClick={() => reexecuteQuery({ requestPolicy: "network-only" })}
+                        >
+                            <Refresh size={18} />
+                        </ActionIcon>
+                    </Group>
+                }
+            />
 
-            <Group position="apart" mt="md">
-                <Text size="md" weight={500} sx={{ lineHeight: 2 }}>
-                    Plan
-                </Text>
+            <CardLine
+                title="Plan"
+                loading={!myUserSub}
+                value={myUserSub?.subscription.name}
+                valueTooltip={<span style={{ whiteSpace: "pre-line" }}>{myUserSub?.subscription.description}</span>}
+            />
 
-                {myUserSub ? (
-                    <Tooltip
-                        transition="fade"
-                        transitionDuration={500}
-                        transitionTimingFunction="ease"
-                        label={<span style={{ whiteSpace: "pre-line" }}>{myUserSub.subscription.description}</span>}
-                    >
-                        <Text size="md">{myUserSub.subscription.name}</Text>
-                    </Tooltip>
-                ) : (
-                    <Skeleton height={8} width="30%" />
-                )}
-            </Group>
+            <CardLine title="Period" loading={!myUserSub} value={myUserSub?.subscriptionOption.name} />
 
-            <Group position="apart" mt="md">
-                <Text size="md" weight={500} sx={{ lineHeight: 2 }}>
-                    Period
-                </Text>
+            <CardLine
+                title="Status"
+                loading={!myUserSub}
+                value={
+                    <Badge size="md" color={getSubStatusColor(myUserSub?.status)}>
+                        {myUserSub?.status}
+                    </Badge>
+                }
+            />
 
-                {myUserSub ? (
-                    <Text size="md"> {myUserSub.subscriptionOption.name}</Text>
-                ) : (
-                    <Skeleton height={8} width="30%" />
-                )}
-            </Group>
-            <Group position="apart" mt="md">
-                <Text size="md" weight={500} sx={{ lineHeight: 2 }}>
-                    Expires
-                </Text>
-
-                {myUserSub ? (
-                    <Tooltip
-                        transition="fade"
-                        transitionDuration={500}
-                        transitionTimingFunction="ease"
-                        label={expiresDate}
-                    >
-                        <Text size="md">{expires}</Text>
-                    </Tooltip>
-                ) : (
-                    <Skeleton height={8} width="30%" />
-                )}
-            </Group>
-            <Group position="apart" mt="md">
-                <Text size="md" weight={500} sx={{ lineHeight: 2 }}>
-                    Status
-                </Text>
-                {/* TODO: Status colors */}
-                {myUserSub ? <Badge size="md">{myUserSub?.status}</Badge> : <Skeleton height={8} width="30%" />}
-            </Group>
-        </Card>
+            <CardLine title="Expires" loading={!myUserSub} value={expires} valueTooltip={expiresDate} />
+        </BaseCard>
     );
 }

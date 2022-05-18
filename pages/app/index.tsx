@@ -1,10 +1,10 @@
-import { createStyles, Grid, SimpleGrid, Text } from "@mantine/core";
-import { Layout } from "@cryptuoso/components/App/Layout/Layout";
+import { createStyles, Grid } from "@mantine/core";
 import Head from "next/head";
 import { gql, useQuery } from "urql";
 import { useSession } from "next-auth/react";
-import { Section } from "@cryptuoso/components/App/Dashboard/Section";
-import { ExchangeAccountCard } from "@cryptuoso/components/App/ExchangeAccount/ExchangeAccountCard";
+import { Layout } from "@cryptuoso/components/App/Layout";
+import { Section } from "@cryptuoso/components/App/Dashboard";
+import { ExchangeAccountCard } from "@cryptuoso/components/App/ExchangeAccount";
 
 const useStyles = createStyles((theme) => ({
     darkBg: {
