@@ -2,6 +2,7 @@ import { createStyles, Grid } from "@mantine/core";
 import Head from "next/head";
 import { Layout } from "@cryptuoso/components/App/Layout";
 import { ExchangeAccountCard } from "@cryptuoso/components/App/ExchangeAccount";
+export { getServerSideProps } from "@cryptuoso/libs/graphql/shared";
 
 const useStyles = createStyles((theme) => ({
     darkBg: {
