@@ -19,7 +19,7 @@ spec:
                 env: <ENV>
         spec:
             imagePullSecrets:
-                - name: cpz-registry
+                - name: regcred
             containers:
                 - image: <IMAGE>
                   imagePullPolicy: IfNotPresent
@@ -53,7 +53,7 @@ spec:
     type: ClusterIP
 ---
 kind: HorizontalPodAutoscaler
-apiVersion: autoscaling/v2beta1
+apiVersion: autoscaling/v2
 metadata:
     name: cryptuoso-web
     namespace: <ENV>
@@ -68,8 +68,12 @@ spec:
         - type: Resource
           resource:
               name: cpu
-              targetAverageUtilization: 150
+              target:
+                  type: Utilization
+                  averageUtilization: 150
         - type: Resource
           resource:
               name: memory
-              targetAverageUtilization: 150
+              target:
+                  type: Utilization
+                  averageUtilization: 150
