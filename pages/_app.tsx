@@ -35,8 +35,8 @@ export default function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
                     name="keywords"
                     content="cryptocurrency, bitcoin, trading, signals, robots, btc, crypto, mining, binance, nft, eth, bnb"
                 />
-                <link rel="shortcut icon" type="image/x-icon" href="/favicon.svg" />
-                <link rel="shortcut icon" type="image/x-icon" href="/favicon.png" />
+                <link rel="shortcut icon" type="image/x-icon" href="/favicon_color.svg" />
+                <link rel="shortcut icon" type="image/x-icon" href="/favicon_color.png" />
                 {process.env.NEXT_DISABLE_ANALYTICS ? null : (
                     <>
                         <script
