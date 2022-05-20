@@ -49,7 +49,7 @@ export function ExchangeAccountCard() {
         <BaseCard fetching={fetching}>
             <CardHeader
                 title="Exchange Account"
-                rightActions={
+                right={
                     <Group spacing="xs">
                         <Button color="gray" variant="subtle" compact uppercase rightIcon={<Key size={18} />}>
                             Edit

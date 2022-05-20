@@ -3,9 +3,8 @@ import Head from "next/head";
 import { gql, useQuery } from "urql";
 import { useSession } from "next-auth/react";
 import { Layout } from "@cryptuoso/components/App/Layout";
-import { Section } from "@cryptuoso/components/App/Dashboard";
-import { ExchangeAccountCard } from "@cryptuoso/components/App/ExchangeAccount";
-import { CurrentBalance } from "@cryptuoso/components/App/Dashboard";
+import { PortfolioGrid, Section } from "@cryptuoso/components/App/Dashboard";
+import { CurrentBalance, Billing } from "@cryptuoso/components/App/Dashboard";
 export { getServerSideProps } from "@cryptuoso/libs/graphql/shared";
 
 const useStyles = createStyles((theme) => ({
@@ -122,8 +121,16 @@ export default function DashboardPage() {
                 <title>Dashboard | CRYPTUOSO</title>
             </Head>
             <Grid>
-                <Grid.Col span={6}>
+                <Grid.Col span={12} lg={6}>
                     <CurrentBalance />
+                </Grid.Col>
+                <Grid.Col span={12} lg={6}>
+                    <Billing />
+                </Grid.Col>
+                <Grid.Col span={12}>
+                    <Section title="Trading">
+                        <PortfolioGrid />
+                    </Section>
                 </Grid.Col>
             </Grid>
         </Layout>

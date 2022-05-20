@@ -71,7 +71,7 @@ export function ProfileCard() {
         <BaseCard fetching={fetching}>
             <CardHeader
                 title="Profile"
-                rightActions={
+                right={
                     <ActionIcon
                         color="gray"
                         variant="hover"

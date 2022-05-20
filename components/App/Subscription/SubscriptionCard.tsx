@@ -10,7 +10,7 @@ import { BaseCard, CardHeader, CardLine } from "@cryptuoso/components/App/Card";
 const SubscriptionQuery = gql`
     query Subscription($userId: uuid!) {
         myUserSub: user_subs(
-            where: { user_id: { _eq: $userId }, status: { _nin: ["canceled", "expired"] } }
+            where: { user_id: { _eq: $userId }, status: { _nin: ["canceled"] } }
             order_by: { created_at: desc_nulls_last }
             limit: 1
         ) {
@@ -34,7 +34,7 @@ const SubscriptionQuery = gql`
     }
 `;
 
-function getSubStatusColor(status?: IUserSub["status"]): DefaultMantineColor {
+export function getSubStatusColor(status?: IUserSub["status"]): DefaultMantineColor {
     switch (status) {
         case "pending":
             return "blue";
@@ -69,17 +69,17 @@ export function SubscriptionCard() {
     if (myUserSub) {
         if (myUserSub.status === "trial" && myUserSub.trialEnded) {
             expires = dayjs.utc().to(myUserSub.trialEnded);
-            expiresDate = `${dayjs.utc(myUserSub.trialEnded).format("YYYY-MM-DD HH:mm:ss")} UTC`;
+            expiresDate = dayjs.utc(myUserSub.trialEnded).format("YYYY-MM-DD HH:mm:ss UTC");
         } else if (myUserSub.status === "active" && myUserSub.activeTo) {
             expires = dayjs.utc().to(myUserSub.activeTo);
-            expiresDate = `${dayjs.utc(myUserSub.activeTo).format("YYYY-MM-DD HH:mm:ss")} UTC`;
+            expiresDate = dayjs.utc(myUserSub.activeTo).format("YYYY-MM-DD HH:mm:ss UTC");
         }
     }
     return (
         <BaseCard fetching={fetching}>
             <CardHeader
                 title="Subscription"
-                rightActions={
+                right={
                     <Group spacing="xs">
                         <Button color="gray" variant="subtle" compact uppercase rightIcon={<Receipt2 size={18} />}>
                             Change Plan

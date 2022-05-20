@@ -17,7 +17,7 @@ import {
 
 import { AlertCircle, Coin, CurrencyDollar, ListCheck, Minus, Plus, Scale } from "tabler-icons-react";
 import { gql, useQuery } from "urql";
-import { StatsCard } from "@cryptuoso/components/Stats";
+import { StatsCard } from "./StatsCard";
 import { round } from "helpers";
 
 const useStyles = createStyles((theme) => {

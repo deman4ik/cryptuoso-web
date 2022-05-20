@@ -1,12 +1,13 @@
 import { BaseCard, CardHeader } from "@cryptuoso/components/App/Card";
+import { Logo } from "@cryptuoso/components/Image";
 import { SimpleLink } from "@cryptuoso/components/Link";
-import { round } from "@cryptuoso/helpers/number";
 import dayjs from "@cryptuoso/libs/dayjs";
 import { ActionIcon, createStyles, Group, Skeleton, Stack, Text, Tooltip, Badge, Button } from "@mantine/core";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
-import { Key, Refresh } from "tabler-icons-react";
+import { Receipt2, Refresh } from "tabler-icons-react";
 import { gql, useQuery } from "urql";
+import { IUserSub } from "../Subscription";
+import { getSubStatusColor } from "../Subscription/SubscriptionCard";
 
 const useStyles = createStyles((theme) => ({
     value: {
@@ -15,68 +16,61 @@ const useStyles = createStyles((theme) => ({
         lineHeight: 1
     },
     image: {
-        transform: "rotate(-10deg)"
+        transform: "rotate(-15deg)"
     }
 }));
 
-const ExchangeAccountQuery = gql`
-    query ExchangeAccount($userId: uuid!) {
-        myUserExAcc: user_exchange_accs(
-            where: { user_id: { _eq: $userId } }
+const SubscriptionQuery = gql`
+    query Subscription($userId: uuid!) {
+        myUserSub: user_subs(
+            where: { user_id: { _eq: $userId }, status: { _nin: ["canceled"] } }
+            order_by: { created_at: desc_nulls_last }
             limit: 1
-            order_by: { created_at: desc }
         ) {
             id
-            exchange
             status
-            balance: balances(path: "$.totalUSD")
-            balanceUpdatedAt: balances(path: "$.updatedAt")
-            error
+
+            trialEnded: trial_ended
+
+            activeTo: active_to
         }
     }
 `;
 
-export function CurrentBalance() {
+export function Billing() {
     const { classes } = useStyles();
     const { data: session }: any = useSession();
     const [result, reexecuteQuery] = useQuery<
         {
-            myUserExAcc: {
-                id: string;
-                exchange: string;
-                name: string;
-                status: string;
-                balance: number;
-                balanceUpdatedAt: string;
-                error?: string;
-            }[];
+            myUserSub: IUserSub[];
         },
         { userId: string }
-    >({ query: ExchangeAccountQuery, variables: { userId: session?.user?.userId } });
+    >({ query: SubscriptionQuery, variables: { userId: session?.user?.userId } });
     const { data, fetching, error } = result;
-    const myUserExAcc = data?.myUserExAcc[0];
-
+    const myUserSub = data?.myUserSub[0];
+    let expires = "";
+    let expiresDate = "";
+    if (myUserSub) {
+        if (myUserSub.status === "trial" && myUserSub.trialEnded) {
+            expires = dayjs.utc().to(myUserSub.trialEnded);
+            expiresDate = dayjs.utc(myUserSub.trialEnded).format("YYYY-MM-DD HH:mm:ss UTC");
+        } else if (myUserSub.status === "active" && myUserSub.activeTo) {
+            expires = dayjs.utc().to(myUserSub.activeTo);
+            expiresDate = dayjs.utc(myUserSub.activeTo).format("YYYY-MM-DD HH:mm:ss UTC");
+        }
+    }
     if (data) console.log(data);
     if (error) console.error(error);
 
     return (
         <BaseCard fetching={fetching}>
             <CardHeader
-                title="Exchange Account"
+                title="Subscription"
                 left={
-                    myUserExAcc ? (
-                        <Tooltip
-                            transition="fade"
-                            transitionDuration={500}
-                            transitionTimingFunction="ease"
-                            placement="start"
-                            label={myUserExAcc?.status === "enabled" ? "Checked" : myUserExAcc?.error}
-                            color={myUserExAcc?.status === "enabled" ? "green" : "red"}
-                        >
-                            <Badge color={myUserExAcc?.status === "enabled" ? "green" : "red"} size="sm">
-                                {myUserExAcc?.status}
-                            </Badge>
-                        </Tooltip>
+                    myUserSub ? (
+                        <Badge color={getSubStatusColor(myUserSub?.status)} size="sm">
+                            {myUserSub?.status}
+                        </Badge>
                     ) : (
                         <Skeleton height={18} circle />
                     )
@@ -85,12 +79,12 @@ export function CurrentBalance() {
                     <Group spacing="xs">
                         <Button
                             component={SimpleLink}
-                            href="/app/exchange-account"
+                            href="/app/billing"
                             color="gray"
                             variant="subtle"
                             compact
                             uppercase
-                            rightIcon={<Key size={18} />}
+                            rightIcon={<Receipt2 size={18} />}
                         >
                             DETAILS
                         </Button>
@@ -106,37 +100,31 @@ export function CurrentBalance() {
             />
             <Group position="apart">
                 <Stack spacing="xs" mt={25}>
-                    {myUserExAcc ? (
+                    {myUserSub ? (
                         <Tooltip
                             transition="fade"
                             transitionDuration={500}
                             transitionTimingFunction="ease"
                             placement="start"
-                            label={`Updated ${dayjs.utc().to(myUserExAcc?.balanceUpdatedAt)}`}
+                            label={expiresDate}
                         >
-                            <Text className={classes.value}>{`${round(myUserExAcc?.balance || 0, 2)} $`}</Text>
+                            <Text className={classes.value}>{expires}</Text>
                         </Tooltip>
                     ) : (
                         <Skeleton height={8} width="30%" />
                     )}
 
-                    {myUserExAcc ? (
+                    {myUserSub ? (
                         <Text size="sm" color="dimmed">
-                            Current Balance
+                            Expires
                         </Text>
                     ) : (
                         <Skeleton height={8} width="30%" />
                     )}
                 </Stack>
 
-                {myUserExAcc ? (
-                    <Image
-                        src={`/${myUserExAcc?.exchange}.svg`}
-                        alt={myUserExAcc?.exchange}
-                        className={classes.image}
-                        height={80}
-                        width={200}
-                    />
+                {myUserSub ? (
+                    <Logo className={classes.image} height={80} width={80} />
                 ) : (
                     <Skeleton height={8} width="30%" />
                 )}
