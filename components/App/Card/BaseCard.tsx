@@ -8,10 +8,10 @@ const useStyles = createStyles((theme) => ({
     }
 }));
 
-export function BaseCard({ fetching = false, children }: { fetching?: boolean; children: ReactNode }) {
+export function BaseCard({ fetching = false, children, ...other }: { fetching?: boolean; children: ReactNode }) {
     const { classes } = useStyles();
     return (
-        <Card shadow="sm" p="sm" radius="lg" className={classes.card}>
+        <Card shadow="sm" p="sm" radius="lg" className={classes.card} {...other}>
             <LoadingOverlay visible={fetching} />
             {children}
         </Card>

@@ -35,8 +35,8 @@ export default function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
                     name="keywords"
                     content="cryptocurrency, bitcoin, trading, signals, robots, btc, crypto, mining, binance, nft, eth, bnb"
                 />
-                <link rel="shortcut icon" type="image/x-icon" href="/favicon.svg" />
-                <link rel="shortcut icon" type="image/x-icon" href="/favicon.png" />
+                <link rel="shortcut icon" type="image/x-icon" href="/favicon_color.svg" />
+                <link rel="shortcut icon" type="image/x-icon" href="/favicon_color.png" />
                 {process.env.NEXT_DISABLE_ANALYTICS ? null : (
                     <>
                         <script
@@ -127,14 +127,14 @@ export default function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
 }
 
 MyApp.getInitialProps = async (appContext: AppContext) => {
-    let session: Session | null | undefined = undefined;
+    // let session: Session | null | undefined = undefined;
     // getSession works both server-side and client-side but we want to avoid any calls to /api/auth/session
     // on page load, so we only call it server-side.
-    if (typeof window === "undefined") session = await getSession(appContext.ctx);
+    //  if (typeof window === "undefined") session = await getSession(appContext.ctx);
     const appProps = await App.getInitialProps(appContext);
     return {
         ...appProps,
-        ...(session !== undefined ? { session } : {}),
+        //   ...(session !== undefined ? { session } : {}),
         colorScheme: getCookie("mantine-color-scheme", appContext.ctx) || "dark"
     };
 };

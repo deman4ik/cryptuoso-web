@@ -5,6 +5,8 @@ import { useSession } from "next-auth/react";
 import { Layout } from "@cryptuoso/components/App/Layout";
 import { Section } from "@cryptuoso/components/App/Dashboard";
 import { ExchangeAccountCard } from "@cryptuoso/components/App/ExchangeAccount";
+import { CurrentBalance } from "@cryptuoso/components/App/Dashboard";
+export { getServerSideProps } from "@cryptuoso/libs/graphql/shared";
 
 const useStyles = createStyles((theme) => ({
     darkBg: {
@@ -119,15 +121,9 @@ export default function DashboardPage() {
             <Head>
                 <title>Dashboard | CRYPTUOSO</title>
             </Head>
-            <Grid grow>
+            <Grid>
                 <Grid.Col span={6}>
-                    <ExchangeAccountCard />
-                </Grid.Col>
-                <Grid.Col span={6}>
-                    <Section title="SUBSCRIPTION"></Section>
-                </Grid.Col>
-                <Grid.Col span={12}>
-                    <Section title="PORTFOLIO"></Section>
+                    <CurrentBalance />
                 </Grid.Col>
             </Grid>
         </Layout>

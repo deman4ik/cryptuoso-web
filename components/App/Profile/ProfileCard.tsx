@@ -1,5 +1,5 @@
 import React from "react";
-import { createStyles, ActionIcon } from "@mantine/core";
+import { createStyles, ActionIcon, Switch } from "@mantine/core";
 import { useSession } from "next-auth/react";
 import { gql, useQuery } from "urql";
 import { Refresh } from "tabler-icons-react";
@@ -85,6 +85,19 @@ export function ProfileCard() {
             <CardLine title="Name" loading={!myUser} value={myUser?.name} />
             <CardLine title="Email" loading={!myUser} value={myUser?.email} />
             <CardLine title="Telegram" loading={!myUser} value={myUser?.telegramUsername || myUser?.telegramId} />
+            <CardLine
+                title="Telegram Notifications"
+                loading={!myUser}
+                value={
+                    <Switch
+                        checked={!!myUser?.telegramId && myUser?.settings.notifications.trading.telegram === true}
+                        disabled={!myUser?.telegramId}
+                        onLabel="ON"
+                        offLabel="OFF"
+                        size="md"
+                    />
+                }
+            />
         </BaseCard>
     );
 }
