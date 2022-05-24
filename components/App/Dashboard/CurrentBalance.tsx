@@ -1,4 +1,4 @@
-import { BaseCard, CardHeader } from "@cryptuoso/components/App/Card";
+import { BaseCard, CardHeader, RefreshAction } from "@cryptuoso/components/App/Card";
 import { SimpleLink } from "@cryptuoso/components/Link";
 import { round } from "@cryptuoso/helpers/number";
 import dayjs from "@cryptuoso/libs/dayjs";
@@ -56,7 +56,6 @@ export function CurrentBalance() {
     const { data, fetching, error } = result;
     const myUserExAcc = data?.myUserExAcc[0];
 
-    if (data) console.log(data);
     if (error) console.error(error);
 
     return (
@@ -94,13 +93,7 @@ export function CurrentBalance() {
                         >
                             DETAILS
                         </Button>
-                        <ActionIcon
-                            color="gray"
-                            variant="hover"
-                            onClick={() => reexecuteQuery({ requestPolicy: "network-only" })}
-                        >
-                            <Refresh size={18} />
-                        </ActionIcon>
+                        <RefreshAction reexecuteQuery={reexecuteQuery} />
                     </Group>
                 }
             />

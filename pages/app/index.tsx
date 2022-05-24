@@ -120,19 +120,17 @@ export default function DashboardPage() {
             <Head>
                 <title>Dashboard | CRYPTUOSO</title>
             </Head>
-            <Grid>
+            <Grid gutter="xs">
                 <Grid.Col span={12} lg={6}>
                     <CurrentBalance />
                 </Grid.Col>
                 <Grid.Col span={12} lg={6}>
                     <Billing />
                 </Grid.Col>
-                <Grid.Col span={12}>
-                    <Section title="Trading">
-                        <PortfolioGrid />
-                    </Section>
-                </Grid.Col>
             </Grid>
+            <Section title="Trading">
+                <PortfolioGrid />
+            </Section>
         </Layout>
     );
 }

@@ -65,7 +65,7 @@ export function ProfileCard() {
 
     const { data, fetching, error } = result;
     const myUser = data?.myUser[0];
-    if (data) console.log(data);
+
     if (error) console.error(error);
     return (
         <BaseCard fetching={fetching}>

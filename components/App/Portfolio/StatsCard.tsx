@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { Card, createStyles, Group, Paper, SimpleGrid, Skeleton, Text } from "@mantine/core";
+import { Card, createStyles, Group, Paper, SimpleGrid, Skeleton, Stack, Text } from "@mantine/core";
 import {
     UserPlus,
     Discount2,
@@ -43,17 +43,35 @@ const icons = {
 
 export interface StatsCardProps {
     title: string;
-    desc: string;
     Icon: TablerIcon;
-    value: string | number;
-    diff?: number;
+    values: { value: number | string; diff?: number; desc: string }[];
     fetching?: boolean;
 }
 
-export function StatsCard({ title, desc, Icon, value, diff, fetching, ...others }: StatsCardProps) {
+export function StatsCard({ title, Icon, fetching, values, ...others }: StatsCardProps) {
     const { classes } = useStyles();
 
-    const DiffIcon = diff && diff > 0 ? ArrowUpRight : ArrowDownRight;
+    const rows = values.map(({ value, desc, diff }, i) => {
+        const DiffIcon = diff && diff > 0 ? ArrowUpRight : ArrowDownRight;
+        return (
+            <Stack key={i} spacing={0} mt={25}>
+                <Group align="flex-end" spacing="xs">
+                    <Text className={classes.value}>{value}</Text>
+                    {diff && (
+                        <Text color={diff > 0 ? "teal" : "red"} size="sm" weight={500} className={classes.diff}>
+                            <span>{diff}%</span>
+                            <DiffIcon size={16} />
+                        </Text>
+                    )}
+                </Group>
+
+                <Text size="sm" color="dimmed" mt={7}>
+                    {desc}
+                </Text>
+            </Stack>
+        );
+    });
+
     return (
         <BaseCard fetching={fetching}>
             <Group position="apart">
@@ -63,25 +81,7 @@ export function StatsCard({ title, desc, Icon, value, diff, fetching, ...others 
                 <Icon className={classes.icon} size={22} />
             </Group>
 
-            {fetching ? (
-                <Skeleton height={200} />
-            ) : (
-                <>
-                    <Group align="flex-end" spacing="xs" mt={25}>
-                        <Text className={classes.value}>{value}</Text>
-                        {diff && (
-                            <Text color={diff > 0 ? "teal" : "red"} size="sm" weight={500} className={classes.diff}>
-                                <span>{diff}%</span>
-                                <DiffIcon size={16} />
-                            </Text>
-                        )}
-                    </Group>
-
-                    <Text size="sm" color="dimmed" mt={7}>
-                        {desc}
-                    </Text>
-                </>
-            )}
+            {fetching ? <Skeleton height={75} /> : <Stack justify="flex-end">{rows}</Stack>}
         </BaseCard>
     );
 }

@@ -77,7 +77,7 @@ export function PaymentHistory() {
     >({ query: PaymentHistoryQuery, variables: { userId: session?.user?.userId } });
     const { data, fetching, error } = result;
     const userPayments = data?.userPayments || [];
-    if (data) console.log(data);
+
     if (error) console.error(error);
 
     /* eslint-disable react/jsx-key */

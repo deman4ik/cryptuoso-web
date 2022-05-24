@@ -6,7 +6,7 @@ import { gql, useQuery } from "urql";
 import { round } from "helpers";
 import dayjs from "@cryptuoso/libs/dayjs";
 import { Key, Refresh } from "tabler-icons-react";
-import { BaseCard, CardHeader, CardLine } from "@cryptuoso/components/App/Card";
+import { BaseCard, CardHeader, CardLine, RefreshAction } from "@cryptuoso/components/App/Card";
 
 const ExchangeAccountQuery = gql`
     query ExchangeAccount($userId: uuid!) {
@@ -43,7 +43,7 @@ export function ExchangeAccountCard() {
     >({ query: ExchangeAccountQuery, variables: { userId: session?.user?.userId } });
     const { data, fetching, error } = result;
     const myUserExAcc = data?.myUserExAcc[0];
-    if (data) console.log(data);
+
     if (error) console.error(error);
     return (
         <BaseCard fetching={fetching}>
@@ -54,13 +54,7 @@ export function ExchangeAccountCard() {
                         <Button color="gray" variant="subtle" compact uppercase rightIcon={<Key size={18} />}>
                             Edit
                         </Button>
-                        <ActionIcon
-                            color="gray"
-                            variant="hover"
-                            onClick={() => reexecuteQuery({ requestPolicy: "network-only" })}
-                        >
-                            <Refresh size={18} />
-                        </ActionIcon>
+                        <RefreshAction reexecuteQuery={reexecuteQuery} />
                     </Group>
                 }
             />

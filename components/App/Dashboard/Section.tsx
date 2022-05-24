@@ -14,8 +14,8 @@ export function Section({
     children?: ReactNode;
 }) {
     return (
-        <Stack m="xs">
-            <Group position="apart">
+        <Stack spacing={0}>
+            <Group position="apart" m="xs" mt="xl">
                 <Group spacing="xs" align="center">
                     <Text weight={900} size="lg" transform="uppercase" color="dimmed">
                         {title}

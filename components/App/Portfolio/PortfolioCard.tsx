@@ -1,12 +1,24 @@
 import React from "react";
-import { Group, Badge, ActionIcon, Button, DefaultMantineColor, Tooltip, Skeleton, ThemeIcon } from "@mantine/core";
+import {
+    Group,
+    Badge,
+    ActionIcon,
+    Button,
+    DefaultMantineColor,
+    Tooltip,
+    Skeleton,
+    ThemeIcon,
+    Text,
+    Stack,
+    createStyles
+} from "@mantine/core";
 import { useSession } from "next-auth/react";
 import { gql, OperationContext, useQuery } from "urql";
 import dayjs from "@cryptuoso/libs/dayjs";
-import { Briefcase, Check, Receipt2, Refresh, X } from "tabler-icons-react";
+import { Briefcase, Check, Circle, Receipt2, Refresh, X } from "tabler-icons-react";
 import { IUserSub } from "@cryptuoso/components/App/Subscription";
-import { BaseCard, CardHeader, CardLine } from "@cryptuoso/components/App/Card";
-import { PortfolioOptions, UserPortfolio } from "./types";
+import { BaseCard, CardHeader, CardLine, RefreshAction } from "@cryptuoso/components/App/Card";
+import { PortfolioOptions, PortfolioSettings, UserPortfolio } from "./types";
 import { SimpleLink } from "@cryptuoso/components/Link";
 
 export function getOptionDesc(option: keyof PortfolioOptions) {
@@ -43,38 +55,57 @@ export function getOptionName(option: keyof PortfolioOptions) {
     }
 }
 
+const useStyles = createStyles((theme) => ({
+    content: {
+        display: "flex"
+    }
+}));
+
 export function PortfolioCard({
     status,
     message,
-    options,
+    settings,
     fetching,
     reexecuteQuery
 }: {
     status?: UserPortfolio["status"];
     message?: UserPortfolio["message"];
-    options?: PortfolioOptions;
+    settings?: PortfolioSettings;
     fetching: boolean;
     reexecuteQuery: (opts?: { requestPolicy?: OperationContext["requestPolicy"] }) => void;
 }) {
-    const optionRows = options ? (
-        Object.entries(options).map(([key, value]) => {
-            return (
-                <CardLine
-                    key={key}
-                    title={getOptionName(key as keyof PortfolioOptions)}
-                    loading={!status}
-                    value={
-                        <ThemeIcon size="sm" color={value ? "green" : "gray"}>
-                            {value ? <Check size={18} /> : <X size={18} />}
-                        </ThemeIcon>
-                    }
-                    titleTooltip={getOptionDesc(key as keyof PortfolioOptions)}
-                />
-            );
-        })
+    const { classes } = useStyles();
+
+    const optionRows = settings?.options ? (
+        Object.entries(settings.options)
+            .sort(([, value]) => (value ? -1 : 1))
+            .map(([key, value]) => {
+                return (
+                    <CardLine
+                        key={key}
+                        loading={!status}
+                        title={
+                            <ThemeIcon size="sm" variant="light" color={value ? "green" : "gray"}>
+                                {value ? <Check size={18} /> : <X size={18} />}
+                            </ThemeIcon>
+                        }
+                        value={
+                            <Text size="md" weight={700}>
+                                {getOptionName(key as keyof PortfolioOptions)}
+                            </Text>
+                        }
+                        valueTooltip={getOptionDesc(key as keyof PortfolioOptions)}
+                        position="left"
+                        mt={0}
+                    />
+                );
+            })
     ) : (
         <Skeleton height={30} />
     );
+
+    const amountText = settings?.balancePercent || settings?.tradingAmountCurrency;
+    const amountTypeText = settings?.tradingAmountType === "balancePercent" ? "% of the balance" : "$ fixed";
 
     return (
         <BaseCard fetching={fetching}>
@@ -111,17 +142,27 @@ export function PortfolioCard({
                         >
                             DETAILS
                         </Button>
-                        <ActionIcon
-                            color="gray"
-                            variant="hover"
-                            onClick={() => reexecuteQuery({ requestPolicy: "network-only" })}
-                        >
-                            <Refresh size={18} />
-                        </ActionIcon>
+                        <RefreshAction reexecuteQuery={reexecuteQuery} />
                     </Group>
                 }
             />
-            {optionRows}
+
+            <Group align="flex-end" spacing="xl">
+                <Stack spacing={0}>
+                    {optionRows}
+                    <Text size="sm" color="dimmed" mt={7}>
+                        Options
+                    </Text>
+                </Stack>
+                <Stack spacing={0}>
+                    <Text size="md" weight={700}>
+                        {`${amountText} ${amountTypeText}`}
+                    </Text>
+                    <Text size="sm" color="dimmed" mt={7}>
+                        Trading Amount
+                    </Text>
+                </Stack>
+            </Group>
         </BaseCard>
     );
 }

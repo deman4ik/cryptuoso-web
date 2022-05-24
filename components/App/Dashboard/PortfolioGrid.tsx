@@ -53,76 +53,122 @@ export function PortfolioGrid() {
     const [result, reexecuteQuery] = useQuery<
         {
             myPortfolio: UserPortfolio[];
+            openPosSum: {
+                aggregate: {
+                    sum: {
+                        unrealizedProfit?: number;
+                    };
+                };
+                openTradesCount: number;
+            };
         },
         { userId: string }
     >({ query: PortfolioQuery, variables: { userId: session?.user?.userId } });
     const { data, fetching, error } = result;
     const myPortfolio = data?.myPortfolio[0];
+
     if (data) console.log(data);
     if (error) console.error(error);
     return (
-        <Grid>
-            <Grid.Col span={12} md={4}>
-                <StatsCard
-                    Icon={Coin}
-                    fetching={!myPortfolio}
-                    title="Profit"
-                    diff={round(myPortfolio?.stats.percentNetProfit || 0) || 0}
-                    value={`${round(myPortfolio?.stats.netProfit || 0, 2)} $`}
-                    desc="Portfolio Total Profit"
-                />
-            </Grid.Col>
-            <Grid.Col span={12} md={4}>
-                <StatsCard
-                    Icon={ListCheck}
-                    title="Trades"
-                    value={round(myPortfolio?.stats.tradesCount || 0) || 0}
-                    desc="Total trades"
-                />
-            </Grid.Col>
-            <Grid.Col span={12} md={4}>
-                <StatsCard
-                    Icon={Plus}
-                    title="Win Rate"
-                    value={`${round(myPortfolio?.stats.winRate || 0)} %`}
-                    desc="Trades win rate"
-                />
-            </Grid.Col>
-            <Grid.Col span={12} md={4}>
-                <StatsCard
-                    Icon={Minus}
-                    title="Max Drawdown"
-                    value={`${round(myPortfolio?.stats.maxDrawdown || 0)} $`}
-                    diff={-(round(myPortfolio?.stats.percentMaxDrawdown || 0) || 0)}
-                    desc="Maximum balance drawdown"
-                />
-            </Grid.Col>
-            <Grid.Col span={12} md={4}>
-                <StatsCard
-                    Icon={Scale}
-                    title="Payoff Ratio"
-                    value={myPortfolio?.stats.payoffRatio || 0}
-                    desc="Ratio between wins and losses"
-                />
-            </Grid.Col>
-            <Grid.Col span={12} md={4}>
-                <StatsCard
-                    Icon={Scale}
-                    title="Sharpe Ratio"
-                    value={myPortfolio?.stats.sharpeRatio || 0}
-                    desc="Return ratio compared to risk"
-                />
-            </Grid.Col>
-            <Grid.Col span={12} sm={6}>
+        <Grid gutter="xs">
+            <Grid.Col span={12} lg={6}>
                 <Equity fetching={fetching} reexecuteQuery={reexecuteQuery} equity={myPortfolio?.stats.equity} />
             </Grid.Col>
-            <Grid.Col span={12} sm={6}>
+            <Grid.Col span={12} lg={6}>
                 <PortfolioCard
                     fetching={fetching}
                     reexecuteQuery={reexecuteQuery}
                     status={myPortfolio?.status}
-                    options={myPortfolio?.settings.options}
+                    settings={myPortfolio?.settings}
                     message={myPortfolio?.message}
+                />
+            </Grid.Col>
+            <Grid.Col span={12} lg={4}>
+                <StatsCard
+                    fetching={fetching}
+                    Icon={Coin}
+                    title="Profit / Loss"
+                    values={[
+                        {
+                            value: `${round(data?.openPosSum.aggregate.sum.unrealizedProfit || 0, 2)} $`,
+                            desc: "Unrealized Profit / Loss"
+                        },
+                        {
+                            value: `${round(myPortfolio?.stats.netProfit || 0, 2)} $`,
+                            diff: round(myPortfolio?.stats.percentNetProfit || 0) || 0,
+                            desc: "Total Profit / Loss"
+                        }
+                    ]}
+                />
+            </Grid.Col>
+            <Grid.Col span={12} lg={4}>
+                <StatsCard
+                    fetching={fetching}
+                    Icon={ListCheck}
+                    title="Trades"
+                    values={[
+                        {
+                            value: round(data?.openPosSum.openTradesCount || 0) || 0,
+                            desc: "Open Trades"
+                        },
+                        {
+                            value: round(myPortfolio?.stats.tradesCount || 0) || 0,
+                            desc: "Total closed trades"
+                        }
+                    ]}
+                />
+            </Grid.Col>
+            <Grid.Col span={12} md={4}>
+                <StatsCard
+                    fetching={fetching}
+                    Icon={Plus}
+                    title="Win Rate"
+                    values={[
+                        {
+                            value: `${round(myPortfolio?.stats.winRate || 0)} %`,
+                            desc: "Trades win rate"
+                        }
+                    ]}
+                />
+            </Grid.Col>
+            <Grid.Col span={12} md={4}>
+                <StatsCard
+                    fetching={fetching}
+                    Icon={Minus}
+                    title="Max Drawdown"
+                    values={[
+                        {
+                            value: `${round(myPortfolio?.stats.maxDrawdown || 0)} $`,
+                            diff: -(round(myPortfolio?.stats.percentMaxDrawdown || 0) || 0),
+                            desc: "Maximum balance drawdown"
+                        }
+                    ]}
+                />
+            </Grid.Col>
+            <Grid.Col span={12} md={4}>
+                <StatsCard
+                    fetching={fetching}
+                    Icon={Scale}
+                    title="Payoff Ratio"
+                    values={[
+                        {
+                            value: myPortfolio?.stats.payoffRatio || 0,
+                            desc: "Ratio between wins and losses"
+                        }
+                    ]}
+                />
+            </Grid.Col>
+            <Grid.Col span={12} md={4}>
+                <StatsCard
+                    fetching={fetching}
+                    Icon={Scale}
+                    title="Sharpe Ratio"
+                    values={[
+                        {
+                            value: myPortfolio?.stats.sharpeRatio || 0,
+                            desc: "Return ratio compared to risk"
+                        }
+                    ]}
                 />
             </Grid.Col>
         </Grid>

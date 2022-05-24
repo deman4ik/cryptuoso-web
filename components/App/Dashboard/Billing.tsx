@@ -1,4 +1,4 @@
-import { BaseCard, CardHeader } from "@cryptuoso/components/App/Card";
+import { BaseCard, CardHeader, RefreshAction } from "@cryptuoso/components/App/Card";
 import { Logo } from "@cryptuoso/components/Image";
 import { SimpleLink } from "@cryptuoso/components/Link";
 import dayjs from "@cryptuoso/libs/dayjs";
@@ -59,7 +59,6 @@ export function Billing() {
             expiresDate = dayjs.utc(myUserSub.activeTo).format("YYYY-MM-DD HH:mm:ss UTC");
         }
     }
-    if (data) console.log(data);
     if (error) console.error(error);
 
     return (
@@ -88,13 +87,7 @@ export function Billing() {
                         >
                             DETAILS
                         </Button>
-                        <ActionIcon
-                            color="gray"
-                            variant="hover"
-                            onClick={() => reexecuteQuery({ requestPolicy: "network-only" })}
-                        >
-                            <Refresh size={18} />
-                        </ActionIcon>
+                        <RefreshAction reexecuteQuery={reexecuteQuery} />
                     </Group>
                 }
             />

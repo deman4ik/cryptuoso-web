@@ -23,6 +23,11 @@ const useStyles = createStyles((theme) => ({
             theme.colorScheme === "dark"
                 ? theme.fn.linearGradient(360, theme.colors.dark[7], theme.colors.dark[6], theme.colors.dark[7])
                 : theme.fn.linearGradient(360, theme.colors.gray[0], theme.colors.gray[1], theme.colors.gray[0])
+    },
+    gradientBg: {
+        backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.white,
+        backgroundImage: `radial-gradient(at 70% 70%, ${theme.colors.indigo[9]} 0px, transparent 50%),
+        radial-gradient(at 15% 35%, ${theme.colors.cyan[9]} 0px, transparent 50%);`
     }
 }));
 
