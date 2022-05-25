@@ -81,7 +81,7 @@ export function CurrentBalance() {
                     )
                 }
                 right={
-                    <Group spacing="xs">
+                    <Group spacing={0}>
                         <Button
                             component={SimpleLink}
                             href="/app/exchange-account"

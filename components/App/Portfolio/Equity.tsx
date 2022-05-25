@@ -31,7 +31,7 @@ export function Equity({
     return (
         <BaseCard fetching={fetching}>
             <CardHeader
-                title="My Portfolio Equity"
+                title="Equity"
                 right={
                     <ActionIcon
                         color="gray"

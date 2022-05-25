@@ -80,7 +80,7 @@ export function SubscriptionCard() {
             <CardHeader
                 title="Subscription"
                 right={
-                    <Group spacing="xs">
+                    <Group spacing={0}>
                         <Button color="gray" variant="subtle" compact uppercase rightIcon={<Receipt2 size={18} />}>
                             Change Plan
                         </Button>

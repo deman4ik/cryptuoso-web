@@ -67,15 +67,28 @@ export function Billing() {
                 title="Subscription"
                 left={
                     myUserSub ? (
-                        <Badge color={getSubStatusColor(myUserSub?.status)} size="sm">
-                            {myUserSub?.status}
-                        </Badge>
+                        <Tooltip
+                            transition="fade"
+                            transitionDuration={500}
+                            transitionTimingFunction="ease"
+                            placement="start"
+                            label={
+                                <Text transform="capitalize" size="sm">
+                                    {myUserSub?.status}
+                                </Text>
+                            }
+                            color={getSubStatusColor(myUserSub?.status)}
+                        >
+                            <Badge color={getSubStatusColor(myUserSub?.status)} size="sm">
+                                {myUserSub?.status}
+                            </Badge>
+                        </Tooltip>
                     ) : (
                         <Skeleton height={18} circle />
                     )
                 }
                 right={
-                    <Group spacing="xs">
+                    <Group spacing={0}>
                         <Button
                             component={SimpleLink}
                             href="/app/billing"

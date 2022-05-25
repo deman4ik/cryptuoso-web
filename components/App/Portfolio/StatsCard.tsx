@@ -34,29 +34,38 @@ const useStyles = createStyles((theme) => ({
     }
 }));
 
-const icons = {
-    user: UserPlus,
-    discount: Discount2,
-    receipt: Receipt2,
-    coin: Coin
-};
+export const plusNum = (value: number) => (value > 0 ? `+${value}` : value);
 
 export interface StatsCardProps {
     title: string;
     Icon: TablerIcon;
-    values: { value: number | string; diff?: number; desc: string }[];
+    values: {
+        value?: number | string;
+        valueType?: null | "%" | "$";
+        diff?: number;
+        desc: string;
+        changeValueColor?: boolean;
+        plusValue?: boolean;
+    }[];
     fetching?: boolean;
 }
 
 export function StatsCard({ title, Icon, fetching, values, ...others }: StatsCardProps) {
     const { classes } = useStyles();
 
-    const rows = values.map(({ value, desc, diff }, i) => {
+    const rows = values.map(({ value = 0, valueType, desc, diff, changeValueColor, plusValue }, i) => {
         const DiffIcon = diff && diff > 0 ? ArrowUpRight : ArrowDownRight;
         return (
             <Stack key={i} spacing={0} mt={25}>
                 <Group align="flex-end" spacing="xs">
-                    <Text className={classes.value}>{value}</Text>
+                    <Text
+                        className={classes.value}
+                        color={changeValueColor === true ? (value > 0 ? "teal" : "red") : undefined}
+                    >
+                        {plusValue
+                            ? `${plusNum(+value)}${valueType ? ` ${valueType}` : ""}`
+                            : `${value}${valueType ? ` ${valueType}` : ""}`}
+                    </Text>
                     {diff && (
                         <Text color={diff > 0 ? "teal" : "red"} size="sm" weight={500} className={classes.diff}>
                             <span>{diff}%</span>

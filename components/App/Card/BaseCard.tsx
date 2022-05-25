@@ -23,7 +23,7 @@ export function BaseCard({
     return (
         <Card shadow="sm" p="sm" radius="lg" className={classes.card} sx={sx} {...other}>
             <LoadingOverlay visible={fetching} />
-            <Stack justify="flex-end" spacing={0}>
+            <Stack justify="space-between" spacing={0} sx={{ height: "100%" }}>
                 {children}
             </Stack>
         </Card>

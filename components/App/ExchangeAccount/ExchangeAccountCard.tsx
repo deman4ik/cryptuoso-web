@@ -50,7 +50,7 @@ export function ExchangeAccountCard() {
             <CardHeader
                 title="Exchange Account"
                 right={
-                    <Group spacing="xs">
+                    <Group spacing={0}>
                         <Button color="gray" variant="subtle" compact uppercase rightIcon={<Key size={18} />}>
                             Edit
                         </Button>

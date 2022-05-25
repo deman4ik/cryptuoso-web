@@ -3,7 +3,7 @@ import Head from "next/head";
 import { gql, useQuery } from "urql";
 import { useSession } from "next-auth/react";
 import { Layout } from "@cryptuoso/components/App/Layout";
-import { PortfolioGrid, Section } from "@cryptuoso/components/App/Dashboard";
+import { Portfolio, PortfolioStats, Section } from "@cryptuoso/components/App/Dashboard";
 import { CurrentBalance, Billing } from "@cryptuoso/components/App/Dashboard";
 export { getServerSideProps } from "@cryptuoso/libs/graphql/shared";
 
@@ -121,15 +121,18 @@ export default function DashboardPage() {
                 <title>Dashboard | CRYPTUOSO</title>
             </Head>
             <Grid gutter="xs">
-                <Grid.Col span={12} lg={6}>
+                <Grid.Col span={12} lg={6} xl={4}>
                     <CurrentBalance />
                 </Grid.Col>
-                <Grid.Col span={12} lg={6}>
+                <Grid.Col span={12} lg={6} xl={4}>
                     <Billing />
                 </Grid.Col>
+                <Grid.Col span={12} xl={4}>
+                    <Portfolio />
+                </Grid.Col>
             </Grid>
-            <Section title="Trading">
-                <PortfolioGrid />
+            <Section title="Portfolio Perfomance">
+                <PortfolioStats />
             </Section>
         </Layout>
     );
