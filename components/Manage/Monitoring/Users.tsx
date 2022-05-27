@@ -3,11 +3,12 @@ import { Section } from "@cryptuoso/components/App/Dashboard";
 import { StatsCard } from "@cryptuoso/components/App/Portfolio";
 import { Group, Text } from "@mantine/core";
 import dayjs from "dayjs";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { UserPlus, Users } from "tabler-icons-react";
 import { gql, useQuery } from "urql";
 import { filterDatesToQuery, periodToDate } from "../Filters";
 import { FiltersContext } from "../Layout";
+import ms from "ms";
 
 const UsersQuery = gql`
     query usersCount($dateFrom: timestamp!, $dateTo: timestamp!) {
@@ -106,6 +107,14 @@ export function UsersSection() {
         }
     });
     const { data, fetching, error } = result;
+
+    useEffect(() => {
+        if (filters.refreshRate !== "off" && !fetching) {
+            const id = setTimeout(() => reexecuteQuery({ requestPolicy: "network-only" }), ms(filters.refreshRate));
+            return () => clearTimeout(id);
+        }
+    }, [fetching, reexecuteQuery, filters.refreshRate]);
+
     const usersTotal = data?.usersTotal.aggregate.count;
     const usersWithPortfolios = data?.usersWithPortfolios.aggregate.count;
     const usersWithSubs = data?.usersWithSubs.aggregate.count;
