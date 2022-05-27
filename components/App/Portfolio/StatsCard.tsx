@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { Card, createStyles, Group, Paper, SimpleGrid, Skeleton, Stack, Text } from "@mantine/core";
+import { Card, CardProps, createStyles, Group, Paper, SimpleGrid, Skeleton, Stack, Sx, Text } from "@mantine/core";
 import {
     UserPlus,
     Discount2,
@@ -48,6 +48,7 @@ export interface StatsCardProps {
         plusValue?: boolean;
     }[];
     fetching?: boolean;
+    sx?: Sx;
 }
 
 export function StatsCard({ title, Icon, fetching, values, ...others }: StatsCardProps) {
@@ -82,7 +83,7 @@ export function StatsCard({ title, Icon, fetching, values, ...others }: StatsCar
     });
 
     return (
-        <BaseCard fetching={fetching}>
+        <BaseCard fetching={fetching} {...others}>
             <Group position="apart">
                 <Text size="md" color="dimmed" className={classes.title}>
                     {title}

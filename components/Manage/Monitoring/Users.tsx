@@ -1,7 +1,7 @@
 import { RefreshAction } from "@cryptuoso/components/App/Card";
 import { Section } from "@cryptuoso/components/App/Dashboard";
 import { StatsCard } from "@cryptuoso/components/App/Portfolio";
-import { Group, Text } from "@mantine/core";
+import { Grid, Group, Text } from "@mantine/core";
 import dayjs from "dayjs";
 import { useContext, useEffect } from "react";
 import { UserPlus, Users } from "tabler-icons-react";
@@ -124,47 +124,51 @@ export function UsersSection() {
 
     if (error) console.error(error);
     return (
-        <Section title="Users" left={<RefreshAction reexecuteQuery={reexecuteQuery} />}>
-            <Group>
-                <StatsCard
-                    fetching={fetching}
-                    Icon={Users}
-                    title="All Users"
-                    values={[
-                        {
-                            value: usersTotal,
-                            desc: "Total"
-                        },
-                        {
-                            value: usersWithPortfolios,
-                            desc: "With Portfolios"
-                        },
-                        {
-                            value: usersWithSubs,
-                            desc: "With Subscriptions"
-                        }
-                    ]}
-                />
-                <StatsCard
-                    fetching={fetching}
-                    Icon={UserPlus}
-                    title="New Users in period"
-                    values={[
-                        {
-                            value: usersTotalDate,
-                            desc: "Total"
-                        },
-                        {
-                            value: usersWithPortfoliosDate,
-                            desc: "With Portfolios"
-                        },
-                        {
-                            value: usersWithSubsDate,
-                            desc: "With Subscriptions"
-                        }
-                    ]}
-                />
-            </Group>
+        <Section title="Users" mt={0} left={<RefreshAction reexecuteQuery={reexecuteQuery} />}>
+            <Grid>
+                <Grid.Col span={12} sm={6}>
+                    <StatsCard
+                        fetching={fetching}
+                        Icon={Users}
+                        title="All Users"
+                        values={[
+                            {
+                                value: usersTotal,
+                                desc: "Total"
+                            },
+                            {
+                                value: usersWithPortfolios,
+                                desc: "With Portfolios"
+                            },
+                            {
+                                value: usersWithSubs,
+                                desc: "With Subscriptions"
+                            }
+                        ]}
+                    />
+                </Grid.Col>
+                <Grid.Col span={12} sm={6}>
+                    <StatsCard
+                        fetching={fetching}
+                        Icon={UserPlus}
+                        title="New Users in period"
+                        values={[
+                            {
+                                value: usersTotalDate,
+                                desc: "Total"
+                            },
+                            {
+                                value: usersWithPortfoliosDate,
+                                desc: "With Portfolios"
+                            },
+                            {
+                                value: usersWithSubsDate,
+                                desc: "With Subscriptions"
+                            }
+                        ]}
+                    />
+                </Grid.Col>
+            </Grid>
         </Section>
     );
 }
