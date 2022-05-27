@@ -1,13 +1,14 @@
 import { RefreshAction } from "@cryptuoso/components/App/Card";
 import { Section } from "@cryptuoso/components/App/Dashboard";
 import { StatsCard } from "@cryptuoso/components/App/Portfolio";
-import { Group, Text } from "@mantine/core";
+import { Grid, Group, Text } from "@mantine/core";
 import dayjs from "dayjs";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { UserPlus, Users } from "tabler-icons-react";
 import { gql, useQuery } from "urql";
 import { filterDatesToQuery, periodToDate } from "../Filters";
 import { FiltersContext } from "../Layout";
+import ms from "ms";
 
 const UsersQuery = gql`
     query usersCount($dateFrom: timestamp!, $dateTo: timestamp!) {
@@ -106,6 +107,14 @@ export function UsersSection() {
         }
     });
     const { data, fetching, error } = result;
+
+    useEffect(() => {
+        if (filters.refreshRate !== "off" && !fetching) {
+            const id = setTimeout(() => reexecuteQuery({ requestPolicy: "network-only" }), ms(filters.refreshRate));
+            return () => clearTimeout(id);
+        }
+    }, [fetching, reexecuteQuery, filters.refreshRate]);
+
     const usersTotal = data?.usersTotal.aggregate.count;
     const usersWithPortfolios = data?.usersWithPortfolios.aggregate.count;
     const usersWithSubs = data?.usersWithSubs.aggregate.count;
@@ -115,47 +124,51 @@ export function UsersSection() {
 
     if (error) console.error(error);
     return (
-        <Section title="Users" left={<RefreshAction reexecuteQuery={reexecuteQuery} />}>
-            <Group>
-                <StatsCard
-                    fetching={fetching}
-                    Icon={Users}
-                    title="All Users"
-                    values={[
-                        {
-                            value: usersTotal,
-                            desc: "Total"
-                        },
-                        {
-                            value: usersWithPortfolios,
-                            desc: "With Portfolios"
-                        },
-                        {
-                            value: usersWithSubs,
-                            desc: "With Subscriptions"
-                        }
-                    ]}
-                />
-                <StatsCard
-                    fetching={fetching}
-                    Icon={UserPlus}
-                    title="New Users in period"
-                    values={[
-                        {
-                            value: usersTotalDate,
-                            desc: "Total"
-                        },
-                        {
-                            value: usersWithPortfoliosDate,
-                            desc: "With Portfolios"
-                        },
-                        {
-                            value: usersWithSubsDate,
-                            desc: "With Subscriptions"
-                        }
-                    ]}
-                />
-            </Group>
+        <Section title="Users" mt={0} left={<RefreshAction reexecuteQuery={reexecuteQuery} />}>
+            <Grid>
+                <Grid.Col span={12} sm={6}>
+                    <StatsCard
+                        fetching={fetching}
+                        Icon={Users}
+                        title="All Users"
+                        values={[
+                            {
+                                value: usersTotal,
+                                desc: "Total"
+                            },
+                            {
+                                value: usersWithPortfolios,
+                                desc: "With Portfolios"
+                            },
+                            {
+                                value: usersWithSubs,
+                                desc: "With Subscriptions"
+                            }
+                        ]}
+                    />
+                </Grid.Col>
+                <Grid.Col span={12} sm={6}>
+                    <StatsCard
+                        fetching={fetching}
+                        Icon={UserPlus}
+                        title="New Users in period"
+                        values={[
+                            {
+                                value: usersTotalDate,
+                                desc: "Total"
+                            },
+                            {
+                                value: usersWithPortfoliosDate,
+                                desc: "With Portfolios"
+                            },
+                            {
+                                value: usersWithSubsDate,
+                                desc: "With Subscriptions"
+                            }
+                        ]}
+                    />
+                </Grid.Col>
+            </Grid>
         </Section>
     );
 }

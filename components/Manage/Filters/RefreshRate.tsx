@@ -11,8 +11,7 @@ export function RefreshRate({ value, setValue }: { value: string | null; setValu
                 if (e) setValue(e);
             }}
             size="xs"
-            mt={0}
-            pt={0}
+            variant="filled"
             sx={{ width: "85px" }}
             data={[
                 { value: "off", label: "Off" },

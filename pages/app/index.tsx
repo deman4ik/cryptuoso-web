@@ -109,7 +109,7 @@ export default function DashboardPage() {
     if (data) console.log(data);
     if (error) console.error(error);
     return (
-        <Layout title="Dashboard">
+        <Layout>
             <Head>
                 <title>Dashboard | CRYPTUOSO</title>
             </Head>

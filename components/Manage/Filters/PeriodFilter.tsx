@@ -49,8 +49,7 @@ export function PeriodFilter({
                     });
             }}
             size="xs"
-            mt={0}
-            pt={0}
+            variant="filled"
             sx={{ width: "115px" }}
             data={[
                 { value: "off", label: "Off" },
