@@ -48,8 +48,8 @@ export function PortfolioStats() {
                     sum: {
                         unrealizedProfit?: number;
                     };
+                    openTradesCount: number;
                 };
-                openTradesCount: number;
             };
         },
         { userId: string }
@@ -87,7 +87,7 @@ export function PortfolioStats() {
                     title="Open Trades"
                     values={[
                         {
-                            value: round(data?.openPosSum.openTradesCount),
+                            value: round(data?.openPosSum.aggregate.openTradesCount),
                             desc: "Open positions amount"
                         }
                     ]}

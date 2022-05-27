@@ -2,7 +2,19 @@ import React from "react";
 import { Group, Badge, Button, Tooltip, Skeleton, ThemeIcon, Text, Stack } from "@mantine/core";
 import { useSession } from "next-auth/react";
 import { gql, useQuery } from "urql";
-import { Briefcase, Check, Coin, Receipt, ReceiptRefund, Scale, TrendingDown, Trophy, X } from "tabler-icons-react";
+import {
+    Bolt,
+    Briefcase,
+    Check,
+    Coin,
+    PresentationAnalytics,
+    Receipt,
+    ReceiptRefund,
+    Scale,
+    TrendingDown,
+    Trophy,
+    X
+} from "tabler-icons-react";
 import { BaseCard, CardHeader, CardLine, RefreshAction } from "@cryptuoso/components/App/Card";
 import { PortfolioOptions, UserPortfolio } from "../Portfolio/types";
 import { SimpleLink } from "@cryptuoso/components/Link";
@@ -61,15 +73,15 @@ export function getOptionName(option: keyof PortfolioOptions) {
 export function getOptionIcon(option: keyof PortfolioOptions) {
     switch (option) {
         case "profit":
-            return <Coin size={18} />;
+            return <Coin size={20} />;
         case "winRate":
-            return <Trophy size={18} />;
+            return <Trophy size={20} />;
         case "risk":
-            return <TrendingDown size={18} />;
+            return <Bolt size={20} />;
         case "moneyManagement":
-            return <Scale size={18} />;
+            return <Scale size={20} />;
         case "efficiency":
-            return <ReceiptRefund size={18} />;
+            return <PresentationAnalytics size={20} />;
         default:
             return "";
     }
@@ -103,9 +115,8 @@ export function Portfolio() {
                                 value ? " ✅" : " ❌"
                             }\n${getOptionDesc(key as keyof PortfolioOptions)}`}</span>
                         }
-                        color={value ? "green" : "gray"}
                     >
-                        <ThemeIcon size="sm" variant="light" color={value ? "green" : "gray"}>
+                        <ThemeIcon size="md" variant="light" color={value ? "indigo" : "gray"}>
                             {getOptionIcon(key as keyof PortfolioOptions)}
                         </ThemeIcon>
                     </Tooltip>

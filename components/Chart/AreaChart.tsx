@@ -39,13 +39,12 @@ const AreaChart = (props: { data?: (SingleValueData | WhitespaceData)[]; classNa
                 },
                 crosshair: {
                     vertLine: {
-                        width: 4,
-                        color: "rgba(224, 227, 235, 0.1)",
-                        style: 0
+                        visible: true,
+                        labelVisible: true
                     },
                     horzLine: {
-                        visible: false,
-                        labelVisible: false
+                        visible: true,
+                        labelVisible: true
                     }
                 },
                 width: chartContainerRef.current.clientWidth,
