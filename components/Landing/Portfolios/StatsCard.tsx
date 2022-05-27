@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { createStyles, Group, Paper, SimpleGrid, Text } from "@mantine/core";
+import { createStyles, Group, Paper, SimpleGrid, Skeleton, Text } from "@mantine/core";
 import {
     UserPlus,
     Discount2,
@@ -46,14 +46,15 @@ export interface StatsCardProps {
     Icon: TablerIcon;
     value: string | number;
     diff?: number;
+    fetching?: boolean;
 }
 
-export function StatsCard({ title, desc, Icon, value, diff }: StatsCardProps) {
+export function StatsCard({ title, desc, Icon, value, diff, fetching, ...others }: StatsCardProps) {
     const { classes } = useStyles();
 
     const DiffIcon = diff && diff > 0 ? ArrowUpRight : ArrowDownRight;
     return (
-        <Paper withBorder p="md" radius="md" key={title}>
+        <Paper withBorder p="md" radius="md" key={title} {...others}>
             <Group position="apart">
                 <Text size="md" color="dimmed" className={classes.title}>
                     {title}
@@ -61,19 +62,25 @@ export function StatsCard({ title, desc, Icon, value, diff }: StatsCardProps) {
                 <Icon className={classes.icon} size={22} />
             </Group>
 
-            <Group align="flex-end" spacing="xs" mt={25}>
-                <Text className={classes.value}>{value}</Text>
-                {diff && (
-                    <Text color={diff > 0 ? "teal" : "red"} size="sm" weight={500} className={classes.diff}>
-                        <span>{diff}%</span>
-                        <DiffIcon size={16} />
-                    </Text>
-                )}
-            </Group>
+            {fetching ? (
+                <Skeleton height={200} />
+            ) : (
+                <>
+                    <Group align="flex-end" spacing="xs" mt={25}>
+                        <Text className={classes.value}>{value}</Text>
+                        {diff && (
+                            <Text color={diff > 0 ? "teal" : "red"} size="sm" weight={500} className={classes.diff}>
+                                <span>{diff}%</span>
+                                <DiffIcon size={16} />
+                            </Text>
+                        )}
+                    </Group>
 
-            <Text size="sm" color="dimmed" mt={7}>
-                {desc}
-            </Text>
+                    <Text size="sm" color="dimmed" mt={7}>
+                        {desc}
+                    </Text>
+                </>
+            )}
         </Paper>
     );
 }

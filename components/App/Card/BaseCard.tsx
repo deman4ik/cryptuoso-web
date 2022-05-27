@@ -1,19 +1,31 @@
-import { Card, createStyles, LoadingOverlay } from "@mantine/core";
+import { Card, createStyles, LoadingOverlay, Stack, Sx } from "@mantine/core";
 import { ReactNode } from "react";
 
 const useStyles = createStyles((theme) => ({
     card: {
         position: "relative",
-        backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.colors.gray[0]
+        backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.colors.gray[0],
+        height: "100%"
     }
 }));
 
-export function BaseCard({ fetching = false, children, ...other }: { fetching?: boolean; children: ReactNode }) {
+export function BaseCard({
+    fetching = false,
+    children,
+    sx,
+    ...other
+}: {
+    fetching?: boolean;
+    sx?: Sx;
+    children: ReactNode;
+}) {
     const { classes } = useStyles();
     return (
-        <Card shadow="sm" p="sm" radius="lg" className={classes.card} {...other}>
+        <Card shadow="sm" p="sm" radius="lg" className={classes.card} sx={sx} {...other}>
             <LoadingOverlay visible={fetching} />
-            {children}
+            <Stack justify="space-between" spacing={0} sx={{ height: "100%" }}>
+                {children}
+            </Stack>
         </Card>
     );
 }

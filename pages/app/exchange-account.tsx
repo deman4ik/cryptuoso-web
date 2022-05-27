@@ -13,12 +13,12 @@ export default function DashboardPage() {
     const { classes } = useStyles();
 
     return (
-        <Layout title="Exchange Account">
+        <Layout>
             <Head>
                 <title>Exchange Account | CRYPTUOSO</title>
             </Head>
             <Grid>
-                <Grid.Col sm={12} md={4}>
+                <Grid.Col span={12} sm={6}>
                     <ExchangeAccountCard />
                 </Grid.Col>
             </Grid>

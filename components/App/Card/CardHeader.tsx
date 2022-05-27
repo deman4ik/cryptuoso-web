@@ -1,13 +1,16 @@
 import { ReactNode } from "react";
-import { Text, Group } from "@mantine/core";
+import { Text, Group, Stack } from "@mantine/core";
 
-export function CardHeader({ title, rightActions }: { title: string; rightActions: ReactNode }) {
+export function CardHeader({ title, left, right }: { title: string; left?: ReactNode; right?: ReactNode }) {
     return (
-        <Group position="apart" mb="md">
-            <Text size="md" weight={900} transform="uppercase" color="dimmed">
-                {title}
-            </Text>
-            {rightActions}
+        <Group position="apart" mb="md" align="flex-start">
+            <Stack align="flex-start" spacing={0}>
+                <Text size="md" weight={900} transform="uppercase" color="dimmed">
+                    {title}
+                </Text>
+                {left}
+            </Stack>
+            {right}
         </Group>
     );
 }

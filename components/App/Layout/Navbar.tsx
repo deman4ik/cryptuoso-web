@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { createStyles, Navbar, Group, Text, ScrollArea } from "@mantine/core";
-import { BellRinging, Key, Receipt2, Dashboard, Logout, UserCircle, BrandTelegram } from "tabler-icons-react";
-import { signOut } from "next-auth/react";
+import { BellRinging, Key, Receipt2, Dashboard, Logout, UserCircle, BrandTelegram, Tools } from "tabler-icons-react";
+import { signOut, useSession } from "next-auth/react";
 import { ColorSchemeToggleBig } from "@cryptuoso/components/Landing/Layout";
 import { SimpleLink } from "@cryptuoso/components/Link";
 import { useRouter } from "next/router";
@@ -79,7 +79,7 @@ const data = [
 export function AppNavbar({ ...others }) {
     const { classes, cx } = useStyles();
     const router = useRouter();
-
+    const { data: session } = useSession();
     const links = data.map((item) => (
         <SimpleLink
             className={cx(classes.link, { [classes.linkActive]: item.link === router.pathname })}
@@ -98,6 +98,13 @@ export function AppNavbar({ ...others }) {
             </Navbar.Section>
 
             <Navbar.Section className={classes.footer}>
+                {session?.user.allowedRoles.includes("manager") && (
+                    <SimpleLink href="/manage" className={classes.link}>
+                        <Tools className={classes.linkIcon} />
+                        <span>Manage</span>
+                    </SimpleLink>
+                )}
+
                 <SimpleLink href="https://t.me/cryptuoso_bot" className={classes.link}>
                     <BrandTelegram className={classes.linkIcon} />
                     <span>Telegram Trading Bot</span>

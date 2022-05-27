@@ -68,16 +68,16 @@ function getPaymentStatusColor(status: IUserPayment["status"]): DefaultMantineCo
 
 export function PaymentHistory() {
     const { classes, theme } = useStyles();
-    const { data: session }: any = useSession();
+    const { data: session } = useSession<true>({ required: true });
     const [result, reexecuteQuery] = useQuery<
         {
             userPayments: IUserPayment[];
         },
         { userId: string }
-    >({ query: PaymentHistoryQuery, variables: { userId: session?.user?.userId } });
+    >({ query: PaymentHistoryQuery, variables: { userId: session?.user?.userId || "" } });
     const { data, fetching, error } = result;
     const userPayments = data?.userPayments || [];
-    if (data) console.log(data);
+
     if (error) console.error(error);
 
     /* eslint-disable react/jsx-key */

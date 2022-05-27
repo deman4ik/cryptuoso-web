@@ -1,4 +1,6 @@
 import { cacheExchange, createClient, dedupExchange, fetchExchange } from "@urql/core";
+import { requestPolicyExchange } from "@urql/exchange-request-policy";
+import { refocusExchange } from "@urql/exchange-refocus";
 import { errorExchange } from "urql";
 import { signIn, useSession } from "next-auth/react";
 import * as React from "react";
@@ -9,7 +11,7 @@ import * as React from "react";
  * If the user has an active session, it will add an accessToken to all requests
  */
 const useClient = (options?: RequestInit) => {
-    const { data: session }: any = useSession();
+    const { data: session } = useSession();
 
     const token = session?.user?.accessToken;
     // const handleError = useErrorHandler();
@@ -32,6 +34,10 @@ const useClient = (options?: RequestInit) => {
             },
             exchanges: [
                 dedupExchange,
+                refocusExchange(),
+                requestPolicyExchange({
+                    ttl: 5 * 60 * 1000
+                }),
                 cacheExchange,
                 errorExchange({
                     onError: (error) => {

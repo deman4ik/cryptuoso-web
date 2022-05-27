@@ -3,19 +3,12 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { getToken, JWT } from "next-auth/jwt";
 import { createClient, gql } from "urql";
 import jwt from "jsonwebtoken";
+import { UserAuthData } from "@cryptuoso/helpers";
+import dayjs from "@cryptuoso/libs/dayjs";
 
 export const client = createClient({
     url: `${process.env.NEXT_PUBLIC_HASURA_URL}`
 });
-
-export interface UserAuthData {
-    id: string;
-    accessToken: string;
-    userId: string;
-    allowedRoles: string[];
-    access: number;
-    exp: number;
-}
 
 export default NextAuth({
     providers: [
@@ -49,7 +42,7 @@ export default NextAuth({
                     if (result.error) {
                         throw result.error;
                     }
-                    //TODO: get user from gql
+
                     const accessToken = result?.data?.result.accessToken;
                     if (accessToken) {
                         const token = jwt.decode(accessToken) as jwt.JwtPayload;
@@ -80,14 +73,58 @@ export default NextAuth({
 
             const { session, token } = params;
 
-            return { ...session, user: { ...session.user, ...(token.user as { [key: string]: any }) } };
+            return { ...session, user: { ...session.user, ...(token.user as UserAuthData) } };
         },
         async jwt(params) {
             //    console.log("jwt callback", params);
             const { token, user } = params;
 
-            // TODO: check for expiration and refresh access token if "remember me" is set
+            /*
+             // TODO: check for expiration and refresh access token if "remember me" is set
             //https://next-auth.js.org/tutorials/refresh-token-rotation
+            console.warn("token", token);
+            console.warn("user", user);
+
+            const exp = token.exp as number;
+            const userData = token.user as UserAuthData;
+            if (userData.exp * 1000 < dayjs.utc().valueOf() || exp * 1000 < dayjs.utc().valueOf()) {
+                const result = await client
+                    .mutation<{ result: { accessToken: string } }>(
+                        gql`
+                            mutation authRefreshToken {
+                                result: authRefreshToken {
+                                    accessToken
+                                }
+                            }
+                        `
+                    )
+                    .toPromise();
+
+                console.log("authRefreshToken", result);
+                if (result.error) {
+                    console.error(result.error);
+                    return {
+                        ...token,
+                        error: "RefreshAccessTokenError"
+                    };
+                }
+
+                const accessToken = result?.data?.result.accessToken;
+                if (accessToken) {
+                    const newToken = jwt.decode(accessToken) as jwt.JwtPayload;
+
+                    return {
+                        ...token,
+                        user: {
+                            id: token.userId,
+                            accessToken: result?.data?.result.accessToken,
+
+                            ...newToken
+                        }
+                    };
+                }
+            }
+           */
 
             if (user) {
                 token.user = user;
@@ -96,7 +133,7 @@ export default NextAuth({
         }
     },
     jwt: {
-        maxAge: 1000 * 60 * 60 // 1 hour
+        maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days
     }
     // debug: true
 });

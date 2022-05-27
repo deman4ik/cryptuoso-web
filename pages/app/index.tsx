@@ -3,16 +3,9 @@ import Head from "next/head";
 import { gql, useQuery } from "urql";
 import { useSession } from "next-auth/react";
 import { Layout } from "@cryptuoso/components/App/Layout";
-import { Section } from "@cryptuoso/components/App/Dashboard";
-import { ExchangeAccountCard } from "@cryptuoso/components/App/ExchangeAccount";
-import { CurrentBalance } from "@cryptuoso/components/App/Dashboard";
+import { Portfolio, PortfolioStats, Section } from "@cryptuoso/components/App/Dashboard";
+import { CurrentBalance, Billing } from "@cryptuoso/components/App/Dashboard";
 export { getServerSideProps } from "@cryptuoso/libs/graphql/shared";
-
-const useStyles = createStyles((theme) => ({
-    darkBg: {
-        backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.white
-    }
-}));
 
 const DashboardQuery = gql`
     query allUserInfo($userId: uuid!) {
@@ -110,8 +103,7 @@ const DashboardQuery = gql`
     }
 `;
 export default function DashboardPage() {
-    const { classes } = useStyles();
-    const { data: session }: any = useSession();
+    const { data: session } = useSession<true>({ required: true });
     const [result] = useQuery({ query: DashboardQuery, variables: { userId: session?.user?.userId } });
     const { data, fetching, error } = result;
     if (data) console.log(data);
@@ -121,11 +113,20 @@ export default function DashboardPage() {
             <Head>
                 <title>Dashboard | CRYPTUOSO</title>
             </Head>
-            <Grid>
-                <Grid.Col span={6}>
+            <Grid gutter="xs">
+                <Grid.Col span={12} lg={6} xl={4}>
                     <CurrentBalance />
                 </Grid.Col>
+                <Grid.Col span={12} lg={6} xl={4}>
+                    <Billing />
+                </Grid.Col>
+                <Grid.Col span={12} xl={4}>
+                    <Portfolio />
+                </Grid.Col>
             </Grid>
+            <Section title="Portfolio Perfomance">
+                <PortfolioStats />
+            </Section>
         </Layout>
     );
 }

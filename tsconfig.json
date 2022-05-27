@@ -16,9 +16,13 @@
         "incremental": true,
         "baseUrl": "",
         "paths": {
+            "@cryptuoso/components": ["components/"],
             "@cryptuoso/components/*": ["components/*"],
+            "@cryptuoso/libs": ["libs/"],
             "@cryptuoso/libs/*": ["libs/*"],
+            "@cryptuoso/helpers": ["helpers/"],
             "@cryptuoso/helpers/*": ["helpers/*"],
+            "@cryptuoso/public": ["public/"],
             "@cryptuoso/public/*": ["public/*"]
         }
     },

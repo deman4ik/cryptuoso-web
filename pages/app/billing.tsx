@@ -13,7 +13,7 @@ export default function DashboardPage() {
     const { classes } = useStyles();
 
     return (
-        <Layout title="Billing">
+        <Layout>
             <Head>
                 <title>Billing | CRYPTUOSO</title>
             </Head>

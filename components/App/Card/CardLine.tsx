@@ -1,5 +1,5 @@
-import { DefaultMantineColor, Group, Skeleton, Text, Tooltip } from "@mantine/core";
-import { ReactNode } from "react";
+import { DefaultMantineColor, Group, GroupPosition, Skeleton, Text, Tooltip, MantineNumberSize } from "@mantine/core";
+import { ReactElement, ReactNode } from "react";
 
 export function CardLine({
     title,
@@ -7,28 +7,35 @@ export function CardLine({
     loading,
     value,
     valueTooltip,
-    valueTooltipColor
+    valueTooltipColor,
+    position = "apart",
+    mt = "md"
 }: {
     loading: boolean;
-    title: string;
+    title?: ReactNode | string;
     titleTooltip?: ReactNode | string;
     value?: ReactNode | string;
     valueTooltip?: ReactNode | string;
     valueTooltipColor?: DefaultMantineColor;
+    position?: GroupPosition;
+    mt?: MantineNumberSize;
 }) {
     let Title;
-    const TitleText = (
-        <Text size="sm" color="dimmed" weight={700} sx={{ lineHeight: 2 }}>
-            {title}
-        </Text>
-    );
+    const TitleComponent =
+        typeof title === "string" ? (
+            <Text size="sm" color="dimmed" weight={700} sx={{ lineHeight: 2 }}>
+                {title}
+            </Text>
+        ) : (
+            title
+        );
     if (titleTooltip) {
         Title = (
             <Tooltip transition="fade" transitionDuration={500} transitionTimingFunction="ease" label={titleTooltip}>
-                {TitleText}
+                {TitleComponent}
             </Tooltip>
         );
-    } else Title = TitleText;
+    } else Title = TitleComponent;
 
     let Value;
     const ValueComponent = typeof value === "string" ? <Text size="md">{value}</Text> : value;
@@ -47,7 +54,7 @@ export function CardLine({
     } else Value = ValueComponent;
 
     return (
-        <Group position="apart" mt="md">
+        <Group position={position} mt={mt}>
             {Title}
             {loading ? <Skeleton height={8} width="30%" /> : Value}
         </Group>
