@@ -90,7 +90,13 @@ export function StatsCard({ title, Icon, fetching, values, ...others }: StatsCar
                 <Icon className={classes.icon} size={22} />
             </Group>
 
-            {fetching ? <Skeleton height={75} /> : <Stack justify="flex-end">{rows}</Stack>}
+            {fetching ? (
+                <Skeleton height={75} />
+            ) : (
+                <Group align="flex-end" position="apart">
+                    {rows}
+                </Group>
+            )}
         </BaseCard>
     );
 }

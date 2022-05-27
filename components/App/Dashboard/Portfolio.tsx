@@ -88,13 +88,13 @@ export function getOptionIcon(option: keyof PortfolioOptions) {
 }
 
 export function Portfolio() {
-    const { data: session }: any = useSession();
+    const { data: session } = useSession<true>({ required: true });
     const [result, reexecuteQuery] = useQuery<
         {
             myPortfolio: UserPortfolio[];
         },
         { userId: string }
-    >({ query: PortfolioQuery, variables: { userId: session?.user?.userId } });
+    >({ query: PortfolioQuery, variables: { userId: session?.user?.userId || "" } });
     const { data, fetching, error } = result;
     const myPortfolio = data?.myPortfolio[0];
 

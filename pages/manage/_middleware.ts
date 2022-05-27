@@ -1,6 +1,6 @@
+import { UserAuthData } from "@cryptuoso/helpers";
 import dayjs from "@cryptuoso/libs/dayjs";
 import { withAuth } from "next-auth/middleware";
-import { UserAuthData } from "pages/api/auth/[...nextauth]";
 
 export default withAuth({
     callbacks: {

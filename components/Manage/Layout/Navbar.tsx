@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { createStyles, Navbar, Group, Text, ScrollArea } from "@mantine/core";
-import { BellRinging, Key, Receipt2, Dashboard, Logout, UserCircle, BrandTelegram, Tools } from "tabler-icons-react";
-import { signOut, useSession } from "next-auth/react";
+import React from "react";
+import { createStyles, Navbar, ScrollArea } from "@mantine/core";
+import { Dashboard, Logout, Briefcase, ArrowBarLeft, Robot, TestPipe, Users, UserCheck } from "tabler-icons-react";
+import { signOut } from "next-auth/react";
 import { ColorSchemeToggleBig } from "@cryptuoso/components/Landing/Layout";
 import { SimpleLink } from "@cryptuoso/components/Link";
 import { useRouter } from "next/router";
@@ -16,7 +16,6 @@ const useStyles = createStyles((theme, _params, getRef) => {
         header: {
             paddingBottom: theme.spacing.md,
             marginBottom: theme.spacing.md * 1.5
-            //   borderBottom: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[2]}`
         },
 
         footer: {
@@ -25,7 +24,6 @@ const useStyles = createStyles((theme, _params, getRef) => {
             [theme.fn.smallerThan("md")]: {
                 marginBottom: theme.spacing.xl * 5
             }
-            //  borderTop: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[2]}`
         },
 
         link: {
@@ -69,17 +67,18 @@ const useStyles = createStyles((theme, _params, getRef) => {
 });
 
 const data = [
-    { link: "/app", label: "Dashboard", icon: Dashboard },
-    { link: "/app/notifications", label: "Notifications", icon: BellRinging },
-    { link: "/app/profile", label: "Profile", icon: UserCircle },
-    { link: "/app/exchange-account", label: "Exchange Account", icon: Key },
-    { link: "/app/billing", label: "Billing", icon: Receipt2 }
+    { link: "/manage", label: "Monitoring", icon: Dashboard },
+    { link: "/manage/users", label: "Users", icon: Users },
+    { link: "/manage/user-portfolios", label: "User Portfolios", icon: UserCheck },
+    { link: "/manage/portfolios", label: "Portfolios", icon: Briefcase },
+    { link: "/manage/robots", label: "Robots", icon: Robot },
+    { link: "/manage/backtests", label: "Backtests", icon: TestPipe }
 ];
 
 export function AppNavbar({ ...others }) {
     const { classes, cx } = useStyles();
     const router = useRouter();
-    const { data: session } = useSession();
+
     const links = data.map((item) => (
         <SimpleLink
             className={cx(classes.link, { [classes.linkActive]: item.link === router.pathname })}
@@ -98,16 +97,9 @@ export function AppNavbar({ ...others }) {
             </Navbar.Section>
 
             <Navbar.Section className={classes.footer}>
-                {session?.user.allowedRoles.includes("manager") && (
-                    <SimpleLink href="/manage" className={classes.link}>
-                        <Tools className={classes.linkIcon} />
-                        <span>Manage</span>
-                    </SimpleLink>
-                )}
-
-                <SimpleLink href="https://t.me/cryptuoso_bot" className={classes.link}>
-                    <BrandTelegram className={classes.linkIcon} />
-                    <span>Telegram Trading Bot</span>
+                <SimpleLink href="/app" className={classes.link}>
+                    <ArrowBarLeft className={classes.linkIcon} />
+                    <span>Back to App</span>
                 </SimpleLink>
                 <ColorSchemeToggleBig />
 

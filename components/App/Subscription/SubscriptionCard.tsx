@@ -52,13 +52,13 @@ export function getSubStatusColor(status?: IUserSub["status"]): DefaultMantineCo
 }
 
 export function SubscriptionCard() {
-    const { data: session }: any = useSession();
+    const { data: session } = useSession<true>({ required: true });
     const [result, reexecuteQuery] = useQuery<
         {
             myUserSub: IUserSub[];
         },
         { userId: string }
-    >({ query: SubscriptionQuery, variables: { userId: session?.user?.userId } });
+    >({ query: SubscriptionQuery, variables: { userId: session?.user?.userId || "" } });
     const { data, fetching, error } = result;
     const myUserSub = data?.myUserSub[0];
 

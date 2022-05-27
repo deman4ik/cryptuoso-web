@@ -4,6 +4,8 @@ import { useSession } from "next-auth/react";
 import { gql, useQuery } from "urql";
 import { Refresh } from "tabler-icons-react";
 import { BaseCard, CardHeader, CardLine } from "../Card";
+import { User } from "@cryptuoso/helpers/types";
+import { UserAuthData, UserSession } from "@cryptuoso/helpers/types";
 
 const UserQuery = gql`
     query UserProfile($userId: uuid!) {
@@ -21,35 +23,8 @@ const UserQuery = gql`
     }
 `;
 
-interface User {
-    id: string;
-    email: string;
-    name: string;
-    telegramId: string;
-    telegramUsername: string;
-    roles: { defaultRole: string; allowedRoles: string[] };
-    access: number;
-    status: number;
-    settings: {
-        notifications: {
-            news: {
-                email: boolean;
-                telegram: boolean;
-            };
-            trading: {
-                email: boolean;
-                telegram: boolean;
-            };
-            signals: {
-                email: boolean;
-                telegram: boolean;
-            };
-        };
-    };
-}
-
 export function ProfileCard() {
-    const { data: session }: any = useSession();
+    const { data: session } = useSession<true>({ required: true });
 
     const [result, reexecuteQuery] = useQuery<
         {
@@ -59,7 +34,7 @@ export function ProfileCard() {
     >({
         query: UserQuery,
         variables: {
-            userId: session?.user?.userId
+            userId: session?.user?.userId || ""
         }
     });
 

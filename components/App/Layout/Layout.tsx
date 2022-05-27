@@ -1,18 +1,7 @@
 import React, { ReactNode, useState } from "react";
-import {
-    Header,
-    Navbar,
-    useMantineTheme,
-    Text,
-    MediaQuery,
-    Burger,
-    AppShell,
-    createStyles,
-    Container
-} from "@mantine/core";
+import { Header, AppShell, createStyles } from "@mantine/core";
 import { AppNavbar } from "./Navbar";
 import { AppHeader } from "./Header";
-import { BorderBottom } from "tabler-icons-react";
 
 const useStyles = createStyles((theme) => ({
     shell: {
@@ -24,31 +13,14 @@ const useStyles = createStyles((theme) => ({
     }
 }));
 
-export function Layout({ children, title }: { children: ReactNode; title: string }) {
+export function Layout({ children }: { children: ReactNode }) {
     const [opened, setOpened] = useState(false);
 
     const { classes } = useStyles();
-    /* return (
-        <AppShell
-            // navbarOffsetBreakpoint controls when navbar should no longer be offset with padding-left
-            navbarOffsetBreakpoint="sm"
-            // prop on AppShell will be automatically added to Header and Navbar
-            fixed
-            navbar={<AppNavbar hidden={!opened} />}
-            header={<AppHeader opened={opened} setOpened={setOpened} />}
-            styles={(theme) => ({
-                main: { marginLeft: 300 }
-            })}
-        >
-            {children}
-        </AppShell>
-    );*/
 
     return (
         <AppShell
-            // navbarOffsetBreakpoint controls when navbar should no longer be offset with padding-left
             navbarOffsetBreakpoint="md"
-            // fixed prop on AppShell will be automatically added to Header and Navbar
             fixed
             padding="xs"
             navbar={

@@ -7,12 +7,6 @@ import { Portfolio, PortfolioStats, Section } from "@cryptuoso/components/App/Da
 import { CurrentBalance, Billing } from "@cryptuoso/components/App/Dashboard";
 export { getServerSideProps } from "@cryptuoso/libs/graphql/shared";
 
-const useStyles = createStyles((theme) => ({
-    darkBg: {
-        backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.white
-    }
-}));
-
 const DashboardQuery = gql`
     query allUserInfo($userId: uuid!) {
         myPortfolio: v_user_portfolios(where: { user_id: { _eq: $userId } }) {
@@ -109,8 +103,7 @@ const DashboardQuery = gql`
     }
 `;
 export default function DashboardPage() {
-    const { classes } = useStyles();
-    const { data: session }: any = useSession();
+    const { data: session } = useSession<true>({ required: true });
     const [result] = useQuery({ query: DashboardQuery, variables: { userId: session?.user?.userId } });
     const { data, fetching, error } = result;
     if (data) console.log(data);

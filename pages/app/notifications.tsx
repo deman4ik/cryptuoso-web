@@ -5,7 +5,7 @@ export { getServerSideProps } from "@cryptuoso/libs/graphql/shared";
 
 export default function NotificationsPage() {
     return (
-        <Layout title="Notifications">
+        <Layout>
             <Head>
                 <title>Notifications | CRYPTUOSO</title>
             </Head>

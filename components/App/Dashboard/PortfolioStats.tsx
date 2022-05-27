@@ -39,7 +39,7 @@ const PortfolioQuery = gql`
 `;
 
 export function PortfolioStats() {
-    const { data: session }: any = useSession();
+    const { data: session } = useSession<true>({ required: true });
     const [result, reexecuteQuery] = useQuery<
         {
             myPortfolioStats: { stats: UserPortfolio["stats"] }[];
@@ -53,7 +53,7 @@ export function PortfolioStats() {
             };
         },
         { userId: string }
-    >({ query: PortfolioQuery, variables: { userId: session?.user?.userId } });
+    >({ query: PortfolioQuery, variables: { userId: session?.user?.userId || "" } });
     const { data, fetching, error } = result;
     const myPortfolioStats = data?.myPortfolioStats[0];
 

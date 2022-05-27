@@ -6,7 +6,7 @@ export { getServerSideProps } from "@cryptuoso/libs/graphql/shared";
 
 export default function ProfilePage() {
     return (
-        <Layout title="Profile">
+        <Layout>
             <Head>
                 <title>Profile | CRYPTUOSO</title>
             </Head>

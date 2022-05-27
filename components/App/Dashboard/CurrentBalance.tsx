@@ -38,7 +38,7 @@ const ExchangeAccountQuery = gql`
 
 export function CurrentBalance() {
     const { classes } = useStyles();
-    const { data: session }: any = useSession();
+    const { data: session } = useSession<true>({ required: true });
     const [result, reexecuteQuery] = useQuery<
         {
             myUserExAcc: {
@@ -52,7 +52,7 @@ export function CurrentBalance() {
             }[];
         },
         { userId: string }
-    >({ query: ExchangeAccountQuery, variables: { userId: session?.user?.userId } });
+    >({ query: ExchangeAccountQuery, variables: { userId: session?.user?.userId || "" } });
     const { data, fetching, error } = result;
     const myUserExAcc = data?.myUserExAcc[0];
 

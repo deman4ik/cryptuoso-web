@@ -13,7 +13,7 @@ export default function DashboardPage() {
     const { classes } = useStyles();
 
     return (
-        <Layout title="Exchange Account">
+        <Layout>
             <Head>
                 <title>Exchange Account | CRYPTUOSO</title>
             </Head>
