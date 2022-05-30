@@ -63,7 +63,13 @@ export function AuthenticationForm() {
                 setLoading(false);
                 setError(result.error.replace("[GraphQL] ", ""));
             } else if (result?.ok) {
-                const url = router.query?.callbackUrl as string;
+                let url;
+                console.log("callbackUrl", router.query?.callbackUrl);
+                if (router.query?.callbackUrl) {
+                    if (Array.isArray(router.query?.callbackUrl) && router.query?.callbackUrl.length > 0) {
+                        url = router.query?.callbackUrl[router.query?.callbackUrl.length - 1];
+                    } else url = router.query?.callbackUrl as string;
+                }
                 router.replace(url || "/app");
             }
         } else {
