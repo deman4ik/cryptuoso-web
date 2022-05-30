@@ -55,7 +55,11 @@ const useStyles = createStyles((theme, { size }: { size: MantineNumberSize }, ge
                 display: "none"
             }
         },
-
+        filtersButton: {
+            [theme.fn.largerThan("sm")]: {
+                display: "none"
+            }
+        },
         filters: {
             [theme.fn.smallerThan("sm")]: {
                 display: "none"
@@ -63,7 +67,7 @@ const useStyles = createStyles((theme, { size }: { size: MantineNumberSize }, ge
         },
         logoText: {
             [theme.fn.smallerThan("sm")]: {
-                fontSize: theme.fontSizes.xs
+                fontSize: theme.fontSizes.sm
             }
         }
     };
@@ -105,7 +109,7 @@ export function AppHeader({
                     Cryptuoso
                 </Text>
             </Group>
-            <ActionIcon size="md" onClick={() => toggleFiltersOpened((o) => !o)} className={classes.burger}>
+            <ActionIcon size="md" onClick={() => toggleFiltersOpened((o) => !o)} className={classes.filtersButton}>
                 {filtersOpened ? <X size="md" /> : <Filter size="sm" />}
             </ActionIcon>
             <Group className={classes.filters}>{items}</Group>
