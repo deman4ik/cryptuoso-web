@@ -5,14 +5,12 @@ import { createClient, gql } from "urql";
 import jwt from "jsonwebtoken";
 import { UserAuthData } from "@cryptuoso/helpers";
 import dayjs from "@cryptuoso/libs/dayjs";
-
-export const client = createClient({
-    url: `${process.env.NEXT_PUBLIC_HASURA_URL}`
-});
+import { gqlPublicClient } from "@cryptuoso/libs/graphql";
 
 export default NextAuth({
     providers: [
         CredentialsProvider({
+            id: "email",
             name: "email",
 
             credentials: {
@@ -22,7 +20,7 @@ export default NextAuth({
             async authorize(credentials, req) {
                 //   console.log("authorize", credentials);
                 try {
-                    const result = await client
+                    const result = await gqlPublicClient
                         .mutation<{ result: { accessToken: string } }, { email: string; password: string }>(
                             gql`
                                 mutation authLogin($email: String!, $password: String!) {
@@ -49,7 +47,79 @@ export default NextAuth({
 
                         return {
                             id: token.userId,
-                            accessToken: result?.data?.result.accessToken,
+                            accessToken,
+
+                            ...token
+                        } as UserAuthData;
+                    }
+                    throw new Error("Failed to authorize. Please try again later.");
+                } catch (err) {
+                    console.error(err);
+                    throw err;
+                }
+            }
+        }),
+        CredentialsProvider({
+            id: "accessToken",
+            name: "accessToken",
+            credentials: {
+                accessToken: { label: "accessToken", type: "text" }
+            },
+            async authorize(credentials, req) {
+                try {
+                    const accessToken = credentials?.accessToken;
+                    if (accessToken) {
+                        const token = jwt.decode(accessToken) as jwt.JwtPayload;
+
+                        return {
+                            id: token.userId,
+                            accessToken,
+
+                            ...token
+                        } as UserAuthData;
+                    }
+                    throw new Error("Failed to authorize. Please try again later.");
+                } catch (err) {
+                    console.error(err);
+                    throw err;
+                }
+            }
+        }),
+        CredentialsProvider({
+            id: "telegram",
+            name: "telegram",
+
+            credentials: {
+                data: { label: "Data", type: "text" }
+            },
+            async authorize(credentials, req) {
+                try {
+                    const result = await gqlPublicClient
+                        .mutation<{ result: { accessToken: string } }, { data: any }>(
+                            gql`
+                                mutation authLoginTelegram($data: TelegramInput!) {
+                                    result: authLoginTelegram(data: $data) {
+                                        accessToken
+                                    }
+                                }
+                            `,
+                            {
+                                data: JSON.parse(credentials?.data as string)
+                            }
+                        )
+                        .toPromise();
+
+                    if (result.error) {
+                        throw result.error;
+                    }
+
+                    const accessToken = result?.data?.result.accessToken;
+                    if (accessToken) {
+                        const token = jwt.decode(accessToken) as jwt.JwtPayload;
+
+                        return {
+                            id: token.userId,
+                            accessToken,
 
                             ...token
                         } as UserAuthData;
