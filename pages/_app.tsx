@@ -9,7 +9,7 @@ import GraphqlProvider from "@cryptuoso/libs/graphql/provider";
 import { useState } from "react";
 import { Session } from "next-auth";
 import { Provider as URQLProvider } from "urql";
-import { publicClient } from "@cryptuoso/libs/graphql/client";
+import { gqlPublicClient } from "@cryptuoso/libs/graphql/client";
 
 export default function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
     const { Component, pageProps } = props;

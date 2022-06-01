@@ -62,6 +62,6 @@ const useClient = (options?: RequestInit) => {
 
 export default useClient;
 
-export const publicClient = createClient({
+export const gqlPublicClient = createClient({
     url: `${process.env.NEXT_PUBLIC_HASURA_URL}`
 });
