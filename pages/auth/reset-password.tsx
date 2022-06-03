@@ -1,14 +1,14 @@
 import { Layout } from "@cryptuoso/components/Landing/Layout";
-import { ActivateAccountForm } from "@cryptuoso/components/Auth";
+import { ResetPasswordForm } from "@cryptuoso/components/Auth";
 import Head from "next/head";
 
-export default function ActivateAccount() {
+export default function ResetPassword() {
     return (
         <Layout containerSize="sm">
             <Head>
-                <title>Activate Account | CRYPTUOSO</title>
+                <title>Reset Password | CRYPTUOSO</title>
             </Head>
-            <ActivateAccountForm />
+            <ResetPasswordForm />
         </Layout>
     );
 }

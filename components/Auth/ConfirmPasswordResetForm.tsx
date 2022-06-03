@@ -11,6 +11,7 @@ import {
     NumberInput,
     Stack,
     ThemeIcon,
+    PasswordInput,
     Anchor
 } from "@mantine/core";
 import { signIn } from "next-auth/react";
@@ -18,9 +19,9 @@ import { useRouter } from "next/router";
 import { SimpleLink, TextLink } from "@cryptuoso/components/Link";
 import { gqlPublicClient } from "@cryptuoso/libs/graphql";
 import { gql } from "urql";
-import { Confetti, Key, Mail } from "tabler-icons-react";
+import { Confetti, Mail, Lock, Key } from "tabler-icons-react";
 
-export function ActivateAccountForm() {
+export function ConfirmPasswordResetForm() {
     const [loading, setLoading] = useState(false);
     const [confirmed, setConfirmed] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -44,12 +45,19 @@ export function ActivateAccountForm() {
     const form = useForm({
         initialValues: {
             email: queryData?.email || "",
-            secret: queryData?.secretCode ? parseInt(queryData.secretCode) : ""
+            secret: queryData?.secretCode ? parseInt(queryData.secretCode) : "",
+            password: "",
+            confirmPassword: ""
         },
 
         validate: {
             email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
-            secret: (value) => (`${value}`.length === 6 && Number.isInteger(value) ? null : "Invalid secret")
+            secret: (value) => (`${value}`.length === 6 && Number.isInteger(value) ? null : "Invalid secret"),
+            password: (value) =>
+                /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/.test(value)
+                    ? null
+                    : "Password should contain 1 number, 1 letter and at least 6 characters",
+            confirmPassword: (val, values) => (val === values?.password ? null : "Passwords don't match. Try again")
         }
     });
 
@@ -57,17 +65,18 @@ export function ActivateAccountForm() {
         setLoading(true);
         setError(null);
         const result = await gqlPublicClient
-            .mutation<{ result: { accessToken: string } }, { email: string; secretCode: string }>(
+            .mutation<{ result: { accessToken: string } }, { email: string; secretCode: string; password: string }>(
                 gql`
-                    mutation authActivateAccount($email: String!, $secretCode: String!) {
-                        result: authActivateAccount(email: $email, secretCode: $secretCode) {
+                    mutation authConfirmPasswordReset($email: String!, $secretCode: String!, $password: String!) {
+                        result: authConfirmPasswordReset(email: $email, secretCode: $secretCode, password: $password) {
                             accessToken
                         }
                     }
                 `,
                 {
                     email: form.values.email,
-                    secretCode: `${form.values.secret}`
+                    secretCode: `${form.values.secret}`,
+                    password: form.values.password
                 }
             )
             .toPromise();
@@ -104,7 +113,7 @@ export function ActivateAccountForm() {
                     </ThemeIcon>
                 )}
                 <Title align="center" sx={(theme) => ({ fontWeight: 900 })}>
-                    {confirmed ? "Your account is confirmed!" : "Please confirm your account"}
+                    {confirmed ? "Your new password is set!" : "Please set your new password"}
                 </Title>
 
                 {confirmed && <Text align="center">Redirecting to App...</Text>}
@@ -119,16 +128,32 @@ export function ActivateAccountForm() {
                             icon={<Mail size={20} />}
                             {...form.getInputProps("email")}
                         />
-
                         <NumberInput
-                            data-autofocus
-                            mt="md"
                             required
+                            mt="md"
                             hideControls
                             placeholder="Secret code we sended to your email"
                             label="Secret code"
                             icon={<Key size={20} />}
                             {...form.getInputProps("secret")}
+                        />
+                        <PasswordInput
+                            data-autofocus
+                            mt="md"
+                            required
+                            placeholder="New password"
+                            label="New password"
+                            icon={<Lock size={20} />}
+                            {...form.getInputProps("password")}
+                        />
+
+                        <PasswordInput
+                            mt="md"
+                            required
+                            label="Confirm new password"
+                            placeholder="Confirm new password"
+                            icon={<Lock size={20} />}
+                            {...form.getInputProps("confirmPassword")}
                         />
 
                         {error && (
