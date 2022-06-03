@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useForm } from "@mantine/form";
-import { EnvelopeClosedIcon, LockClosedIcon } from "@modulz/radix-icons";
 import {
     TextInput,
     PasswordInput,
@@ -22,8 +21,16 @@ import { useRouter } from "next/router";
 import { SimpleLink, TextLink } from "@cryptuoso/components/Link";
 import { gqlPublicClient } from "@cryptuoso/libs/graphql";
 import { gql } from "urql";
-import { TelegramLoginWidget } from "./TelegramLoginWidget";
+import { TelegramLoginData, TelegramLoginWidget } from "./TelegramLoginWidget";
+import { Lock, Mail } from "tabler-icons-react";
 
+interface FormValues {
+    name: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+    termsOfService: boolean;
+}
 export function AuthenticationForm() {
     const [formType, setFormType] = useState<"register" | "login" | "success">("login");
     const [loading, setLoading] = useState(false);
@@ -35,7 +42,7 @@ export function AuthenticationForm() {
         setError(null);
     };
 
-    const form = useForm({
+    const form = useForm<FormValues>({
         initialValues: {
             name: "",
             email: "",
@@ -63,12 +70,13 @@ export function AuthenticationForm() {
         } //TODO: fastest-validator
     });
 
-    const handleSubmit = async (data?: any) => {
+    const handleSubmit = async (data?: FormValues | TelegramLoginData, event?: React.FormEvent, type = "email") => {
         setLoading(true);
         setError(null);
         if (formType === "login") {
             let result;
-            if (data) {
+            console.log(data);
+            if (type === "telegram") {
                 result = await signIn<"credentials">("telegram", {
                     redirect: false,
                     data: JSON.stringify(data)
@@ -83,16 +91,23 @@ export function AuthenticationForm() {
 
             if (result?.error) {
                 setLoading(false);
-                setError(result.error.replace("[GraphQL] ", ""));
+                const error = result.error.replace("[GraphQL] ", "");
+                setError(error);
+                console.log(result);
+                if (error.includes("User account is not activated.")) {
+                    setTimeout(() => {
+                        router.replace(`/auth/activate-account/manual?email=${form.values.email}`);
+                    }, 1500);
+                }
             } else if (result?.ok) {
-                let url;
-                console.log("callbackUrl", router.query?.callbackUrl);
+                /*let url;
                 if (router.query?.callbackUrl) {
                     if (Array.isArray(router.query?.callbackUrl) && router.query?.callbackUrl.length > 0) {
                         url = router.query?.callbackUrl[router.query?.callbackUrl.length - 1];
                     } else url = router.query?.callbackUrl as string;
                 }
-                router.replace(url || "/app");
+                router.replace(url || "/app"); */
+                router.replace("/app");
             }
         } else {
             const result = await gqlPublicClient
@@ -114,9 +129,18 @@ export function AuthenticationForm() {
 
             setLoading(false);
             if (result?.error) {
-                setError(result.error.message.replace("[GraphQL] ", ""));
+                const error = result.error.message.replace("[GraphQL] ", "");
+                setError(error);
+                if (error.includes("User account is not activated.")) {
+                    setTimeout(() => {
+                        router.replace(`/auth/activate-account/manual?email=${form.values.email}`);
+                    }, 1500);
+                }
             } else if (result?.data?.result.userId) {
                 setFormType("success");
+                setTimeout(() => {
+                    router.replace(`/auth/activate-account/manual?email=${form.values.email}`);
+                }, 1500);
             }
         }
     };
@@ -185,6 +209,7 @@ export function AuthenticationForm() {
                     <form onSubmit={form.onSubmit(handleSubmit)}>
                         {formType === "register" && (
                             <TextInput
+                                mt="md"
                                 data-autofocus
                                 placeholder="Your  name"
                                 label="Name"
@@ -197,7 +222,7 @@ export function AuthenticationForm() {
                             required
                             placeholder="Your email"
                             label="Email"
-                            icon={<EnvelopeClosedIcon />}
+                            icon={<Mail size={20} />}
                             {...form.getInputProps("email")}
                         />
 
@@ -206,7 +231,7 @@ export function AuthenticationForm() {
                             required
                             placeholder="Password"
                             label="Password"
-                            icon={<LockClosedIcon />}
+                            icon={<Lock size={20} />}
                             {...form.getInputProps("password")}
                         />
 
@@ -216,7 +241,7 @@ export function AuthenticationForm() {
                                 required
                                 label="Confirm Password"
                                 placeholder="Confirm password"
-                                icon={<LockClosedIcon />}
+                                icon={<Lock size={20} />}
                                 {...form.getInputProps("confirmPassword")}
                             />
                         )}
@@ -248,12 +273,12 @@ export function AuthenticationForm() {
 
                         <Group position="right" mt="md">
                             {formType === "login" && (
-                                <Anchor component={SimpleLink} href="/auth/forgotpassword" size="sm">
+                                <Anchor component={SimpleLink} href="/auth/reset-password" size="sm">
                                     Forgot password?
                                 </Anchor>
-                            )}{" "}
+                            )}
                         </Group>
-                        {/** TODO: forgot password and link */}
+
                         <Stack>
                             <Button
                                 type="submit"
@@ -266,7 +291,7 @@ export function AuthenticationForm() {
                             </Button>
                             <Divider label="OR" labelPosition="center" />
 
-                            <SimpleGrid cols={2} breakpoints={[{ maxWidth: 576, cols: 1 }]}>
+                            <SimpleGrid cols={2} breakpoints={[{ maxWidth: 576, cols: 1 }]} spacing="xl">
                                 <Center>
                                     <Text color="dimmed" size="sm" align="center">
                                         If you have a Telegram account and want to use{" "}
@@ -281,7 +306,7 @@ export function AuthenticationForm() {
                                     </Text>
                                 </Center>
                                 <Center>
-                                    <TelegramLoginWidget onAuth={handleSubmit} />
+                                    <TelegramLoginWidget onAuth={(data) => handleSubmit(data, undefined, "telegram")} />
                                 </Center>
                             </SimpleGrid>
                         </Stack>
