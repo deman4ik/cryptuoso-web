@@ -16,7 +16,7 @@ const nextConfig = {
         ];
     },
     images: {
-        domains: ["graphcdn.io"]
+        domains: ["stellate.co"]
     }
 };
 

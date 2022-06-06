@@ -20,6 +20,7 @@ import { SimpleLink, TextLink } from "@cryptuoso/components/Link";
 import { gqlPublicClient } from "@cryptuoso/libs/graphql";
 import { gql } from "urql";
 import { Confetti, Mail, Lock, Key } from "tabler-icons-react";
+import { useReward } from "react-rewards";
 
 export function ConfirmPasswordResetForm() {
     const [loading, setLoading] = useState(false);
@@ -61,6 +62,11 @@ export function ConfirmPasswordResetForm() {
         }
     });
 
+    const { reward, isAnimating } = useReward("confirmed", "confetti", {
+        startVelocity: 15,
+        spread: 85
+    });
+
     const handleSubmit = async () => {
         setLoading(true);
         setError(null);
@@ -96,6 +102,7 @@ export function ConfirmPasswordResetForm() {
                 setError(signInResult.error.replace("[GraphQL] ", ""));
             } else if (signInResult?.ok) {
                 setConfirmed(true);
+                reward();
                 setTimeout(() => {
                     router.replace("/app");
                 }, 1000);
@@ -108,7 +115,16 @@ export function ConfirmPasswordResetForm() {
             <LoadingOverlay visible={loading} />
             <Stack align="center">
                 {confirmed && (
-                    <ThemeIcon size="xl" variant="gradient" gradient={{ from: "indigo", to: "cyan" }}>
+                    <ThemeIcon
+                        size="xl"
+                        variant="gradient"
+                        gradient={{ from: "indigo", to: "cyan" }}
+                        id="confirmed"
+                        mt={100}
+                        onClick={() => {
+                            if (!isAnimating) reward();
+                        }}
+                    >
                         <Confetti size={30} />
                     </ThemeIcon>
                 )}

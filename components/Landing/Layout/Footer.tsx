@@ -13,7 +13,12 @@ const useStyles = createStyles((theme) => ({
         width: "100%",
         display: "flex",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        flexWrap: "wrap"
+    },
+    poweredByItem: {
+        marginLeft: 5,
+        marginRight: 5
     },
     inner: {
         display: "flex",
@@ -57,7 +62,7 @@ export function LandingFooter({ links }: LandingFooterProps) {
     return (
         <div className={classes.footer}>
             <div className={classes.poweredBy}>
-                <SimpleLink href="https://hasura.io/?ref=powered-by">
+                <SimpleLink href="https://hasura.io/?ref=powered-by" className={classes.poweredByItem}>
                     <Image
                         src={theme.colorScheme === "dark" ? "/hasura-logo-dark.svg" : "/hasura-logo-light.svg"}
                         alt="Powered by Hasura, Instant GraphQL on all your data"
@@ -65,19 +70,19 @@ export function LandingFooter({ links }: LandingFooterProps) {
                         height={30}
                     />
                 </SimpleLink>
-                <SimpleLink href="https://graphcdn.io/?ref=powered-by">
+                <SimpleLink href="https://stellate.co/?ref=powered-by" className={classes.poweredByItem}>
                     <Image
                         src={
                             theme.colorScheme === "dark"
-                                ? "https://graphcdn.io/badge-light.svg"
-                                : "https://graphcdn.io/badge.svg"
+                                ? "https://stellate.co/badge-light.svg"
+                                : "https://stellate.co/badge.svg"
                         }
-                        alt="Powered by GraphCDN, the GraphQL CDN"
-                        width={120}
-                        height={40}
+                        alt="Powered by Stellate, the GraphQL Edge Cache"
+                        width={100}
+                        height={44}
                     />
                 </SimpleLink>
-                <SimpleLink href="https://mantine.dev/?ref=powered-by">
+                <SimpleLink href="https://mantine.dev/?ref=powered-by" className={classes.poweredByItem}>
                     <Image
                         src={theme.colorScheme === "dark" ? "/mantine-logo-dark.svg" : "/mantine-logo-light.svg"}
                         alt="Powered by Mantine, A fully featured React component library"
