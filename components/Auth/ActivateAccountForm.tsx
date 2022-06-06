@@ -19,6 +19,7 @@ import { SimpleLink, TextLink } from "@cryptuoso/components/Link";
 import { gqlPublicClient } from "@cryptuoso/libs/graphql";
 import { gql } from "urql";
 import { Confetti, Key, Mail } from "tabler-icons-react";
+import { useReward } from "react-rewards";
 
 export function ActivateAccountForm() {
     const [loading, setLoading] = useState(false);
@@ -51,6 +52,11 @@ export function ActivateAccountForm() {
             email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
             secret: (value) => (`${value}`.length === 6 && Number.isInteger(value) ? null : "Invalid secret")
         }
+    });
+
+    const { reward } = useReward("confirmed", "confetti", {
+        startVelocity: 15,
+        spread: 85
     });
 
     const handleSubmit = async () => {
@@ -87,6 +93,7 @@ export function ActivateAccountForm() {
                 setError(signInResult.error.replace("[GraphQL] ", ""));
             } else if (signInResult?.ok) {
                 setConfirmed(true);
+                reward();
                 setTimeout(() => {
                     router.replace("/app");
                 }, 1000);
@@ -99,7 +106,13 @@ export function ActivateAccountForm() {
             <LoadingOverlay visible={loading} />
             <Stack align="center">
                 {confirmed && (
-                    <ThemeIcon size="xl" variant="gradient" gradient={{ from: "indigo", to: "cyan" }}>
+                    <ThemeIcon
+                        size="xl"
+                        variant="gradient"
+                        gradient={{ from: "indigo", to: "cyan" }}
+                        id="confirmed"
+                        mt={100}
+                    >
                         <Confetti size={30} />
                     </ThemeIcon>
                 )}
