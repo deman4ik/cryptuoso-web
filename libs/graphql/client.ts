@@ -19,6 +19,7 @@ const useClient = (options?: RequestInit) => {
     return React.useMemo(() => {
         const client = createClient({
             url: `${process.env.NEXT_PUBLIC_HASURA_URL}`,
+            requestPolicy: "cache-and-network",
             fetchOptions: () => {
                 if (token)
                     return {
@@ -63,5 +64,6 @@ const useClient = (options?: RequestInit) => {
 export default useClient;
 
 export const gqlPublicClient = createClient({
-    url: `${process.env.NEXT_PUBLIC_HASURA_URL}`
+    url: `${process.env.NEXT_PUBLIC_HASURA_URL}`,
+    requestPolicy: "cache-and-network"
 });
