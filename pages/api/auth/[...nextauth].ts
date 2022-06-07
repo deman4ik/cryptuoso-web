@@ -1,10 +1,8 @@
-import NextAuth, { Awaitable } from "next-auth";
+import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { getToken, JWT } from "next-auth/jwt";
-import { createClient, gql } from "urql";
+import { gql } from "urql";
 import jwt from "jsonwebtoken";
 import { UserAuthData } from "@cryptuoso/helpers";
-import dayjs from "@cryptuoso/libs/dayjs";
 import { gqlPublicClient } from "@cryptuoso/libs/graphql";
 
 export default NextAuth({
@@ -149,13 +147,13 @@ export default NextAuth({
             //    console.log("jwt callback", params);
             const { token, user } = params;
 
-            // TODO: check for expiration and refresh access token if "remember me" is set
-            //https://next-auth.js.org/tutorials/refresh-token-rotation
-
             if (user) {
                 token.user = user;
             }
 
+            // TODO: check for expiration and refresh access token if "remember me" is set
+            //https://next-auth.js.org/tutorials/refresh-token-rotation
+            /*
             const exp = token.exp as number;
             const userData = token.user as UserAuthData;
 
@@ -208,13 +206,13 @@ export default NextAuth({
                         }
                     };
                 }
-            }
+            } */
 
             return token;
         }
     },
     jwt: {
-        maxAge: 60 //1000 * 60 * 60 * 24 * 7 // 7 days
+        maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days
     }
     // debug: true
 });
