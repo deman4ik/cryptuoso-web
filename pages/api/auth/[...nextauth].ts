@@ -149,8 +149,7 @@ export default NextAuth({
             //    console.log("jwt callback", params);
             const { token, user } = params;
 
-            /*
-             // TODO: check for expiration and refresh access token if "remember me" is set
+            // TODO: check for expiration and refresh access token if "remember me" is set
             //https://next-auth.js.org/tutorials/refresh-token-rotation
             console.warn("token", token);
             console.warn("user", user);
@@ -158,7 +157,7 @@ export default NextAuth({
             const exp = token.exp as number;
             const userData = token.user as UserAuthData;
             if (userData.exp * 1000 < dayjs.utc().valueOf() || exp * 1000 < dayjs.utc().valueOf()) {
-                const result = await client
+                const result = await gqlPublicClient
                     .mutation<{ result: { accessToken: string } }>(
                         gql`
                             mutation authRefreshToken {
@@ -194,7 +193,6 @@ export default NextAuth({
                     };
                 }
             }
-           */
 
             if (user) {
                 token.user = user;
@@ -203,7 +201,7 @@ export default NextAuth({
         }
     },
     jwt: {
-        maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days
+        maxAge: 1000 * 60 //1000 * 60 * 60 * 24 * 7 // 7 days
     }
     // debug: true
 });
