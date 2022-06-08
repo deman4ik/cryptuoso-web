@@ -38,9 +38,6 @@ export function AppHeader({
                     Cryptuoso
                 </Text>
             </Group>
-            <Group spacing={12}>
-                <Button>Action</Button>
-            </Group>
         </div>
     );
 }
