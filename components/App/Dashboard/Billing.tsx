@@ -1,13 +1,13 @@
 import { BaseCard, CardHeader, RefreshAction } from "@cryptuoso/components/App/Card";
 import { Logo } from "@cryptuoso/components/Image";
 import { SimpleLink } from "@cryptuoso/components/Link";
+import { getSubStatusColor } from "@cryptuoso/helpers/pricing";
 import dayjs from "@cryptuoso/libs/dayjs";
 import { ActionIcon, createStyles, Group, Skeleton, Stack, Text, Tooltip, Badge, Button } from "@mantine/core";
 import { useSession } from "next-auth/react";
 import { Receipt2, Refresh } from "tabler-icons-react";
 import { gql, useQuery } from "urql";
 import { IUserSub } from "../Subscription";
-import { getSubStatusColor } from "../Subscription/SubscriptionCard";
 
 const useStyles = createStyles((theme) => ({
     value: {
@@ -52,10 +52,10 @@ export function Billing() {
     let expiresDate = "";
     if (myUserSub) {
         if (myUserSub.status === "trial" && myUserSub.trialEnded) {
-            expires = dayjs.utc().to(myUserSub.trialEnded);
+            expires = dayjs.utc().to(dayjs.utc(myUserSub.trialEnded));
             expiresDate = dayjs.utc(myUserSub.trialEnded).format("YYYY-MM-DD HH:mm:ss UTC");
         } else if (myUserSub.status === "active" && myUserSub.activeTo) {
-            expires = dayjs.utc().to(myUserSub.activeTo);
+            expires = dayjs.utc().to(dayjs.utc(myUserSub.activeTo));
             expiresDate = dayjs.utc(myUserSub.activeTo).format("YYYY-MM-DD HH:mm:ss UTC");
         }
     }

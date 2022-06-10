@@ -57,7 +57,7 @@ export function ProfileCard() {
                 }
             />
 
-            <CardLine title="Name" loading={!myUser} value={myUser?.name} />
+            <CardLine mt={0} title="Name" loading={!myUser} value={myUser?.name} />
             <CardLine title="Email" loading={!myUser} value={myUser?.email} />
             <CardLine title="Telegram" loading={!myUser} value={myUser?.telegramUsername || myUser?.telegramId} />
             <CardLine

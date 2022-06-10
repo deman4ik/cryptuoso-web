@@ -26,6 +26,13 @@ const DashboardQuery = gql`
             limit: 1
         ) {
             id
+            userPayments: user_payments(
+                where: { status: { _in: ["COMPLETED"] } }
+                order_by: { created_at: desc_nulls_last }
+                limit: 1
+            ) {
+                id
+            }
         }
     }
 `;
@@ -36,10 +43,11 @@ export default function DashboardPage() {
     const { data, fetching, error } = result;
     if (data) console.log(data);
     if (error) console.error(error);
-    let userExAcExists = data?.userExAcExists[0];
+    let userExAccExists = data?.userExAcExists[0];
     let userSubExists = data?.userSubExists[0];
+    let userPaymentExists = data?.userSubExists[0]?.userPayments[0];
     let portfolioExists = data?.portfolioExists[0];
-    const inited = userExAcExists && userSubExists && portfolioExists;
+    const inited = userExAccExists && userSubExists && portfolioExists;
     return (
         <Layout>
             <Head>
@@ -49,16 +57,16 @@ export default function DashboardPage() {
                 <>
                     <Grid gutter="xs">
                         <Grid.Col span={12} lg={6} xl={4}>
-                            <Skeleton />
+                            <Skeleton height={50} />
                         </Grid.Col>
                         <Grid.Col span={12} lg={6} xl={4}>
-                            <Skeleton />
+                            <Skeleton height={50} />
                         </Grid.Col>
                         <Grid.Col span={12} xl={4}>
-                            <Skeleton />
+                            <Skeleton height={50} />
                         </Grid.Col>
                     </Grid>
-                    <Skeleton />
+                    <Skeleton height={150} />
                 </>
             ) : inited ? (
                 <>
@@ -78,7 +86,12 @@ export default function DashboardPage() {
                     </Section>
                 </>
             ) : (
-                <GettingStarted />
+                <GettingStarted
+                    userExAccExists={userExAccExists}
+                    userSubExists={userSubExists}
+                    userPaymentExists={userPaymentExists}
+                    portfolioExists={portfolioExists}
+                />
             )}
         </Layout>
     );

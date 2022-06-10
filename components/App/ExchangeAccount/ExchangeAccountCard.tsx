@@ -1,5 +1,5 @@
-import React from "react";
-import { Group, Badge, ActionIcon, Button } from "@mantine/core";
+import React, { useState } from "react";
+import { Group, Badge, Text, Button, Modal } from "@mantine/core";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { gql, useQuery } from "urql";
@@ -7,6 +7,7 @@ import { round } from "helpers";
 import dayjs from "@cryptuoso/libs/dayjs";
 import { Key, Refresh } from "tabler-icons-react";
 import { BaseCard, CardHeader, CardLine, RefreshAction } from "@cryptuoso/components/App/Card";
+import { ExchangeAccountForm } from "./ExchangeAccountForm";
 
 const ExchangeAccountQuery = gql`
     query ExchangeAccount($userId: uuid!) {
@@ -26,6 +27,7 @@ const ExchangeAccountQuery = gql`
 `;
 
 export function ExchangeAccountCard() {
+    const [modalOpened, setModalOpened] = useState(false);
     const { data: session } = useSession<true>({ required: true });
     const [result, reexecuteQuery] = useQuery<
         {
@@ -51,39 +53,86 @@ export function ExchangeAccountCard() {
                 title="Exchange Account"
                 right={
                     <Group spacing={0}>
-                        <Button color="gray" variant="subtle" compact uppercase rightIcon={<Key size={18} />}>
-                            Edit
-                        </Button>
+                        {myUserExAcc?.id && (
+                            <Button
+                                color="gray"
+                                variant="subtle"
+                                compact
+                                uppercase
+                                rightIcon={<Key size={18} />}
+                                onClick={() => setModalOpened(true)}
+                            >
+                                Edit
+                            </Button>
+                        )}
                         <RefreshAction reexecuteQuery={reexecuteQuery} />
                     </Group>
                 }
             />
 
-            <CardLine
-                title="Exchange"
-                loading={!myUserExAcc}
-                value={
-                    <Image src={`/${myUserExAcc?.exchange}.svg`} alt={myUserExAcc?.exchange} height={30} width={70} />
-                }
-            />
-            <CardLine
-                title="API Key Status"
-                loading={!myUserExAcc}
-                value={
-                    <Badge size="md" color={myUserExAcc?.status === "enabled" ? "green" : "red"}>
-                        {myUserExAcc?.status}
-                    </Badge>
-                }
-                valueTooltip={myUserExAcc?.status === "enabled" ? "Checked" : myUserExAcc?.error}
-                valueTooltipColor={myUserExAcc?.status === "enabled" ? "green" : "red"}
-            />
+            {!fetching && !myUserExAcc ? (
+                <Button
+                    variant="gradient"
+                    gradient={{ from: "indigo", to: "cyan", deg: 45 }}
+                    uppercase
+                    rightIcon={<Key size={18} />}
+                    onClick={() => setModalOpened(true)}
+                >
+                    Create
+                </Button>
+            ) : (
+                <>
+                    <CardLine
+                        mt={0}
+                        title="Exchange"
+                        loading={fetching}
+                        value={
+                            <Image
+                                src={`/${myUserExAcc?.exchange}.svg`}
+                                alt={myUserExAcc?.exchange}
+                                height={30}
+                                width={70}
+                            />
+                        }
+                    />
+                    <CardLine
+                        title="API Key Status"
+                        loading={fetching}
+                        value={
+                            <Badge size="md" color={myUserExAcc?.status === "enabled" ? "green" : "red"}>
+                                {myUserExAcc?.status}
+                            </Badge>
+                        }
+                        valueTooltip={myUserExAcc?.status === "enabled" ? "Checked" : myUserExAcc?.error}
+                        valueTooltipColor={myUserExAcc?.status === "enabled" ? "green" : "red"}
+                    />
 
-            <CardLine
-                title="Current Balance"
-                loading={!myUserExAcc}
-                value={`${round(myUserExAcc?.balance || 0, 2)} $`}
-                valueTooltip={`Updated ${dayjs.utc().to(myUserExAcc?.balanceUpdatedAt)}`}
-            />
+                    <CardLine
+                        title="Current Balance"
+                        loading={fetching}
+                        value={`${round(myUserExAcc?.balance || 0, 2)} $`}
+                        valueTooltip={`Updated ${dayjs.utc().to(dayjs.utc(myUserExAcc?.balanceUpdatedAt))}`}
+                    />
+                </>
+            )}
+            <Modal
+                opened={modalOpened}
+                onClose={() => setModalOpened(false)}
+                title={
+                    <Text transform="uppercase" weight={900} align="center">
+                        {myUserExAcc?.id ? "Edit Exchange Account" : "Create Exchange Account"}
+                    </Text>
+                }
+            >
+                <ExchangeAccountForm
+                    id={myUserExAcc?.id}
+                    exchange={myUserExAcc?.exchange}
+                    onSuccess={() => {
+                        reexecuteQuery({ requestPolicy: "network-only" });
+                        setModalOpened(false);
+                    }}
+                />
+            </Modal>
         </BaseCard>
     );
 }

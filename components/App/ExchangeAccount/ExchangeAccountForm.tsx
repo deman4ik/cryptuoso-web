@@ -1,5 +1,5 @@
 import { SimpleLink } from "@cryptuoso/components/Link";
-import { Button, Group, LoadingOverlay, Paper, TextInput, Select, Text, Anchor } from "@mantine/core";
+import { Button, Group, LoadingOverlay, Paper, TextInput, Select, Text, Anchor, PasswordInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useState } from "react";
 import { Key, ShieldLock, Wallet } from "tabler-icons-react";
@@ -54,8 +54,8 @@ export function ExchangeAccountForm({
         }*/
     });
 
-    const [userExchangeAccUpsertResult, userExchangeAccUpsert] = useMutation<
-        { result: string },
+    const [, userExchangeAccUpsert] = useMutation<
+        { result: { result: string } },
         {
             id?: string | null;
             exchange: string;
@@ -78,9 +78,8 @@ export function ExchangeAccountForm({
     const handleSubmit = async () => {
         setLoading(true);
         setError(null);
-        if (onSuccess) onSuccess();
 
-        await userExchangeAccUpsert({
+        const result = await userExchangeAccUpsert({
             id: id || null,
             exchange: form.values.exchange,
             keys: {
@@ -90,70 +89,77 @@ export function ExchangeAccountForm({
             }
         });
 
-        const result = userExchangeAccUpsertResult;
-        setLoading(false);
         if (result?.error) {
+            setLoading(false);
             setError(result.error.message.replace("[GraphQL] ", ""));
-        } else if (result?.data?.result) {
-            if (onSuccess) onSuccess();
+        } else if (result?.data?.result?.result) {
+            if (onSuccess) {
+                onSuccess();
+            } else {
+                setLoading(false);
+            }
         }
     };
     return (
         <div style={{ position: "relative" }}>
             <LoadingOverlay visible={loading} />
-            <Paper shadow="md" p={20} radius="md">
-                <form onSubmit={form.onSubmit(handleSubmit)}>
-                    <Select
-                        data={exchanges.map(({ code, name }) => ({ label: name, value: code }))}
-                        disabled={!!id}
-                        required
-                        placeholder="Exchange"
-                        label="Exchange"
-                        icon={<Wallet size={20} />}
-                        {...form.getInputProps("exchange")}
-                    />
 
-                    <TextInput
-                        required
-                        placeholder="Exchange Account API Key"
-                        label="API Key"
-                        mt="md"
-                        icon={<Key size={20} />}
-                        {...form.getInputProps("key")}
-                    />
+            <form onSubmit={form.onSubmit(handleSubmit)}>
+                <Select
+                    data={exchanges.map(({ code, name }) => ({ label: name, value: code }))}
+                    disabled={!!id}
+                    required
+                    placeholder="Exchange"
+                    label="Exchange"
+                    icon={<Wallet size={20} />}
+                    {...form.getInputProps("exchange")}
+                />
 
-                    <TextInput
-                        required
-                        placeholder="Exchange Account API Secret"
-                        label="API Secret"
-                        mt="md"
-                        icon={<ShieldLock size={20} />}
-                        {...form.getInputProps("secret")}
-                    />
+                <PasswordInput
+                    required
+                    placeholder="Exchange Account API Key"
+                    label={id ? "New API Key" : "API Key"}
+                    mt="md"
+                    icon={<Key size={20} />}
+                    {...form.getInputProps("key")}
+                />
 
-                    {error && (
-                        <Text color="red" size="sm" mt="sm">
-                            {error}
+                <PasswordInput
+                    required
+                    placeholder="Exchange Account API Secret"
+                    label={id ? "New API Secret" : "API Secret"}
+                    mt="md"
+                    icon={<ShieldLock size={20} />}
+                    {...form.getInputProps("secret")}
+                />
+
+                {error && (
+                    <Text color="red" size="sm" mt="sm">
+                        {error}
+                    </Text>
+                )}
+                <Group position="right" mt="md">
+                    {id && (
+                        <Text size="xs" color="dimmed">
+                            You can change API Keys only when your portfolio is stopped or exchange account is disabled
                         </Text>
                     )}
-                    <Group position="right" mt="md">
-                        <Anchor component={SimpleLink} href="/docs/exchange-accounts" size="sm" target="_blank">
-                            How to create API Keys?
-                        </Anchor>
-                    </Group>
-                    <Group position="right" mt="md">
-                        <Button
-                            type="submit"
-                            fullWidth
-                            mt="sm"
-                            variant="gradient"
-                            gradient={{ from: "indigo", to: "cyan", deg: 45 }}
-                        >
-                            {!!id ? "Confirm" : "Create"}
-                        </Button>
-                    </Group>
-                </form>
-            </Paper>
+                    <Anchor component={SimpleLink} href="/docs/exchange-accounts" size="sm" target="_blank">
+                        How to create API Keys?
+                    </Anchor>
+                </Group>
+                <Group position="right" mt="md">
+                    <Button
+                        type="submit"
+                        fullWidth
+                        mt="sm"
+                        variant="gradient"
+                        gradient={{ from: "indigo", to: "cyan", deg: 45 }}
+                    >
+                        {!!id ? "Confirm" : "Create"}
+                    </Button>
+                </Group>
+            </form>
         </div>
     );
 }

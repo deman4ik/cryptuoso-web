@@ -19,6 +19,7 @@ import { gql, useQuery } from "urql";
 import { SimpleLink } from "@cryptuoso/components/Link";
 import { Briefcase, LockAccess, ReceiptTax, SettingsAutomation, ManualGearbox } from "tabler-icons-react";
 import { useMediaQuery } from "@mantine/hooks";
+import { features, freeOption, Option, paidFeatures } from "@cryptuoso/helpers/pricing";
 
 const useStyles = createStyles((theme) => {
     return {
@@ -55,57 +56,6 @@ const freeFeatures = [
         toColor: "yellow"
     }
 ];
-const paidFeatures = [
-    {
-        icon: SettingsAutomation,
-        title: "Automated",
-        description: "Fully automated trading on a pull of 200+ robots. Start and forget.",
-        fromColor: "indigo",
-        toColor: "cyan"
-    }
-];
-
-const features = [
-    {
-        icon: LockAccess,
-        title: "No Limits",
-        description: "Unlimited positions & deals. Unlimited trading volume.",
-        fromColor: "red",
-        toColor: "pink"
-    },
-    {
-        icon: ReceiptTax,
-        title: "No fees",
-        description: "No additional fees on your trades. Fixed subscription pricing.",
-        fromColor: "lime",
-        toColor: "cyan"
-    },
-    {
-        icon: Briefcase,
-        title: "Portfolio",
-        description: "Automated portfolio rebalancing and performance analysis.",
-        fromColor: "pink",
-        toColor: "grape"
-    }
-];
-
-interface Option {
-    code: string;
-    name: string;
-    priceMonth: number;
-    priceTotal: number;
-    discount: number | null;
-    highlight: boolean;
-}
-
-const freeOption: Option = {
-    code: "free",
-    name: "Free Plan",
-    priceMonth: 0,
-    priceTotal: 0,
-    discount: null,
-    highlight: false
-};
 
 export function Pricing() {
     const theme = useMantineTheme();
@@ -163,7 +113,11 @@ export function Pricing() {
                 Get access to all the available features at a single, affordable price.
             </Text>
             <Text size="md" align="center">
-                Pay with <Anchor href="https://commerce.coinbase.com/faq">Crypto</Anchor>!
+                Pay with{" "}
+                <Anchor href="/docs/subscription" target="_blank">
+                    Crypto
+                </Anchor>
+                !
             </Text>
             {error && <Text color="red">{error.message}</Text>}
             <LoadingOverlay visible={fetching} />
