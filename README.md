@@ -14,3 +14,4 @@
 -   Next.js
 -   Mantine
 -   URQL
+    // "react-coinbase-commerce": "github:deman4ik/react-coinbase-commerce",

@@ -1,4 +1,4 @@
-import { TextLink } from "@cryptuoso/components/Link";
+import { SimpleLink, TextLink } from "@cryptuoso/components/Link";
 import { getPaymentStatusColor, getSubStatusColor } from "@cryptuoso/helpers/pricing";
 import dayjs from "@cryptuoso/libs/dayjs";
 import { Badge, Button, Group, LoadingOverlay, Modal, SimpleGrid, Stack, Text, useMantineTheme } from "@mantine/core";
@@ -8,7 +8,6 @@ import { gql, useMutation, useQuery } from "urql";
 import { CardLine } from "../Card";
 import { SubscriptionCard } from "./SubscriptionCard";
 import { IUserPayment, IUserSub } from "./types";
-import CoinbaseCommerceButton from "react-coinbase-commerce";
 
 const UserPaymentQuery = gql`
     query SubscriptionWithPayment($userId: uuid!) {
@@ -50,7 +49,6 @@ const UserPaymentQuery = gql`
 `;
 
 export function CheckoutForm({ onSuccess }: { onSuccess?: () => void }) {
-    const [modalOpened, setModalOpened] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const theme = useMantineTheme();
@@ -104,117 +102,114 @@ export function CheckoutForm({ onSuccess }: { onSuccess?: () => void }) {
     };
 
     return (
-        <>
-            <div style={{ position: "relative" }}>
-                <LoadingOverlay visible={fetching || loading} />
+        <div style={{ position: "relative" }}>
+            <LoadingOverlay visible={fetching || loading} />
 
-                <SimpleGrid cols={2} breakpoints={[{ maxWidth: "md", cols: 1 }]} mt="md">
-                    <Stack>
-                        <Text transform="uppercase" color="dimmed" weight={700}>
-                            Your subscription
-                        </Text>
-                        <CardLine
-                            mt={0}
-                            title="Plan"
-                            loading={fetching}
-                            value={myUserSub?.subscription.name}
-                            valueTooltip={
-                                <span style={{ whiteSpace: "pre-line" }}>{myUserSub?.subscription.description}</span>
-                            }
-                        />
+            <SimpleGrid cols={2} breakpoints={[{ maxWidth: "md", cols: 1 }]} mt="md">
+                <Stack>
+                    <Text transform="uppercase" color="dimmed" weight={700}>
+                        Your subscription
+                    </Text>
+                    <CardLine
+                        mt={0}
+                        title="Plan"
+                        loading={fetching}
+                        value={myUserSub?.subscription.name}
+                        valueTooltip={
+                            <span style={{ whiteSpace: "pre-line" }}>{myUserSub?.subscription.description}</span>
+                        }
+                    />
 
-                        <CardLine
-                            mt={0}
-                            title="Period"
-                            loading={!myUserSub}
-                            value={myUserSub?.subscriptionOption.name}
-                        />
+                    <CardLine mt={0} title="Period" loading={!myUserSub} value={myUserSub?.subscriptionOption.name} />
 
-                        <CardLine
-                            mt={0}
-                            title="Status"
-                            loading={!myUserSub}
-                            value={
-                                <Badge size="md" color={getSubStatusColor(myUserSub?.status)}>
-                                    {myUserSub?.status}
-                                </Badge>
-                            }
-                        />
-                    </Stack>
-                    <Stack justify="space-between">
-                        <Text transform="uppercase" color="dimmed" weight={700}>
-                            Your payment
-                        </Text>
-                        {!payment || ["EXPIRED", "CANCELED"].includes(payment.status) ? (
-                            <Stack>
-                                <Text
-                                    align="center"
-                                    variant="gradient"
-                                    gradient={{ from: theme.primaryColor, to: "cyan", deg: 45 }}
-                                    size="xl"
-                                    weight={900}
-                                >
-                                    ${myUserSub?.subscriptionOption.priceTotal}
-                                </Text>
+                    <CardLine
+                        mt={0}
+                        title="Status"
+                        loading={!myUserSub}
+                        value={
+                            <Badge size="md" color={getSubStatusColor(myUserSub?.status)}>
+                                {myUserSub?.status}
+                            </Badge>
+                        }
+                    />
+                </Stack>
+                <Stack justify="space-between">
+                    <Text transform="uppercase" color="dimmed" weight={700}>
+                        Your payment
+                    </Text>
+                    {!payment || ["EXPIRED", "CANCELED"].includes(payment.status) ? (
+                        <Stack>
+                            <Text
+                                align="center"
+                                variant="gradient"
+                                gradient={{ from: theme.primaryColor, to: "cyan", deg: 45 }}
+                                size="xl"
+                                weight={900}
+                            >
+                                ${myUserSub?.subscriptionOption.priceTotal}
+                            </Text>
+                            <Button
+                                onClick={handleCheckout}
+                                size="md"
+                                variant="gradient"
+                                gradient={{ from: theme.primaryColor, to: "cyan", deg: 45 }}
+                                px="xl"
+                            >
+                                Checkout
+                            </Button>
+                            <Text color="dimmed" size="sm">
+                                You will have 1 hour to proceed your payment
+                            </Text>
+                        </Stack>
+                    ) : (
+                        <Stack>
+                            <CardLine
+                                mt={0}
+                                title="Code"
+                                loading={fetching}
+                                value={
+                                    <TextLink size="md" href={payment.url} target="_blank">
+                                        {payment.code}
+                                    </TextLink>
+                                }
+                            />
+                            <CardLine
+                                mt={0}
+                                title="Price"
+                                loading={fetching}
+                                value={
+                                    <Text
+                                        variant="gradient"
+                                        gradient={{ from: theme.primaryColor, to: "cyan", deg: 45 }}
+                                        size="md"
+                                    >
+                                        ${payment.price}
+                                    </Text>
+                                }
+                            />
+                            <CardLine
+                                mt={0}
+                                title="Status"
+                                loading={fetching}
+                                value={
+                                    <Badge size="md" color={getPaymentStatusColor(payment.status)}>
+                                        {payment.status}
+                                    </Badge>
+                                }
+                            />
+
+                            <CardLine
+                                mt={0}
+                                title="Expires"
+                                loading={fetching}
+                                value={dayjs.utc().to(dayjs.utc(payment.expiresAt))}
+                                valueTooltip={dayjs.utc(payment.expiresAt).format("YYYY-MM-DD HH:mm:ss UTC")}
+                            />
+                            <Group>
                                 <Button
-                                    onClick={handleCheckout}
-                                    size="md"
-                                    variant="gradient"
-                                    gradient={{ from: theme.primaryColor, to: "cyan", deg: 45 }}
-                                    px="xl"
-                                >
-                                    Checkout
-                                </Button>
-                                <Text color="dimmed" size="sm">
-                                    You will have 1 hour to proceed your payment
-                                </Text>
-                            </Stack>
-                        ) : (
-                            <Stack>
-                                <CardLine
-                                    mt={0}
-                                    title="Code"
-                                    loading={fetching}
-                                    value={
-                                        <TextLink size="md" href={payment.url} target="_blank">
-                                            {payment.code}
-                                        </TextLink>
-                                    }
-                                />
-                                <CardLine
-                                    mt={0}
-                                    title="Price"
-                                    loading={fetching}
-                                    value={
-                                        <Text
-                                            variant="gradient"
-                                            gradient={{ from: theme.primaryColor, to: "cyan", deg: 45 }}
-                                            size="md"
-                                        >
-                                            ${payment.price}
-                                        </Text>
-                                    }
-                                />
-                                <CardLine
-                                    mt={0}
-                                    title="Status"
-                                    loading={fetching}
-                                    value={
-                                        <Badge size="md" color={getPaymentStatusColor(payment.status)}>
-                                            {payment.status}
-                                        </Badge>
-                                    }
-                                />
-
-                                <CardLine
-                                    mt={0}
-                                    title="Expires"
-                                    loading={fetching}
-                                    value={dayjs.utc().to(dayjs.utc(payment.expiresAt))}
-                                    valueTooltip={dayjs.utc(payment.expiresAt).format("YYYY-MM-DD HH:mm:ss UTC")}
-                                />
-                                <Button
-                                    onClick={() => setModalOpened(true)}
+                                    component={SimpleLink}
+                                    href={payment.url || ""}
+                                    target="_blank"
                                     size="md"
                                     variant="gradient"
                                     gradient={{ from: theme.primaryColor, to: "cyan", deg: 45 }}
@@ -222,49 +217,19 @@ export function CheckoutForm({ onSuccess }: { onSuccess?: () => void }) {
                                 >
                                     Pay
                                 </Button>
-                            </Stack>
-                        )}
-                    </Stack>
-                </SimpleGrid>
-            </div>
-            <Modal
-                opened={modalOpened}
-                onClose={() => setModalOpened(false)}
-                title={
-                    <Text transform="uppercase" weight={900} align="center">
-                        PROCEED YOUR PAYMENT
-                    </Text>
-                }
-                size="xl"
-            >
-                <CoinbaseCommerceButton
-                    styled={{ display: "flex" }}
-                    chargeId={payment?.code}
-                    onLoad={() => {
-                        console.log("onLoad");
-                    }}
-                    onChargeSuccess={() => {
-                        console.log("onChargeSuccess");
-                    }}
-                    onChargeFailure={() => {
-                        console.log("onChargeFailure");
-                    }}
-                    onModalClosed={() => {
-                        console.log("onModalClosed");
-                    }}
-                />
-                <Button
-                    onClick={() => {
-                        console.log("OK");
-                    }}
-                    size="md"
-                    variant="gradient"
-                    gradient={{ from: theme.primaryColor, to: "cyan", deg: 45 }}
-                    px="xl"
-                >
-                    OK
-                </Button>
-            </Modal>
-        </>
+                                <Button
+                                    size="md"
+                                    variant="gradient"
+                                    gradient={{ from: theme.primaryColor, to: "cyan", deg: 45 }}
+                                    px="xl"
+                                >
+                                    Check Payment
+                                </Button>
+                            </Group>
+                        </Stack>
+                    )}
+                </Stack>
+            </SimpleGrid>
+        </div>
     );
 }
