@@ -30,7 +30,9 @@ On free plan you have access to trading signals. Signals are published automatic
 
 A signal for opening a deal tells you the deal type (short/long) and asset price to open a position. A close signal tells you what to do with the asset, depending on the type of position (sell/buy), and price to close trade.
 
-There are more than 200 signals available for you to subscribe to. Yes, every signal you see is used by our robots that trade automatically (available on paid plan).
+In the channel, you will receive signals from a specially selected optimal portfolio, which is also periodically updated from a pool of more than 200 robots for maximum profit and minimum risk.
+
+Every signal you see is used by our robots that trade automatically (available on paid plan).
 
 ## I am new to crypto trading. Will your platform be useful for me?
 

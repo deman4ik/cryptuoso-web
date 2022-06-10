@@ -16,7 +16,9 @@ export interface IUserSub {
     subscriptionOption: {
         code: "1m" | "6m" | "1y";
         name: string;
+        priceTotal: number;
     };
+    userPayments?: IUserPayment[];
 }
 
 export interface IUserPayment {

@@ -105,7 +105,7 @@ export function CurrentBalance() {
                             transitionDuration={500}
                             transitionTimingFunction="ease"
                             placement="start"
-                            label={`Updated ${dayjs.utc().to(myUserExAcc?.balanceUpdatedAt)}`}
+                            label={`Updated ${dayjs.utc().to(dayjs.utc(myUserExAcc?.balanceUpdatedAt))}`}
                         >
                             <Text className={classes.value}>{`${round(myUserExAcc?.balance || 0, 2)} $`}</Text>
                         </Tooltip>

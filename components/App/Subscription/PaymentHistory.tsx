@@ -17,6 +17,7 @@ import { TextLink } from "@cryptuoso/components/Link/TextLink";
 import dayjs from "@cryptuoso/libs/dayjs";
 import { Refresh } from "tabler-icons-react";
 import { ResponsiveTable } from "../Table/Table";
+import { getPaymentStatusColor } from "@cryptuoso/helpers/pricing";
 
 const useStyles = createStyles((theme) => ({
     card: {
@@ -26,7 +27,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const PaymentHistoryQuery = gql`
-    query Subscription($userId: uuid!) {
+    query UserPayments($userId: uuid!) {
         userPayments: user_payments(where: { user_id: { _eq: $userId } }, order_by: { created_at: desc_nulls_last }) {
             id
             code
@@ -48,23 +49,6 @@ const PaymentHistoryQuery = gql`
         }
     }
 `;
-
-function getPaymentStatusColor(status: IUserPayment["status"]): DefaultMantineColor {
-    switch (status) {
-        case "NEW":
-        case "PENDING":
-        case "UNRESOLVED":
-            return "blue";
-        case "COMPLETED":
-        case "RESOLVED":
-            return "green";
-        case "EXPIRED":
-        case "CANCELED":
-            return "red";
-        default:
-            return "gray";
-    }
-}
 
 export function PaymentHistory() {
     const { classes, theme } = useStyles();
@@ -94,8 +78,8 @@ export function PaymentHistory() {
                     <Badge size="md" color={getPaymentStatusColor(payment.status)}>
                         {payment.status}
                     </Badge>,
-                    <Text size="sm"> {dayjs(payment.createdAt).format("MMM DD, YYYY")}</Text>,
-                    <Text size="sm">{dayjs(payment.expiresAt).format("MMM DD, YYYY")}</Text>,
+                    <Text size="sm"> {dayjs.utc(payment.createdAt).format("YYYY-MM-DD HH:mm:ss UTC")}</Text>,
+                    <Text size="sm">{dayjs.utc(payment.expiresAt).format("YYYY-MM-DD HH:mm:ss UTC")}</Text>,
                     <Text size="sm">{`${payment?.userSub?.subscription.name} ${payment?.userSub?.subscriptionOption.name}`}</Text>,
                     <Text size="sm">{`${dayjs.utc(payment.subscriptionFrom).format("YYYY-MM-DD")} - ${dayjs
                         .utc(payment.subscriptionTo)
