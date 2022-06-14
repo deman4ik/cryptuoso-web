@@ -75,7 +75,7 @@ export function StatsCard({ title, Icon, fetching, values, ...others }: StatsCar
                     )}
                 </Group>
 
-                <Text size="sm" color="dimmed" mt={7}>
+                <Text size="sm" color="dimmed" mt={7} weight={500}>
                     {desc}
                 </Text>
             </Stack>

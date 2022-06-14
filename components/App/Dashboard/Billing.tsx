@@ -73,7 +73,7 @@ export function Billing() {
                             transitionTimingFunction="ease"
                             placement="start"
                             label={
-                                <Text transform="capitalize" size="sm">
+                                <Text transform="capitalize" size="sm" weight={500}>
                                     {myUserSub?.status}
                                 </Text>
                             }
@@ -114,14 +114,16 @@ export function Billing() {
                             placement="start"
                             label={expiresDate}
                         >
-                            <Text className={classes.value}>{expires}</Text>
+                            <Text className={classes.value} weight={500}>
+                                {expires}
+                            </Text>
                         </Tooltip>
                     ) : (
                         <Skeleton height={8} width="30%" />
                     )}
 
                     {myUserSub ? (
-                        <Text size="sm" color="dimmed">
+                        <Text size="sm" color="dimmed" weight={500}>
                             Expires
                         </Text>
                     ) : (

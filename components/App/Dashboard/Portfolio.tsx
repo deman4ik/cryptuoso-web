@@ -175,7 +175,7 @@ export function Portfolio() {
                 <Stack spacing={0}>
                     <Group spacing="xs"> {optionRows}</Group>
 
-                    <Text size="sm" color="dimmed" mt={7}>
+                    <Text size="sm" color="dimmed" mt={7} weight={500}>
                         Options
                     </Text>
                 </Stack>
@@ -190,7 +190,7 @@ export function Portfolio() {
                             {amountText}
                         </Text>
                     </Tooltip>
-                    <Text size="sm" color="dimmed" mt={7}>
+                    <Text size="sm" color="dimmed" mt={7} weight={500}>
                         Trading Amount
                     </Text>
                 </Stack>

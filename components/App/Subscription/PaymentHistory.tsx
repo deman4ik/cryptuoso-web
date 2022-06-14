@@ -71,17 +71,31 @@ export function PaymentHistory() {
             return {
                 id: payment.id,
                 values: [
-                    <TextLink size="sm" href={payment.url} target="_blank">
+                    <TextLink size="sm" href={payment.url} target="_blank" weight={500}>
                         {payment.code}
                     </TextLink>,
-                    <Text size="sm">{payment.price} $</Text>,
+                    <Text
+                        size="sm"
+                        weight={500}
+                        variant="gradient"
+                        gradient={{ from: theme.primaryColor, to: "cyan", deg: 45 }}
+                    >
+                        ${payment.price}
+                    </Text>,
                     <Badge size="md" color={getPaymentStatusColor(payment.status)}>
                         {payment.status}
                     </Badge>,
-                    <Text size="sm"> {dayjs.utc(payment.createdAt).format("YYYY-MM-DD HH:mm:ss UTC")}</Text>,
-                    <Text size="sm">{dayjs.utc(payment.expiresAt).format("YYYY-MM-DD HH:mm:ss UTC")}</Text>,
-                    <Text size="sm">{`${payment?.userSub?.subscription.name} ${payment?.userSub?.subscriptionOption.name}`}</Text>,
-                    <Text size="sm">{`${dayjs.utc(payment.subscriptionFrom).format("YYYY-MM-DD")} - ${dayjs
+                    <Text size="sm" weight={500}>
+                        {dayjs.utc(payment.createdAt).format("YYYY-MM-DD HH:mm:ss UTC")}
+                    </Text>,
+                    <Text size="sm" weight={500}>
+                        {dayjs.utc(payment.expiresAt).format("YYYY-MM-DD HH:mm:ss UTC")}
+                    </Text>,
+                    <Text
+                        size="sm"
+                        weight={500}
+                    >{`${payment?.userSub?.subscription.name} ${payment?.userSub?.subscriptionOption.name}`}</Text>,
+                    <Text size="sm" weight={500}>{`${dayjs.utc(payment.subscriptionFrom).format("YYYY-MM-DD")} - ${dayjs
                         .utc(payment.subscriptionTo)
                         .format("YYYY-MM-DD")}`}</Text>
                 ]

@@ -89,7 +89,7 @@ export function ChooseSubForm({ onSuccess }: { onSuccess: () => void }) {
             <Text size="lg" mt="sm" weight={500}>
                 {feature.title}
             </Text>
-            <Text color="dimmed" size="sm">
+            <Text color="dimmed" size="sm" weight={500}>
                 {feature.description}
             </Text>
         </div>
@@ -138,9 +138,9 @@ export function ChooseSubForm({ onSuccess }: { onSuccess: () => void }) {
 
             {options && options.length ? (
                 <Stack mt="md">
-                    <Text align="center" size="sm" color="dimmed">
+                    <Text align="center" size="sm" color="dimmed" weight={500}>
                         Choose your subscription period and pay with Crypto.{" "}
-                        <Anchor href="/docs/subscription" target="_blank" size="sm">
+                        <Anchor href="/docs/subscription" target="_blank" size="sm" weight={500}>
                             Learn details
                         </Anchor>
                     </Text>
@@ -164,7 +164,7 @@ export function ChooseSubForm({ onSuccess }: { onSuccess: () => void }) {
                                             <Text align="center" size="lg" weight={900}>
                                                 ${option?.priceTotal}
                                             </Text>
-                                            <Text align="center" color="dimmed" size="md" mt={-20}>
+                                            <Text align="center" color="dimmed" size="md" mt={-20} weight={500}>
                                                 for {option?.name}
                                             </Text>
                                         </>
@@ -181,11 +181,11 @@ export function ChooseSubForm({ onSuccess }: { onSuccess: () => void }) {
                                 >
                                     ${option?.priceMonth}
                                 </Text>
-                                <Text align="center" color="dimmed" size="lg" mt={-25}>
+                                <Text align="center" color="dimmed" size="lg" mt={-25} weight={500}>
                                     per month
                                 </Text>
                                 {error && (
-                                    <Text color="red" size="sm" mt="sm">
+                                    <Text color="red" size="sm" mt="sm" weight={500}>
                                         {error}
                                     </Text>
                                 )}
