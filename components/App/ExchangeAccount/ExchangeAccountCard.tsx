@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Group, Badge, Text, Button, Modal } from "@mantine/core";
+import { Group, Badge, Text, Button, Modal, useMantineTheme } from "@mantine/core";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { gql, useQuery } from "urql";
@@ -27,6 +27,7 @@ const ExchangeAccountQuery = gql`
 `;
 
 export function ExchangeAccountCard() {
+    const theme = useMantineTheme();
     const [modalOpened, setModalOpened] = useState(false);
     const { data: session } = useSession<true>({ required: true });
     const [result, reexecuteQuery] = useQuery<
@@ -99,7 +100,14 @@ export function ExchangeAccountCard() {
                         title="API Key Status"
                         loading={fetching}
                         value={
-                            <Badge size="md" color={myUserExAcc?.status === "enabled" ? "green" : "red"}>
+                            <Badge
+                                size="md"
+                                variant="gradient"
+                                gradient={{
+                                    from: myUserExAcc?.status === "enabled" ? "lime" : "orange",
+                                    to: myUserExAcc?.status === "enabled" ? "green" : "red"
+                                }}
+                            >
                                 {myUserExAcc?.status}
                             </Badge>
                         }
@@ -110,7 +118,16 @@ export function ExchangeAccountCard() {
                     <CardLine
                         title="Current Balance"
                         loading={fetching}
-                        value={`${round(myUserExAcc?.balance || 0, 2)} $`}
+                        value={
+                            <Text
+                                variant="gradient"
+                                gradient={{ from: theme.primaryColor, to: "cyan", deg: 45 }}
+                                weight={700}
+                                size="md"
+                            >
+                                ${round(myUserExAcc?.balance || 0, 2)}
+                            </Text>
+                        }
                         valueTooltip={`Updated ${dayjs.utc().to(dayjs.utc(myUserExAcc?.balanceUpdatedAt))}`}
                     />
                 </>

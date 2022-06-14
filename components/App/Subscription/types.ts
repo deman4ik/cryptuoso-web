@@ -31,9 +31,11 @@ export interface IUserPayment {
     expiresAt?: string;
     subscriptionFrom?: string;
     subscriptionTo?: string;
+    userSubId?: string;
     userSub?: {
         subscriptionOption: {
             name: string;
+            priceTotal?: number;
         };
         subscription: {
             name: string;

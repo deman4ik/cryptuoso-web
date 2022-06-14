@@ -18,9 +18,10 @@ export default function DashboardPage() {
                 <title>Billing | CRYPTUOSO</title>
             </Head>
             <Grid>
-                <Grid.Col sm={12} md={6}>
+                <Grid.Col span={12}>
                     <SubscriptionCard />
                 </Grid.Col>
+
                 <Grid.Col span={12}>
                     <PaymentHistory />
                 </Grid.Col>

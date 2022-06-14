@@ -26,8 +26,9 @@ const DashboardQuery = gql`
             limit: 1
         ) {
             id
+            status
             userPayments: user_payments(
-                where: { status: { _in: ["COMPLETED"] } }
+                where: { status: { _in: ["COMPLETED", "RESOLVED"] } }
                 order_by: { created_at: desc_nulls_last }
                 limit: 1
             ) {
@@ -45,6 +46,7 @@ export default function DashboardPage() {
     if (error) console.error(error);
     let userExAccExists = data?.userExAcExists[0];
     let userSubExists = data?.userSubExists[0];
+    let userSubActive = data?.userSubExists[0]?.status === "active";
     let userPaymentExists = data?.userSubExists[0]?.userPayments[0];
     let portfolioExists = data?.portfolioExists[0];
     const inited = userExAccExists && userSubExists && portfolioExists;
@@ -89,6 +91,7 @@ export default function DashboardPage() {
                 <GettingStarted
                     userExAccExists={userExAccExists}
                     userSubExists={userSubExists}
+                    userSubActive={userSubActive}
                     userPaymentExists={userPaymentExists}
                     portfolioExists={portfolioExists}
                 />

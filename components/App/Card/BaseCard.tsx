@@ -1,4 +1,4 @@
-import { Card, createStyles, LoadingOverlay, Stack, Sx } from "@mantine/core";
+import { Card, createStyles, LoadingOverlay, MantineNumberSize, MantineShadow, Stack, Sx } from "@mantine/core";
 import { ReactNode } from "react";
 
 const useStyles = createStyles((theme) => ({
@@ -11,19 +11,28 @@ const useStyles = createStyles((theme) => ({
 
 export function BaseCard({
     fetching = false,
+
     children,
     sx,
+    radius = "lg",
+    shadow = "sm",
+    justify = "space-between",
     ...other
 }: {
     fetching?: boolean;
+    radius?: MantineNumberSize;
+    shadow?: MantineShadow;
+    justify?: React.CSSProperties["justifyContent"];
     sx?: Sx;
+
     children: ReactNode;
 }) {
     const { classes } = useStyles();
     return (
-        <Card shadow="sm" p="sm" radius="lg" className={classes.card} sx={sx} {...other}>
+        <Card shadow={shadow} p="sm" radius={radius} className={classes.card} sx={sx} {...other} withBorder={false}>
             <LoadingOverlay visible={fetching} />
-            <Stack justify="space-between" spacing={0} sx={{ height: "100%" }}>
+
+            <Stack justify={justify} spacing={0} sx={{ height: "100%" }}>
                 {children}
             </Stack>
         </Card>

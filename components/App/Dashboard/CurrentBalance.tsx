@@ -107,14 +107,17 @@ export function CurrentBalance() {
                             placement="start"
                             label={`Updated ${dayjs.utc().to(dayjs.utc(myUserExAcc?.balanceUpdatedAt))}`}
                         >
-                            <Text className={classes.value}>{`${round(myUserExAcc?.balance || 0, 2)} $`}</Text>
+                            <Text className={classes.value} weight={500}>{`${round(
+                                myUserExAcc?.balance || 0,
+                                2
+                            )} $`}</Text>
                         </Tooltip>
                     ) : (
                         <Skeleton height={8} width="30%" />
                     )}
 
                     {myUserExAcc ? (
-                        <Text size="sm" color="dimmed">
+                        <Text size="sm" color="dimmed" weight={500}>
                             Current Balance
                         </Text>
                     ) : (

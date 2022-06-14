@@ -1,4 +1,13 @@
-import { DefaultMantineColor, Group, GroupPosition, Skeleton, Text, Tooltip, MantineNumberSize } from "@mantine/core";
+import {
+    DefaultMantineColor,
+    Group,
+    GroupPosition,
+    Skeleton,
+    Text,
+    Tooltip,
+    MantineNumberSize,
+    Stack
+} from "@mantine/core";
 import { ReactElement, ReactNode } from "react";
 
 export function CardLine({
@@ -9,7 +18,8 @@ export function CardLine({
     valueTooltip,
     valueTooltipColor,
     position = "apart",
-    mt = "md"
+    mt = "md",
+    variant = "group"
 }: {
     loading: boolean;
     title?: ReactNode | string;
@@ -19,6 +29,7 @@ export function CardLine({
     valueTooltipColor?: DefaultMantineColor;
     position?: GroupPosition;
     mt?: MantineNumberSize;
+    variant?: "stack" | "group";
 }) {
     let Title;
     const TitleComponent =
@@ -31,17 +42,31 @@ export function CardLine({
         );
     if (titleTooltip) {
         Title = (
-            <Tooltip transition="fade" transitionDuration={500} transitionTimingFunction="ease" label={titleTooltip}>
+            <Tooltip
+                wrapLines
+                transition="fade"
+                transitionDuration={500}
+                transitionTimingFunction="ease"
+                label={titleTooltip}
+            >
                 {TitleComponent}
             </Tooltip>
         );
     } else Title = TitleComponent;
 
     let Value;
-    const ValueComponent = typeof value === "string" ? <Text size="md">{value}</Text> : value;
+    const ValueComponent =
+        typeof value === "string" ? (
+            <Text size="sm" weight={500}>
+                {value}
+            </Text>
+        ) : (
+            value
+        );
     if (valueTooltip) {
         Value = (
             <Tooltip
+                wrapLines
                 transition="fade"
                 transitionDuration={500}
                 transitionTimingFunction="ease"
@@ -53,10 +78,15 @@ export function CardLine({
         );
     } else Value = ValueComponent;
 
-    return (
+    return variant === "group" ? (
         <Group position={position} mt={mt}>
             {Title}
             {loading ? <Skeleton height={8} width="30%" /> : Value}
         </Group>
+    ) : (
+        <Stack justify={position} mt={mt} spacing="xs">
+            {Title}
+            {loading ? <Skeleton height={8} width="30%" /> : Value}
+        </Stack>
     );
 }

@@ -134,13 +134,13 @@ export function ExchangeAccountForm({
                 />
 
                 {error && (
-                    <Text color="red" size="sm" mt="sm">
+                    <Text color="red" size="sm" mt="sm" weight={500}>
                         {error}
                     </Text>
                 )}
                 <Group position="right" mt="md">
                     {id && (
-                        <Text size="xs" color="dimmed">
+                        <Text size="xs" color="dimmed" weight={500}>
                             You can change API Keys only when your portfolio is stopped or exchange account is disabled
                         </Text>
                     )}
