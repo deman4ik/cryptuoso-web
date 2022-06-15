@@ -23,7 +23,9 @@
             "@cryptuoso/helpers": ["helpers/"],
             "@cryptuoso/helpers/*": ["helpers/*"],
             "@cryptuoso/public": ["public/"],
-            "@cryptuoso/public/*": ["public/*"]
+            "@cryptuoso/public/*": ["public/*"],
+            "@cryptuoso/types": ["@types/"],
+            "@cryptuoso/types/*": ["@types/*"]
         }
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

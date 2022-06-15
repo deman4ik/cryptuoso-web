@@ -2,6 +2,7 @@ import { Stack, Stepper, Container, Paper, Group, SimpleGrid } from "@mantine/co
 import { useState } from "react";
 import { ExchangeAccountForm } from "@cryptuoso/components/App/ExchangeAccount";
 import { ChooseSubForm, SubscriptionCard } from "@cryptuoso/components/App/Subscription";
+import { ChoosePortfolio } from "../Portfolio";
 
 function initialStep(
     userExAccExists: boolean,
@@ -50,7 +51,7 @@ export function GettingStarted({
                     <SubscriptionCard sx={{ width: "100%" }} onSuccess={nextStep} />
                 </Stepper.Step>
                 <Stepper.Step label="Portfolio" description="Configure your portfolio">
-                    Step 3 content: Get full access
+                    <ChoosePortfolio />
                 </Stepper.Step>
             </Stepper>
         </Container>

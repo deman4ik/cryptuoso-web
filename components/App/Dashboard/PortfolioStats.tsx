@@ -3,7 +3,8 @@ import { Grid } from "@mantine/core";
 import { useSession } from "next-auth/react";
 import { Coin, ListCheck, Minus, Plus, Scale } from "tabler-icons-react";
 import { gql, useQuery } from "urql";
-import { StatsCard, UserPortfolio, Equity } from "@cryptuoso/components/App/Portfolio";
+import { StatsCard, Equity } from "@cryptuoso/components/App/Portfolio";
+import { UserPortfolio } from "@cryptuoso/types";
 
 const PortfolioQuery = gql`
     query myPortfolioStats($userId: uuid!) {

@@ -1,4 +1,4 @@
-import { StatsInfo } from "@cryptuoso/components/Stats";
+import { StatsInfo } from "@cryptuoso/types";
 import { ActionIcon, createStyles, Skeleton } from "@mantine/core";
 import { Refresh } from "tabler-icons-react";
 import { OperationContext } from "urql";
