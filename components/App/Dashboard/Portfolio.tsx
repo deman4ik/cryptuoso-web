@@ -3,10 +3,13 @@ import { Group, Badge, Button, Tooltip, Skeleton, ThemeIcon, Text, Stack } from 
 import { useSession } from "next-auth/react";
 import { gql, useQuery } from "urql";
 import {
+    Adjustments,
     Bolt,
     Briefcase,
     Check,
     Coin,
+    PlayerPlay,
+    PlayerStop,
     PresentationAnalytics,
     Receipt,
     ReceiptRefund,
@@ -36,6 +39,11 @@ const PortfolioQuery = gql`
         }
     }
 `;
+
+function portfolioStatusToBoolean(status?: UserPortfolio["status"]) {
+    if (status === "started" || status === "starting") return true;
+    return false;
+}
 
 export function Portfolio() {
     const { data: session } = useSession<true>({ required: true });
@@ -68,7 +76,7 @@ export function Portfolio() {
                             transitionDuration={500}
                             transitionTimingFunction="ease"
                             placement="start"
-                            label={myPortfolio?.status === "started" ? "Active" : myPortfolio?.message}
+                            label={myPortfolio?.status === "started" ? "Active" : myPortfolio?.message || "Disabled"}
                             color={myPortfolio?.status === "started" ? "green" : "red"}
                         >
                             <Badge color={myPortfolio?.status === "started" ? "green" : "red"} size="sm">
@@ -81,17 +89,25 @@ export function Portfolio() {
                 }
                 right={
                     <Group spacing={0}>
+                        <Button color="gray" variant="subtle" compact uppercase rightIcon={<Adjustments size={18} />}>
+                            Configure
+                        </Button>
                         <Button
-                            component={SimpleLink}
-                            href="/app/my-portfolio"
-                            color="gray"
                             variant="subtle"
                             compact
                             uppercase
-                            rightIcon={<Briefcase size={18} />}
+                            color={portfolioStatusToBoolean(myPortfolio?.status) ? "gray" : "green"}
+                            rightIcon={
+                                portfolioStatusToBoolean(myPortfolio?.status) ? (
+                                    <PlayerStop size={18} />
+                                ) : (
+                                    <PlayerPlay size={18} />
+                                )
+                            }
                         >
-                            DETAILS
+                            {portfolioStatusToBoolean(myPortfolio?.status) ? "Stop" : "Start"}
                         </Button>
+
                         <RefreshAction reexecuteQuery={reexecuteQuery} />
                     </Group>
                 }

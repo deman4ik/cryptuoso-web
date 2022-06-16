@@ -94,6 +94,7 @@ export default function DashboardPage() {
                     userSubActive={userSubActive}
                     userPaymentExists={userPaymentExists}
                     portfolioExists={portfolioExists}
+                    refetch={() => reexecuteQuery({ requestPolicy: "network-only" })}
                 />
             )}
         </Layout>

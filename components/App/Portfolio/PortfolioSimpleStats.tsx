@@ -1,7 +1,8 @@
 import { round } from "@cryptuoso/helpers";
+import dayjs from "@cryptuoso/libs/dayjs";
 import { StatsInfo } from "@cryptuoso/types";
 import { Grid } from "@mantine/core";
-import { Coin, ListCheck, Minus, Plus, Scale } from "tabler-icons-react";
+import { Cash, CashBanknote, Coin, ListCheck, Minus, Plus, Scale } from "tabler-icons-react";
 import { OperationContext } from "urql";
 import { Equity } from "./Equity";
 import { StatsCard } from "./StatsCard";
@@ -18,9 +19,56 @@ export function PortfolioSimpleStats({
     return (
         <Grid gutter="xs">
             <Grid.Col span={12}>
-                <Equity fetching={fetching} reexecuteQuery={reexecuteQuery} equity={stats?.equity} />
+                <Equity
+                    fetching={fetching}
+                    reexecuteQuery={reexecuteQuery}
+                    equity={stats?.equity}
+                    heightMultiplier={10}
+                />
             </Grid.Col>
 
+            <Grid.Col span={12} sm={6} lg={4}>
+                <StatsCard
+                    fetching={fetching}
+                    Icon={CashBanknote}
+                    title="Initial Balance"
+                    values={[
+                        {
+                            value: round(stats?.initialBalance || 0),
+                            valueType: "$",
+                            desc: "Initial portfolio balance"
+                        }
+                    ]}
+                />
+            </Grid.Col>
+            <Grid.Col span={12} sm={6} lg={4}>
+                <StatsCard
+                    fetching={fetching}
+                    Icon={Cash}
+                    title="Current Balance"
+                    values={[
+                        {
+                            value: round(stats?.currentBalance || 0),
+                            valueType: "$",
+                            desc: "Current portfolio balance"
+                        }
+                    ]}
+                />
+            </Grid.Col>
+            <Grid.Col span={12} sm={6} lg={4}>
+                <StatsCard
+                    fetching={fetching}
+                    Icon={Coin}
+                    title="First trade"
+                    values={[
+                        {
+                            value: dayjs.utc().to(dayjs.utc(stats?.firstPosition.entryDate)),
+                            valueType: null,
+                            desc: "Portfolio started"
+                        }
+                    ]}
+                />
+            </Grid.Col>
             <Grid.Col span={12} sm={6} lg={4}>
                 <StatsCard
                     fetching={fetching}

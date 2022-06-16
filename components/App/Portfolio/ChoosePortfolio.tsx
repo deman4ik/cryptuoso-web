@@ -1,63 +1,38 @@
 import { useState } from "react";
-import { FullStats, Option, PortfolioOptions, StatsInfo } from "@cryptuoso/types";
-import { gql, useQuery } from "urql";
-import { Button, Container, Group, SimpleGrid, Stack, Text, Tooltip, useMantineTheme } from "@mantine/core";
+import { FullStats, Option, PortfolioOptions, PortfolioSettings, StatsInfo } from "@cryptuoso/types";
+import { gql, useMutation, useQuery } from "urql";
+import {
+    Button,
+    Container,
+    Grid,
+    Group,
+    LoadingOverlay,
+    SimpleGrid,
+    Skeleton,
+    Stack,
+    Text,
+    Tooltip,
+    useMantineTheme
+} from "@mantine/core";
 import { OptionsPicker } from "./OptionsPicker";
-import { BaseCard, CardHeader } from "@cryptuoso/components/App/Card";
+import { BaseCard, CardHeader, CardLine } from "@cryptuoso/components/App/Card";
 import { PortfolioSimpleStats } from "./PortfolioSimpleStats";
 import { Plus } from "tabler-icons-react";
 import { getPortfolioOptionsIcons } from "@cryptuoso/helpers/portfolio";
 import Image from "next/image";
+import { portfoliosQuery, ExchangeAccountQuery } from "@cryptuoso/queries";
+import { useSession } from "next-auth/react";
+import dayjs from "@cryptuoso/libs/dayjs";
+import { round } from "@cryptuoso/helpers/number";
+import { useForm } from "@mantine/form";
+import { TradingAmountFormControls } from "./TradingAmountFormControls";
 
-const portfoliosQuery = gql`
-    query PublicPortfolios(
-        $exchange: String!
-        $risk: Boolean!
-        $profit: Boolean!
-        $winRate: Boolean!
-        $efficiency: Boolean!
-        $moneyManagement: Boolean!
-    ) {
-        portfolios: v_portfolios(
-            where: {
-                exchange: { _eq: $exchange }
-                option_risk: { _eq: $risk }
-                option_profit: { _eq: $profit }
-                option_win_rate: { _eq: $winRate }
-                option_efficiency: { _eq: $efficiency }
-                option_money_management: { _eq: $moneyManagement }
-                status: { _eq: "started" }
-                base: { _eq: true }
-            }
-            limit: 1
-        ) {
-            stats {
-                tradesCount: trades_count
-                currentBalance: current_balance
-                netProfit: net_profit
-                percentNetProfit: percent_net_profit
-                winRate: win_rate
-                maxDrawdown: max_drawdown
-                maxDrawdownDate: max_drawdown_date
-                percentMaxDrawdown: percent_max_drawdown
-                payoffRatio: payoff_ratio
-                sharpeRatio: sharpe_ratio
-                recoveryFactor: recovery_factor
-                avgTradesCount: avg_trades_count_years
-                avgPercentNetProfitYearly: avg_percent_net_profit_yearly
-                equity: equity
-                firstPosition: first_position
-                lastPosition: last_position
-            }
-        }
-    }
-`;
-
-export function ChoosePortfolio() {
+export function ChoosePortfolio({ onSuccess }: { onSuccess?: () => void }) {
+    const { data: session } = useSession<true>({ required: true });
     const theme = useMantineTheme();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const exchange = "binance_futures";
+
     let [options, setOptions] = useState<Option[]>([Option.profit]);
     if (!options.length) options = [Option.profit];
     const selectedOptions: PortfolioOptions = {
@@ -72,8 +47,24 @@ export function ChoosePortfolio() {
         selectedOptions[option] = true;
     }
 
-    const optionRows = getPortfolioOptionsIcons(selectedOptions, "value");
-    const [result, reexecuteQuery] = useQuery<{
+    const [myUserExAccResult, reexecuteMyUserExAccQuery] = useQuery<
+        {
+            myUserExAcc: {
+                id: string;
+                exchange: string;
+                name: string;
+                status: string;
+                balance: number;
+                balanceUpdatedAt: string;
+                error?: string;
+            }[];
+        },
+        { userId: string }
+    >({ query: ExchangeAccountQuery, variables: { userId: session?.user?.userId || "" } });
+    const { data: myUserExAccData, fetching: myUserExAccFetching, error: myUserExAccError } = myUserExAccResult;
+    const myUserExAcc = myUserExAccData?.myUserExAcc[0];
+
+    const [portfoliosResult, reexecutePortfoliosQuery] = useQuery<{
         portfolios: [
             {
                 stats: StatsInfo;
@@ -81,41 +72,130 @@ export function ChoosePortfolio() {
         ];
     }>({
         query: portfoliosQuery,
-        variables: { exchange, ...selectedOptions }
+        variables: { exchange: myUserExAcc?.exchange, ...selectedOptions }
     });
-    //TODO: get exchange from userExAcc
-    const { data, fetching, error: queryError } = result;
 
-    const portfolioStats = data?.portfolios[0]?.stats;
+    const { data: portfoliosData, fetching: portfoliosFetching, error: portfoliosError } = portfoliosResult;
 
-    const handleSubscribe = async () => {};
+    const portfolioStats = portfoliosData?.portfolios[0]?.stats;
+
+    const form = useForm<{
+        tradingAmountType: PortfolioSettings["tradingAmountType"];
+        balancePercent: PortfolioSettings["balancePercent"];
+        tradingAmountCurrency?: PortfolioSettings["tradingAmountCurrency"];
+    }>({
+        initialValues: {
+            tradingAmountType: "balancePercent",
+            balancePercent: 100,
+            tradingAmountCurrency: myUserExAcc?.balance
+        }
+
+        /* validate: {
+            tradingAmountType: (value) => !!value || "Invalid trading amount type",
+            balancePercent: (value) => !!value || "Invalid percent value",
+            tradingAmountCurrency: (value) => !!value || "Invalid amount"
+        }*/
+    });
+
+    const [, userPortfolioCreate] = useMutation<
+        { result: { result: string } },
+        {
+            exchange: string;
+            userExAccId: string;
+            tradingAmountType: string;
+            balancePercent?: number;
+            tradingAmountCurrency?: number;
+            options: PortfolioOptions;
+        }
+    >(
+        gql`
+            mutation userPortfolioCreate(
+                $exchange: String!
+                $userExAccId: uuid
+                $tradingAmountType: String!
+                $balancePercent: Int
+                $tradingAmountCurrency: Int
+                $options: PortfolioOptions
+            ) {
+                result: userPortfolioCreate(
+                    exchange: $exchange
+                    userExAccId: $userExAccId
+                    tradingAmountType: $tradingAmountType
+                    balancePercent: $balancePercent
+                    tradingAmountCurrency: $tradingAmountCurrency
+                    options: $options
+                ) {
+                    result
+                }
+            }
+        `
+    );
+
+    const handleSubscribe = async () => {
+        setLoading(true);
+        setError(null);
+
+        const result = await userPortfolioCreate({
+            exchange: myUserExAcc?.exchange || "",
+            userExAccId: myUserExAcc?.id || "",
+            tradingAmountType: form.values.tradingAmountType || "",
+            balancePercent: form.values.balancePercent || 0,
+            tradingAmountCurrency: form.values.tradingAmountCurrency || 0,
+            options: selectedOptions
+        });
+
+        if (result?.error) {
+            setLoading(false);
+            setError(result.error.message.replace("[GraphQL] ", ""));
+        } else if (result?.data?.result?.result) {
+            if (onSuccess) {
+                onSuccess();
+            } else {
+                setLoading(false);
+            }
+        }
+    };
     return (
-        <BaseCard fetching={fetching || loading} justify="flex-start">
-            <CardHeader title="Choose Portfolio Options" />
-            <SimpleGrid cols={2} breakpoints={[{ maxWidth: "md", cols: 1 }]} spacing="xl">
-                <OptionsPicker options={options} setOptions={setOptions} />
-                <Stack>
-                    <Group position="center">
-                        <Image src={`/${exchange}.svg`} alt={exchange} height={40} width={100} />
-                        {optionRows}
-                    </Group>
-                    <Button
-                        onClick={handleSubscribe}
-                        size="md"
-                        variant="gradient"
-                        gradient={{ from: theme.primaryColor, to: "cyan", deg: 45 }}
-                        px="xl"
-                        leftIcon={<Plus size={18} />}
-                    >
-                        Subscribe
-                    </Button>
-                </Stack>
-            </SimpleGrid>
-
+        <BaseCard fetching={myUserExAccFetching || portfoliosFetching || loading} justify="flex-start">
+            <div style={{ position: "relative" }}>
+                <LoadingOverlay visible={myUserExAccFetching || portfoliosFetching || loading} />
+                <SimpleGrid cols={2} breakpoints={[{ maxWidth: "md", cols: 1 }]} spacing="xl">
+                    <Stack spacing={0}>
+                        <CardHeader title="Choose Portfolio Options" />
+                        <OptionsPicker options={options} setOptions={setOptions} />
+                    </Stack>
+                    <Stack spacing={0}>
+                        <CardHeader title="Choose Trading Amount" />
+                        <TradingAmountFormControls
+                            form={form}
+                            currentBalance={myUserExAcc?.balance}
+                            currentBalanceUpdatedAt={myUserExAcc?.balanceUpdatedAt}
+                        />
+                    </Stack>
+                </SimpleGrid>
+            </div>
+            {error && (
+                <Text color="red" size="sm" mt="sm" weight={500}>
+                    {error}
+                </Text>
+            )}
+            <Button
+                onClick={handleSubscribe}
+                size="lg"
+                variant="gradient"
+                my="xl"
+                gradient={{ from: theme.primaryColor, to: "cyan", deg: 45 }}
+                leftIcon={<Plus size={18} />}
+                disabled={myUserExAccFetching || portfoliosFetching}
+                loading={loading}
+            >
+                Subscribe
+            </Button>
+            <CardHeader title="Selected Portfolio Performance History" />
             <PortfolioSimpleStats
                 stats={portfolioStats}
-                fetching={fetching || loading}
-                reexecuteQuery={reexecuteQuery}
+                fetching={portfoliosFetching}
+                reexecuteQuery={reexecutePortfoliosQuery}
             />
         </BaseCard>
     );

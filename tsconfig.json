@@ -18,6 +18,8 @@
         "paths": {
             "@cryptuoso/components": ["components/"],
             "@cryptuoso/components/*": ["components/*"],
+            "@cryptuoso/queries": ["libs/graphql/queries"],
+            "@cryptuoso/queries/*": ["libs/graphql/queries/*"],
             "@cryptuoso/libs": ["libs/"],
             "@cryptuoso/libs/*": ["libs/*"],
             "@cryptuoso/helpers": ["helpers/"],

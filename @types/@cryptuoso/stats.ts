@@ -147,6 +147,7 @@ export interface PeriodStats<T> {
 
 export interface StatsInfo {
     tradesCount: FullStats["tradesCount"];
+    initialBalance: FullStats["initialBalance"];
     currentBalance: FullStats["currentBalance"];
     netProfit: FullStats["netProfit"];
     percentNetProfit: FullStats["percentNetProfit"];

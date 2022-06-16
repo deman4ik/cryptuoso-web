@@ -11,22 +11,24 @@ const AreaChart = dynamic(() => import("@cryptuoso/components/Chart/AreaChart"),
     ssr: false
 });
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles((theme, { heightMultiplier }: { heightMultiplier: number }) => ({
     chart: {
-        height: theme.spacing.xl * 10
+        height: theme.spacing.xl * heightMultiplier
     }
 }));
 
 export function Equity({
     equity,
     fetching,
-    reexecuteQuery
+    reexecuteQuery,
+    heightMultiplier = 10
 }: {
     equity?: StatsInfo["equity"];
     fetching: boolean;
     reexecuteQuery: (opts?: { requestPolicy?: OperationContext["requestPolicy"] }) => void;
+    heightMultiplier?: number;
 }) {
-    const { classes } = useStyles();
+    const { classes } = useStyles({ heightMultiplier });
 
     return (
         <BaseCard fetching={fetching}>

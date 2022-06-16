@@ -2,6 +2,7 @@ import { BaseCard, CardHeader, RefreshAction } from "@cryptuoso/components/App/C
 import { SimpleLink } from "@cryptuoso/components/Link";
 import { round } from "@cryptuoso/helpers/number";
 import dayjs from "@cryptuoso/libs/dayjs";
+import { ExchangeAccountQuery } from "@cryptuoso/queries";
 import { ActionIcon, createStyles, Group, Skeleton, Stack, Text, Tooltip, Badge, Button } from "@mantine/core";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -18,23 +19,6 @@ const useStyles = createStyles((theme) => ({
         transform: "rotate(-10deg)"
     }
 }));
-
-const ExchangeAccountQuery = gql`
-    query ExchangeAccount($userId: uuid!) {
-        myUserExAcc: user_exchange_accs(
-            where: { user_id: { _eq: $userId } }
-            limit: 1
-            order_by: { created_at: desc }
-        ) {
-            id
-            exchange
-            status
-            balance: balances(path: "$.totalUSD")
-            balanceUpdatedAt: balances(path: "$.updatedAt")
-            error
-        }
-    }
-`;
 
 export function CurrentBalance() {
     const { classes } = useStyles();
