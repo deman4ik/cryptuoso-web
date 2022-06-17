@@ -61,3 +61,20 @@ export const portfoliosQuery = gql`
         }
     }
 `;
+
+export const MyPortfolioQuery = gql`
+    query MyPortfolio($userId: uuid!) {
+        myPortfolio: v_user_portfolios(where: { user_id: { _eq: $userId } }) {
+            id
+            userExAccId: user_ex_acc_id
+            exchange
+            status
+            message
+            startedAt: started_at
+            stoppedAt: stopped_at
+            activeFrom: active_from
+            settings: user_portfolio_settings
+            nextSettings: next_user_portfolio_settings
+        }
+    }
+`;

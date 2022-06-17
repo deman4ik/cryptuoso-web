@@ -1,4 +1,4 @@
-import { PortfolioOptions } from "@cryptuoso/types";
+import { PortfolioOptions, UserPortfolio } from "@cryptuoso/types";
 import { Skeleton, ThemeIcon, Tooltip } from "@mantine/core";
 import { Bolt, Coin, PresentationAnalytics, Scale, Trophy } from "tabler-icons-react";
 
@@ -80,4 +80,9 @@ export function getPortfolioOptionsIcons(options?: PortfolioOptions, sort: "key"
         <Skeleton height={30} />
     );
     return optionRows;
+}
+
+export function isPortfolioStarted(status?: UserPortfolio["status"]) {
+    if (status === "started" || status === "starting") return true;
+    return false;
 }
