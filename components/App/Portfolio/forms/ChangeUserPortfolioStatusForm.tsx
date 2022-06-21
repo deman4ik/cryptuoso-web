@@ -3,7 +3,7 @@ import { useState } from "react";
 import { AlertCircle } from "tabler-icons-react";
 import { gql, useMutation } from "urql";
 
-export function PortfolioStatusForm({
+export function ChangeUserPortfolioStatusForm({
     onSuccess,
     onCancel,
     id,
@@ -84,12 +84,13 @@ export function PortfolioStatusForm({
                     {error}
                 </Text>
             )}
-            <Group position="right">
-                <Button mt="sm" variant="subtle" color="gray" onClick={onCancel}>
+            <Group position="center" mt="xl" grow>
+                <Button size="lg" fullWidth variant="subtle" color="gray" onClick={onCancel}>
                     Cancel
                 </Button>
                 <Button
-                    mt="sm"
+                    size="lg"
+                    fullWidth
                     variant="gradient"
                     gradient={{ from: "indigo", to: "cyan", deg: 45 }}
                     onClick={handleSubmit}

@@ -3,9 +3,11 @@ import Head from "next/head";
 import { gql, useQuery } from "urql";
 import { useSession } from "next-auth/react";
 import { Layout } from "@cryptuoso/components/App/Layout";
-import { Portfolio, PortfolioStats, Section } from "@cryptuoso/components/App/Dashboard";
-import { CurrentBalance, Billing } from "@cryptuoso/components/App/Dashboard";
+import { Section } from "@cryptuoso/components/App/Dashboard";
 import { GettingStarted } from "@cryptuoso/components/App/Dashboard/GettingStarted";
+import { CurrentBalance } from "@cryptuoso/components/App/ExchangeAccount";
+import { Billing } from "@cryptuoso/components/App/Subscription";
+import { PortfolioStats, UserPortfolio } from "@cryptuoso/components/App/Portfolio";
 export { getServerSideProps } from "@cryptuoso/libs/graphql/shared";
 
 const DashboardQuery = gql`
@@ -80,7 +82,7 @@ export default function DashboardPage() {
                             <Billing />
                         </Grid.Col>
                         <Grid.Col span={12} xl={4}>
-                            <Portfolio />
+                            <UserPortfolio />
                         </Grid.Col>
                     </Grid>
                     <Section title="Portfolio Perfomance">

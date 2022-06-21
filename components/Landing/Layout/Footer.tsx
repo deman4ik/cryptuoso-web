@@ -1,5 +1,5 @@
 import React from "react";
-import { createStyles, Anchor, Group, ActionIcon, Text, useMantineTheme } from "@mantine/core";
+import { createStyles, Anchor, Group, ActionIcon, Text, useMantineTheme, Container } from "@mantine/core";
 import { BrandTwitter, BrandInstagram, BrandTelegram } from "tabler-icons-react";
 import { SimpleLink } from "@cryptuoso/components/Link";
 import Image from "next/image";
@@ -60,7 +60,7 @@ export function LandingFooter({ links }: LandingFooterProps) {
     ));
 
     return (
-        <div className={classes.footer}>
+        <Container size="xl" className={classes.footer}>
             <div className={classes.poweredBy}>
                 <SimpleLink href="https://hasura.io/?ref=powered-by" className={classes.poweredByItem}>
                     <Image
@@ -109,6 +109,6 @@ export function LandingFooter({ links }: LandingFooterProps) {
                     </ActionIcon>
                 </Group>
             </div>
-        </div>
+        </Container>
     );
 }

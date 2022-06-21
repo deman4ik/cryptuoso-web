@@ -14,9 +14,9 @@ import {
     Tooltip,
     useMantineTheme
 } from "@mantine/core";
-import { OptionsPicker } from "./OptionsPicker";
+import { OptionsPicker } from "../controls/OptionsPicker";
 import { BaseCard, CardHeader, CardLine } from "@cryptuoso/components/App/Card";
-import { PortfolioSimpleStats } from "./PortfolioSimpleStats";
+import { PortfolioSimpleStats } from "../PortfolioSimpleStats";
 import { Plus } from "tabler-icons-react";
 import { getPortfolioOptionsIcons } from "@cryptuoso/helpers/portfolio";
 import Image from "next/image";
@@ -25,9 +25,9 @@ import { useSession } from "next-auth/react";
 import dayjs from "@cryptuoso/libs/dayjs";
 import { round } from "@cryptuoso/helpers/number";
 import { useForm } from "@mantine/form";
-import { TradingAmountFormControls } from "./TradingAmountFormControls";
+import { TradingAmountFormControls } from "../controls/TradingAmountFormControls";
 
-export function ChoosePortfolio({ onSuccess }: { onSuccess?: () => void }) {
+export function CreateUserPortfolio({ onSuccess }: { onSuccess?: () => void }) {
     const { data: session } = useSession<true>({ required: true });
     const theme = useMantineTheme();
     const [loading, setLoading] = useState(false);
@@ -47,9 +47,9 @@ export function ChoosePortfolio({ onSuccess }: { onSuccess?: () => void }) {
         selectedOptions[option] = true;
     }
 
-    const [myUserExAccResult, reexecuteMyUserExAccQuery] = useQuery<
+    const [userExAccResult, reexecuteMyUserExAccQuery] = useQuery<
         {
-            myUserExAcc: {
+            userExAcc: {
                 id: string;
                 exchange: string;
                 name: string;
@@ -61,8 +61,8 @@ export function ChoosePortfolio({ onSuccess }: { onSuccess?: () => void }) {
         },
         { userId: string }
     >({ query: ExchangeAccountQuery, variables: { userId: session?.user?.userId || "" } });
-    const { data: myUserExAccData, fetching: myUserExAccFetching, error: myUserExAccError } = myUserExAccResult;
-    const myUserExAcc = myUserExAccData?.myUserExAcc[0];
+    const { data: userExAccData, fetching: userExAccFetching, error: userExAccError } = userExAccResult;
+    const userExAcc = userExAccData?.userExAcc[0];
 
     const [portfoliosResult, reexecutePortfoliosQuery] = useQuery<{
         portfolios: [
@@ -72,7 +72,7 @@ export function ChoosePortfolio({ onSuccess }: { onSuccess?: () => void }) {
         ];
     }>({
         query: portfoliosQuery,
-        variables: { exchange: myUserExAcc?.exchange, ...selectedOptions }
+        variables: { exchange: userExAcc?.exchange, ...selectedOptions }
     });
 
     const { data: portfoliosData, fetching: portfoliosFetching, error: portfoliosError } = portfoliosResult;
@@ -87,7 +87,7 @@ export function ChoosePortfolio({ onSuccess }: { onSuccess?: () => void }) {
         initialValues: {
             tradingAmountType: "balancePercent",
             balancePercent: 100,
-            tradingAmountCurrency: myUserExAcc?.balance
+            tradingAmountCurrency: userExAcc?.balance
         }
 
         /* validate: {
@@ -136,8 +136,8 @@ export function ChoosePortfolio({ onSuccess }: { onSuccess?: () => void }) {
         setError(null);
 
         const result = await userPortfolioCreate({
-            exchange: myUserExAcc?.exchange || "",
-            userExAccId: myUserExAcc?.id || "",
+            exchange: userExAcc?.exchange || "",
+            userExAccId: userExAcc?.id || "",
             tradingAmountType: form.values.tradingAmountType || "",
             balancePercent: form.values.balancePercent || 0,
             tradingAmountCurrency: form.values.tradingAmountCurrency || 0,
@@ -156,9 +156,9 @@ export function ChoosePortfolio({ onSuccess }: { onSuccess?: () => void }) {
         }
     };
     return (
-        <BaseCard fetching={myUserExAccFetching || portfoliosFetching || loading} justify="flex-start">
+        <BaseCard fetching={userExAccFetching || portfoliosFetching || loading} justify="flex-start">
             <div style={{ position: "relative" }}>
-                <LoadingOverlay visible={myUserExAccFetching || portfoliosFetching || loading} />
+                <LoadingOverlay visible={userExAccFetching || portfoliosFetching || loading} />
                 <SimpleGrid cols={2} breakpoints={[{ maxWidth: "md", cols: 1 }]} spacing="xl">
                     <Stack spacing={0}>
                         <CardHeader title="Choose Portfolio Options" />
@@ -168,8 +168,8 @@ export function ChoosePortfolio({ onSuccess }: { onSuccess?: () => void }) {
                         <CardHeader title="Choose Trading Amount" />
                         <TradingAmountFormControls
                             form={form}
-                            currentBalance={myUserExAcc?.balance}
-                            currentBalanceUpdatedAt={myUserExAcc?.balanceUpdatedAt}
+                            currentBalance={userExAcc?.balance}
+                            currentBalanceUpdatedAt={userExAcc?.balanceUpdatedAt}
                         />
                     </Stack>
                 </SimpleGrid>
@@ -186,7 +186,7 @@ export function ChoosePortfolio({ onSuccess }: { onSuccess?: () => void }) {
                 my="xl"
                 gradient={{ from: theme.primaryColor, to: "cyan", deg: 45 }}
                 leftIcon={<Plus size={18} />}
-                disabled={myUserExAccFetching || portfoliosFetching}
+                disabled={userExAccFetching || portfoliosFetching}
                 loading={loading}
             >
                 Subscribe

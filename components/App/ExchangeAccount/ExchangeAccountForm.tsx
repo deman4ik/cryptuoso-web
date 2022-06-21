@@ -148,17 +148,17 @@ export function ExchangeAccountForm({
                         How to create API Keys?
                     </Anchor>
                 </Group>
-                <Group position="right" mt="md">
-                    <Button
-                        type="submit"
-                        fullWidth
-                        mt="sm"
-                        variant="gradient"
-                        gradient={{ from: "indigo", to: "cyan", deg: 45 }}
-                    >
-                        {!!id ? "Confirm" : "Create"}
-                    </Button>
-                </Group>
+
+                <Button
+                    type="submit"
+                    fullWidth
+                    size="lg"
+                    mt="md"
+                    variant="gradient"
+                    gradient={{ from: "indigo", to: "cyan", deg: 45 }}
+                >
+                    {!!id ? "Confirm" : "Create"}
+                </Button>
             </form>
         </div>
     );

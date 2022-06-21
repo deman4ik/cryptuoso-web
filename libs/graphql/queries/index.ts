@@ -2,11 +2,7 @@ import { gql } from "urql";
 
 export const ExchangeAccountQuery = gql`
     query ExchangeAccount($userId: uuid!) {
-        myUserExAcc: user_exchange_accs(
-            where: { user_id: { _eq: $userId } }
-            limit: 1
-            order_by: { created_at: desc }
-        ) {
+        userExAcc: user_exchange_accs(where: { user_id: { _eq: $userId } }, limit: 1, order_by: { created_at: desc }) {
             id
             exchange
             status
@@ -64,7 +60,7 @@ export const portfoliosQuery = gql`
 
 export const MyPortfolioQuery = gql`
     query MyPortfolio($userId: uuid!) {
-        myPortfolio: v_user_portfolios(where: { user_id: { _eq: $userId } }) {
+        userPortfolio: v_user_portfolios(where: { user_id: { _eq: $userId } }) {
             id
             userExAccId: user_ex_acc_id
             exchange

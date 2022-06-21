@@ -29,45 +29,46 @@ import {
     isPortfolioStarted
 } from "@cryptuoso/helpers";
 import { MyPortfolioQuery } from "@cryptuoso/queries";
-import { PortfolioStatusForm } from "../Portfolio";
+import { ChangeUserPortfolioStatusForm, EditPortfolio } from ".";
 
-export function Portfolio() {
+export function UserPortfolio() {
     const { data: session } = useSession<true>({ required: true });
-    const [modalOpened, setModalOpened] = useState(false);
+    const [statusModalOpened, setStatusModalOpened] = useState(false);
+    const [settingsModalOpened, setSettingsModalOpened] = useState(false);
     const [result, reexecuteQuery] = useQuery<
         {
-            myPortfolio: UserPortfolio[];
+            userPortfolio: UserPortfolio[];
         },
         { userId: string }
     >({ query: MyPortfolioQuery, variables: { userId: session?.user?.userId || "" } });
     const { data, fetching, error } = result;
-    const myPortfolio = data?.myPortfolio[0];
-    const isStarted = isPortfolioStarted(myPortfolio?.status);
+    const userPortfolio = data?.userPortfolio[0];
+    const isStarted = isPortfolioStarted(userPortfolio?.status);
     if (error) console.error(error);
 
-    const optionRows = getPortfolioOptionsIcons(myPortfolio?.settings?.options);
+    const optionRows = getPortfolioOptionsIcons(userPortfolio?.settings?.options);
 
     const amountText =
-        `${myPortfolio?.settings?.balancePercent} %` || `${myPortfolio?.settings?.tradingAmountCurrency} $`;
+        `${userPortfolio?.settings?.balancePercent} %` || `${userPortfolio?.settings?.tradingAmountCurrency} $`;
     const amountTypeText =
-        myPortfolio?.settings?.tradingAmountType === "balancePercent" ? "% of the balance" : "fixed in USD";
+        userPortfolio?.settings?.tradingAmountType === "balancePercent" ? "% of the balance" : "fixed in USD";
 
     return (
         <BaseCard fetching={fetching}>
             <CardHeader
                 title="Portfolio"
                 left={
-                    myPortfolio ? (
+                    userPortfolio ? (
                         <Tooltip
                             transition="fade"
                             transitionDuration={500}
                             transitionTimingFunction="ease"
                             placement="start"
-                            label={isStarted ? "Active" : myPortfolio?.message || "Disabled"}
+                            label={isStarted ? "Active" : userPortfolio?.message || "Disabled"}
                             color={isStarted ? "green" : "red"}
                         >
                             <Badge color={isStarted ? "green" : "red"} size="sm">
-                                {myPortfolio?.status}
+                                {userPortfolio?.status}
                             </Badge>
                         </Tooltip>
                     ) : (
@@ -76,7 +77,14 @@ export function Portfolio() {
                 }
                 right={
                     <Group spacing={0}>
-                        <Button color="gray" variant="subtle" compact uppercase rightIcon={<Adjustments size={18} />}>
+                        <Button
+                            color="gray"
+                            variant="subtle"
+                            compact
+                            uppercase
+                            rightIcon={<Adjustments size={18} />}
+                            onClick={() => setSettingsModalOpened(true)}
+                        >
                             Configure
                         </Button>
                         <Button
@@ -85,7 +93,7 @@ export function Portfolio() {
                             uppercase
                             color={isStarted ? "gray" : "green"}
                             rightIcon={isStarted ? <PlayerStop size={18} /> : <PlayerPlay size={18} />}
-                            onClick={() => setModalOpened(true)}
+                            onClick={() => setStatusModalOpened(true)}
                         >
                             {isStarted ? "Stop" : "Start"}
                         </Button>
@@ -120,22 +128,43 @@ export function Portfolio() {
                 </Stack>
             </Group>
             <Modal
-                opened={modalOpened}
-                onClose={() => setModalOpened(false)}
+                centered
+                opened={statusModalOpened}
+                onClose={() => setStatusModalOpened(false)}
                 title={
                     <Text transform="uppercase" weight={900} align="center">
                         {isStarted ? "Stop portfolio" : "Start portfolio"}
                     </Text>
                 }
             >
-                <PortfolioStatusForm
-                    id={myPortfolio?.id || ""}
+                <ChangeUserPortfolioStatusForm
+                    id={userPortfolio?.id || ""}
                     isStarted={isStarted}
                     onSuccess={() => {
                         reexecuteQuery({ requestPolicy: "network-only" });
-                        setModalOpened(false);
+                        setStatusModalOpened(false);
                     }}
-                    onCancel={() => setModalOpened(false)}
+                    onCancel={() => setStatusModalOpened(false)}
+                />
+            </Modal>
+            <Modal
+                centered
+                opened={settingsModalOpened}
+                onClose={() => setSettingsModalOpened(false)}
+                title={
+                    <Text transform="uppercase" weight={900} align="center">
+                        Configure portfolio
+                    </Text>
+                }
+                size="90%"
+            >
+                <EditPortfolio
+                    userPortfolio={userPortfolio}
+                    onSuccess={() => {
+                        reexecuteQuery({ requestPolicy: "network-only" });
+                        setSettingsModalOpened(false);
+                    }}
+                    onCancel={() => setSettingsModalOpened(false)}
                 />
             </Modal>
         </BaseCard>

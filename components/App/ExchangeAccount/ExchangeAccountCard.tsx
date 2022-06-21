@@ -11,11 +11,7 @@ import { ExchangeAccountForm } from "./ExchangeAccountForm";
 
 const ExchangeAccountQuery = gql`
     query ExchangeAccount($userId: uuid!) {
-        myUserExAcc: user_exchange_accs(
-            where: { user_id: { _eq: $userId } }
-            limit: 1
-            order_by: { created_at: desc }
-        ) {
+        userExAcc: user_exchange_accs(where: { user_id: { _eq: $userId } }, limit: 1, order_by: { created_at: desc }) {
             id
             exchange
             status
@@ -32,7 +28,7 @@ export function ExchangeAccountCard() {
     const { data: session } = useSession<true>({ required: true });
     const [result, reexecuteQuery] = useQuery<
         {
-            myUserExAcc: {
+            userExAcc: {
                 id: string;
                 exchange: string;
                 name: string;
@@ -45,7 +41,7 @@ export function ExchangeAccountCard() {
         { userId: string }
     >({ query: ExchangeAccountQuery, variables: { userId: session?.user?.userId || "" } });
     const { data, fetching, error } = result;
-    const myUserExAcc = data?.myUserExAcc[0];
+    const userExAcc = data?.userExAcc[0];
 
     if (error) console.error(error);
     return (
@@ -54,7 +50,7 @@ export function ExchangeAccountCard() {
                 title="Exchange Account"
                 right={
                     <Group spacing={0}>
-                        {myUserExAcc?.id && (
+                        {userExAcc?.id && (
                             <Button
                                 color="gray"
                                 variant="subtle"
@@ -71,7 +67,7 @@ export function ExchangeAccountCard() {
                 }
             />
 
-            {!fetching && !myUserExAcc ? (
+            {!fetching && !userExAcc ? (
                 <Button
                     variant="gradient"
                     gradient={{ from: "indigo", to: "cyan", deg: 45 }}
@@ -89,8 +85,8 @@ export function ExchangeAccountCard() {
                         loading={fetching}
                         value={
                             <Image
-                                src={`/${myUserExAcc?.exchange}.svg`}
-                                alt={myUserExAcc?.exchange}
+                                src={`/${userExAcc?.exchange}.svg`}
+                                alt={userExAcc?.exchange}
                                 height={30}
                                 width={70}
                             />
@@ -104,15 +100,15 @@ export function ExchangeAccountCard() {
                                 size="md"
                                 variant="gradient"
                                 gradient={{
-                                    from: myUserExAcc?.status === "enabled" ? "lime" : "orange",
-                                    to: myUserExAcc?.status === "enabled" ? "green" : "red"
+                                    from: userExAcc?.status === "enabled" ? "lime" : "orange",
+                                    to: userExAcc?.status === "enabled" ? "green" : "red"
                                 }}
                             >
-                                {myUserExAcc?.status}
+                                {userExAcc?.status}
                             </Badge>
                         }
-                        valueTooltip={myUserExAcc?.status === "enabled" ? "Checked" : myUserExAcc?.error}
-                        valueTooltipColor={myUserExAcc?.status === "enabled" ? "green" : "red"}
+                        valueTooltip={userExAcc?.status === "enabled" ? "Checked" : userExAcc?.error}
+                        valueTooltipColor={userExAcc?.status === "enabled" ? "green" : "red"}
                     />
 
                     <CardLine
@@ -125,10 +121,10 @@ export function ExchangeAccountCard() {
                                 weight={700}
                                 size="md"
                             >
-                                ${round(myUserExAcc?.balance || 0, 2)}
+                                ${round(userExAcc?.balance || 0, 2)}
                             </Text>
                         }
-                        valueTooltip={`Updated ${dayjs.utc().to(dayjs.utc(myUserExAcc?.balanceUpdatedAt))}`}
+                        valueTooltip={`Updated ${dayjs.utc().to(dayjs.utc(userExAcc?.balanceUpdatedAt))}`}
                     />
                 </>
             )}
@@ -137,13 +133,13 @@ export function ExchangeAccountCard() {
                 onClose={() => setModalOpened(false)}
                 title={
                     <Text transform="uppercase" weight={900} align="center">
-                        {myUserExAcc?.id ? "Edit Exchange Account" : "Create Exchange Account"}
+                        {userExAcc?.id ? "Edit Exchange Account" : "Create Exchange Account"}
                     </Text>
                 }
             >
                 <ExchangeAccountForm
-                    id={myUserExAcc?.id}
-                    exchange={myUserExAcc?.exchange}
+                    id={userExAcc?.id}
+                    exchange={userExAcc?.exchange}
                     onSuccess={() => {
                         reexecuteQuery({ requestPolicy: "network-only" });
                         setModalOpened(false);

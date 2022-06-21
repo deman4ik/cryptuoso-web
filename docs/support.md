@@ -13,7 +13,7 @@ Having common questions with signals or robots? Ask it in our [Telegram Communit
 
 ### Telegram Bot
 
-Have a personal problem regarding connecting an exchange keys or billing?
+Have a personal problem regarding connecting exchange keys or billing?
 
 Send message to our [Telegram Bot](https://t.me/cryptuoso_bot) in ❓ **Support** section.
 
