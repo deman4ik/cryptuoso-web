@@ -2,6 +2,7 @@ import { Stack, Stepper, Container, Paper, Group, SimpleGrid } from "@mantine/co
 import { useState } from "react";
 import { ExchangeAccountForm } from "@cryptuoso/components/App/ExchangeAccount";
 import { ChooseSubForm, SubscriptionCard } from "@cryptuoso/components/App/Subscription";
+import { CreateUserPortfolio } from "../Portfolio";
 
 function initialStep(
     userExAccExists: boolean,
@@ -25,20 +26,22 @@ export function GettingStarted({
     userSubExists,
     userSubActive,
     userPaymentExists,
-    portfolioExists
+    portfolioExists,
+    refetch
 }: {
     userExAccExists: boolean;
     userSubExists: boolean;
     userSubActive: boolean;
     userPaymentExists: boolean;
     portfolioExists: boolean;
+    refetch: () => void;
 }) {
     const [active, setActive] = useState(
         initialStep(userExAccExists, userSubExists, userSubActive, userPaymentExists, portfolioExists)
     );
     const nextStep = () => setActive((current) => (current < 4 ? current + 1 : current));
     return (
-        <Container mt="xs">
+        <Container mt="xs" size="xl">
             <Stepper active={active} breakpoint="sm">
                 <Stepper.Step label="API Keys" description="Create Exchange Account">
                     <ExchangeAccountForm onSuccess={nextStep} />
@@ -50,7 +53,7 @@ export function GettingStarted({
                     <SubscriptionCard sx={{ width: "100%" }} onSuccess={nextStep} />
                 </Stepper.Step>
                 <Stepper.Step label="Portfolio" description="Configure your portfolio">
-                    Step 3 content: Get full access
+                    <CreateUserPortfolio onSuccess={refetch} />
                 </Stepper.Step>
             </Stepper>
         </Container>

@@ -3,11 +3,12 @@ import { Grid } from "@mantine/core";
 import { useSession } from "next-auth/react";
 import { Coin, ListCheck, Minus, Plus, Scale } from "tabler-icons-react";
 import { gql, useQuery } from "urql";
-import { StatsCard, UserPortfolio, Equity } from "@cryptuoso/components/App/Portfolio";
+import { StatsCard, Equity } from "@cryptuoso/components/App/Portfolio";
+import { UserPortfolio } from "@cryptuoso/types";
 
 const PortfolioQuery = gql`
-    query myPortfolioStats($userId: uuid!) {
-        myPortfolioStats: v_user_portfolios(where: { user_id: { _eq: $userId } }) {
+    query userPortfolioStats($userId: uuid!) {
+        userPortfolioStats: v_user_portfolios(where: { user_id: { _eq: $userId } }) {
             stats {
                 tradesCount: trades_count
                 currentBalance: current_balance
@@ -42,7 +43,7 @@ export function PortfolioStats() {
     const { data: session } = useSession<true>({ required: true });
     const [result, reexecuteQuery] = useQuery<
         {
-            myPortfolioStats: { stats: UserPortfolio["stats"] }[];
+            userPortfolioStats: { stats: UserPortfolio["stats"] }[];
             openPosSum: {
                 aggregate: {
                     sum: {
@@ -55,14 +56,14 @@ export function PortfolioStats() {
         { userId: string }
     >({ query: PortfolioQuery, variables: { userId: session?.user?.userId || "" } });
     const { data, fetching, error } = result;
-    const myPortfolioStats = data?.myPortfolioStats[0];
+    const userPortfolioStats = data?.userPortfolioStats[0];
 
     if (data) console.log(data);
     if (error) console.error(error);
     return (
         <Grid gutter="xs">
             <Grid.Col span={12}>
-                <Equity fetching={fetching} reexecuteQuery={reexecuteQuery} equity={myPortfolioStats?.stats.equity} />
+                <Equity fetching={fetching} reexecuteQuery={reexecuteQuery} equity={userPortfolioStats?.stats.equity} />
             </Grid.Col>
             <Grid.Col span={12} sm={6} lg={4}>
                 <StatsCard
@@ -100,8 +101,8 @@ export function PortfolioStats() {
                     title="Profit / Loss"
                     values={[
                         {
-                            value: round(myPortfolioStats?.stats.netProfit, 2),
-                            diff: round(myPortfolioStats?.stats.percentNetProfit || 0),
+                            value: round(userPortfolioStats?.stats.netProfit, 2),
+                            diff: round(userPortfolioStats?.stats.percentNetProfit || 0),
                             valueType: "$",
                             changeValueColor: true,
                             plusValue: true,
@@ -118,7 +119,7 @@ export function PortfolioStats() {
                     title="Trades"
                     values={[
                         {
-                            value: round(myPortfolioStats?.stats.tradesCount),
+                            value: round(userPortfolioStats?.stats.tradesCount),
                             desc: "Closed positions amount"
                         }
                     ]}
@@ -131,7 +132,7 @@ export function PortfolioStats() {
                     title="Win Rate"
                     values={[
                         {
-                            value: round(myPortfolioStats?.stats.winRate),
+                            value: round(userPortfolioStats?.stats.winRate),
                             valueType: "%",
                             desc: "Trades win rate"
                         }
@@ -145,9 +146,9 @@ export function PortfolioStats() {
                     title="Max Drawdown"
                     values={[
                         {
-                            value: round(myPortfolioStats?.stats.maxDrawdown),
+                            value: round(userPortfolioStats?.stats.maxDrawdown),
                             valueType: "$",
-                            diff: -round(myPortfolioStats?.stats.percentMaxDrawdown || 0),
+                            diff: -round(userPortfolioStats?.stats.percentMaxDrawdown || 0),
                             desc: "Maximum balance drawdown"
                         }
                     ]}
@@ -160,7 +161,7 @@ export function PortfolioStats() {
                     title="Payoff Ratio"
                     values={[
                         {
-                            value: myPortfolioStats?.stats.payoffRatio || 0,
+                            value: userPortfolioStats?.stats.payoffRatio || 0,
                             desc: "Ratio between wins and losses"
                         }
                     ]}
@@ -173,7 +174,7 @@ export function PortfolioStats() {
                     title="Sharpe Ratio"
                     values={[
                         {
-                            value: myPortfolioStats?.stats.sharpeRatio || 0,
+                            value: userPortfolioStats?.stats.sharpeRatio || 0,
                             desc: "Return ratio compared to risk"
                         }
                     ]}

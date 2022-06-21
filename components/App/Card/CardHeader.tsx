@@ -5,9 +5,11 @@ export function CardHeader({ title, left, right }: { title: string; left?: React
     return (
         <Group position="apart" mb="md" align="flex-start">
             <Stack align="flex-start" spacing={0}>
-                <Text size="md" weight={900} transform="uppercase" color="dimmed">
-                    {title}
-                </Text>
+                <Group>
+                    <Text size="md" weight={900} transform="uppercase" color="dimmed">
+                        {title}
+                    </Text>
+                </Group>
                 {left}
             </Stack>
             {right}

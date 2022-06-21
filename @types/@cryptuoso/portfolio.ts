@@ -1,4 +1,4 @@
-import { StatsInfo } from "@cryptuoso/components/Stats";
+import { StatsInfo } from "./stats";
 
 export interface UserPortfolio {
     id: string;
@@ -13,6 +13,14 @@ export interface UserPortfolio {
     stats: StatsInfo;
     settings: PortfolioSettings;
     nextSettings?: PortfolioSettings;
+}
+
+export const enum Option {
+    profit = "profit",
+    risk = "risk",
+    winRate = "winRate",
+    efficiency = "efficiency",
+    moneyManagement = "moneyManagement"
 }
 
 export interface PortfolioOptions {

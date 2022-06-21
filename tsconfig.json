@@ -18,12 +18,16 @@
         "paths": {
             "@cryptuoso/components": ["components/"],
             "@cryptuoso/components/*": ["components/*"],
+            "@cryptuoso/queries": ["libs/graphql/queries"],
+            "@cryptuoso/queries/*": ["libs/graphql/queries/*"],
             "@cryptuoso/libs": ["libs/"],
             "@cryptuoso/libs/*": ["libs/*"],
             "@cryptuoso/helpers": ["helpers/"],
             "@cryptuoso/helpers/*": ["helpers/*"],
             "@cryptuoso/public": ["public/"],
-            "@cryptuoso/public/*": ["public/*"]
+            "@cryptuoso/public/*": ["public/*"],
+            "@cryptuoso/types": ["@types/"],
+            "@cryptuoso/types/*": ["@types/*"]
         }
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

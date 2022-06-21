@@ -14,7 +14,7 @@ import {
     Chip,
     Alert
 } from "@mantine/core";
-
+import { Option } from "@cryptuoso/types";
 import { AlertCircle, Coin, CurrencyDollar, ListCheck, Minus, Plus, Scale } from "tabler-icons-react";
 import { gql, useQuery } from "urql";
 import { StatsCard } from "./StatsCard";
@@ -40,7 +40,7 @@ const useStyles = createStyles((theme) => {
 });
 
 const portfolioQuery = gql`
-    query publicPortfolios(
+    query PublicPortfolio(
         $exchange: String!
         $risk: Boolean!
         $profit: Boolean!
@@ -73,14 +73,6 @@ const portfolioQuery = gql`
         }
     }
 `;
-
-const enum Option {
-    profit = "profit",
-    risk = "risk",
-    winRate = "winRate",
-    efficiency = "efficiency",
-    moneyManagement = "moneyManagement"
-}
 
 interface PortfolioStats {
     netProfit: number;

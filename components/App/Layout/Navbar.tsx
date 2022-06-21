@@ -1,13 +1,23 @@
 import React, { useState } from "react";
 import { createStyles, Navbar, Group, Text, ScrollArea } from "@mantine/core";
-import { BellRinging, Key, Receipt2, Dashboard, Logout, UserCircle, BrandTelegram, Tools } from "tabler-icons-react";
+import {
+    BellRinging,
+    Key,
+    Receipt2,
+    Dashboard,
+    Logout,
+    UserCircle,
+    BrandTelegram,
+    Tools,
+    Briefcase
+} from "tabler-icons-react";
 import { signOut, useSession } from "next-auth/react";
 import { ColorSchemeToggleBig } from "@cryptuoso/components/Landing/Layout";
 import { SimpleLink } from "@cryptuoso/components/Link";
 import { useRouter } from "next/router";
 
 const useStyles = createStyles((theme, _params, getRef) => {
-    const icon = getRef("icon");
+    const icon: string = getRef("icon");
     return {
         navbar: {
             borderRight: "1px solid transparent",
@@ -70,6 +80,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
 
 const data = [
     { link: "/app", label: "Dashboard", icon: Dashboard },
+    { link: "/app/portfolios", label: "Public Portfolios", icon: Briefcase },
     { link: "/app/notifications", label: "Notifications", icon: BellRinging },
     { link: "/app/profile", label: "Profile", icon: UserCircle },
     { link: "/app/exchange-account", label: "Exchange Account", icon: Key },

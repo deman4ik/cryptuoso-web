@@ -2,6 +2,7 @@ import { BaseCard, CardHeader, RefreshAction } from "@cryptuoso/components/App/C
 import { SimpleLink } from "@cryptuoso/components/Link";
 import { round } from "@cryptuoso/helpers/number";
 import dayjs from "@cryptuoso/libs/dayjs";
+import { ExchangeAccountQuery } from "@cryptuoso/queries";
 import { ActionIcon, createStyles, Group, Skeleton, Stack, Text, Tooltip, Badge, Button } from "@mantine/core";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -19,29 +20,12 @@ const useStyles = createStyles((theme) => ({
     }
 }));
 
-const ExchangeAccountQuery = gql`
-    query ExchangeAccount($userId: uuid!) {
-        myUserExAcc: user_exchange_accs(
-            where: { user_id: { _eq: $userId } }
-            limit: 1
-            order_by: { created_at: desc }
-        ) {
-            id
-            exchange
-            status
-            balance: balances(path: "$.totalUSD")
-            balanceUpdatedAt: balances(path: "$.updatedAt")
-            error
-        }
-    }
-`;
-
 export function CurrentBalance() {
     const { classes } = useStyles();
     const { data: session } = useSession<true>({ required: true });
     const [result, reexecuteQuery] = useQuery<
         {
-            myUserExAcc: {
+            userExAcc: {
                 id: string;
                 exchange: string;
                 name: string;
@@ -54,7 +38,7 @@ export function CurrentBalance() {
         { userId: string }
     >({ query: ExchangeAccountQuery, variables: { userId: session?.user?.userId || "" } });
     const { data, fetching, error } = result;
-    const myUserExAcc = data?.myUserExAcc[0];
+    const userExAcc = data?.userExAcc[0];
 
     if (error) console.error(error);
 
@@ -63,17 +47,17 @@ export function CurrentBalance() {
             <CardHeader
                 title="Exchange Account"
                 left={
-                    myUserExAcc ? (
+                    userExAcc ? (
                         <Tooltip
                             transition="fade"
                             transitionDuration={500}
                             transitionTimingFunction="ease"
                             placement="start"
-                            label={myUserExAcc?.status === "enabled" ? "Checked" : myUserExAcc?.error}
-                            color={myUserExAcc?.status === "enabled" ? "green" : "red"}
+                            label={userExAcc?.status === "enabled" ? "Checked" : userExAcc?.error}
+                            color={userExAcc?.status === "enabled" ? "green" : "red"}
                         >
-                            <Badge color={myUserExAcc?.status === "enabled" ? "green" : "red"} size="sm">
-                                {myUserExAcc?.status}
+                            <Badge color={userExAcc?.status === "enabled" ? "green" : "red"} size="sm">
+                                {userExAcc?.status}
                             </Badge>
                         </Tooltip>
                     ) : (
@@ -99,16 +83,16 @@ export function CurrentBalance() {
             />
             <Group position="apart">
                 <Stack spacing="xs" mt={25}>
-                    {myUserExAcc ? (
+                    {userExAcc ? (
                         <Tooltip
                             transition="fade"
                             transitionDuration={500}
                             transitionTimingFunction="ease"
                             placement="start"
-                            label={`Updated ${dayjs.utc().to(dayjs.utc(myUserExAcc?.balanceUpdatedAt))}`}
+                            label={`Updated ${dayjs.utc().to(dayjs.utc(userExAcc?.balanceUpdatedAt))}`}
                         >
                             <Text className={classes.value} weight={500}>{`${round(
-                                myUserExAcc?.balance || 0,
+                                userExAcc?.balance || 0,
                                 2
                             )} $`}</Text>
                         </Tooltip>
@@ -116,7 +100,7 @@ export function CurrentBalance() {
                         <Skeleton height={8} width="30%" />
                     )}
 
-                    {myUserExAcc ? (
+                    {userExAcc ? (
                         <Text size="sm" color="dimmed" weight={500}>
                             Current Balance
                         </Text>
@@ -125,10 +109,10 @@ export function CurrentBalance() {
                     )}
                 </Stack>
 
-                {myUserExAcc ? (
+                {userExAcc ? (
                     <Image
-                        src={`/${myUserExAcc?.exchange}.svg`}
-                        alt={myUserExAcc?.exchange}
+                        src={`/${userExAcc?.exchange}.svg`}
+                        alt={userExAcc?.exchange}
                         className={classes.image}
                         height={80}
                         width={200}

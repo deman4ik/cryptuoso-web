@@ -202,12 +202,12 @@ export function SubscriptionCard({ onSuccess, sx }: { onSuccess?: () => void; sx
                             title="Checkout new payment"
                             right={<RefreshAction reexecuteQuery={reexecuteQuery} />}
                         />
-                        <Stack>
+                        <Stack mb="xl" spacing="lg">
                             <Text
                                 align="center"
                                 variant="gradient"
                                 gradient={{ from: theme.primaryColor, to: "cyan", deg: 45 }}
-                                size="xl"
+                                sx={{ fontSize: 30 }}
                                 weight={900}
                             >
                                 ${myUserSub?.subscriptionOption.priceTotal}
