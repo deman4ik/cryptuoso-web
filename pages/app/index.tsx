@@ -8,6 +8,7 @@ import { GettingStarted } from "@cryptuoso/components/App/Dashboard/GettingStart
 import { CurrentBalance } from "@cryptuoso/components/App/ExchangeAccount";
 import { Billing } from "@cryptuoso/components/App/Subscription";
 import { PortfolioStats, UserPortfolio } from "@cryptuoso/components/App/Portfolio";
+import { UserPortfolioPositions } from "@cryptuoso/components/App/Portfolio/UserPortfolioPositions";
 export { getServerSideProps } from "@cryptuoso/libs/graphql/shared";
 
 const DashboardQuery = gql`
@@ -71,6 +72,7 @@ export default function DashboardPage() {
                         </Grid.Col>
                     </Grid>
                     <Skeleton height={150} />
+                    <Skeleton height={150} />
                 </>
             ) : inited ? (
                 <>
@@ -87,6 +89,9 @@ export default function DashboardPage() {
                     </Grid>
                     <Section title="Portfolio Perfomance">
                         <PortfolioStats />
+                    </Section>
+                    <Section title="Portfolio Positions">
+                        <UserPortfolioPositions />
                     </Section>
                 </>
             ) : (

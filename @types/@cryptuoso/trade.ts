@@ -16,7 +16,8 @@ export type PositionDirection = "long" | "short";
 export const enum RobotPositionStatus {
     new = "new",
     open = "open",
-    closed = "closed"
+    closed = "closed",
+    closedAuto = "closedAuto"
 }
 
 export const enum RobotTradeStatus {
@@ -52,39 +53,27 @@ export const enum TradeAction {
 }
 
 export interface BasePosition {
-    id?: string;
+    id: string;
     robotId?: string;
     timeframe?: ValidTimeframe;
+    asset: string;
+    currency: string;
     prefix?: string;
     code?: string;
     parentId?: string;
-    direction?: PositionDirection;
-    status?: RobotPositionStatus;
+    direction: PositionDirection;
+    status: RobotPositionStatus;
     entryStatus?: RobotTradeStatus;
     entryPrice?: number;
     entryDate?: string;
     entryOrderType?: OrderType;
     entryAction?: TradeAction;
-    entryCandleTimestamp?: string;
     exitStatus?: RobotTradeStatus;
     exitPrice?: number;
     exitDate?: string;
     exitOrderType?: OrderType;
     exitAction?: TradeAction;
-    exitCandleTimestamp?: string;
-    amountInCurrency?: number;
-    volume?: number;
-    worstProfit?: number;
-    maxPrice?: number;
+    volume: number;
     profit?: number;
     barsHeld?: number;
-    fee?: number;
-    margin?: number;
-    emulated?: boolean;
-    meta?: {
-        portfolioShare?: number;
-        currentBalance?: number;
-        prevBalance?: number;
-    };
-    minAmountCurrency?: number;
 }

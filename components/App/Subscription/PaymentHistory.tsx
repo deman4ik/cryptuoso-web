@@ -71,33 +71,33 @@ export function PaymentHistory() {
             return {
                 id: payment.id,
                 values: [
-                    <TextLink size="sm" href={payment.url} target="_blank" weight={500}>
-                        {payment.code}
-                    </TextLink>,
-                    <Text
-                        size="sm"
-                        weight={500}
-                        variant="gradient"
-                        gradient={{ from: theme.primaryColor, to: "cyan", deg: 45 }}
-                    >
+                    <Group spacing={0} position="center">
+                        <TextLink size="md" href={payment.url} target="_blank" weight={500} align="center">
+                            {payment.code}
+                        </TextLink>
+                    </Group>,
+                    <Text size="md" weight={500} align="center">
                         ${payment.price}
                     </Text>,
-                    <Badge size="md" color={getPaymentStatusColor(payment.status)}>
-                        {payment.status}
-                    </Badge>,
-                    <Text size="sm" weight={500}>
+                    <Group spacing={0} position="center">
+                        <Badge size="lg" color={getPaymentStatusColor(payment.status)}>
+                            {payment.status}
+                        </Badge>
+                    </Group>,
+                    <Text size="sm" weight={500} align="center">
                         {dayjs.utc(payment.createdAt).format("YYYY-MM-DD HH:mm:ss UTC")}
                     </Text>,
-                    <Text size="sm" weight={500}>
+                    <Text size="sm" weight={500} align="center">
                         {dayjs.utc(payment.expiresAt).format("YYYY-MM-DD HH:mm:ss UTC")}
                     </Text>,
                     <Text
                         size="sm"
                         weight={500}
+                        align="center"
                     >{`${payment?.userSub?.subscription.name} ${payment?.userSub?.subscriptionOption.name}`}</Text>,
-                    <Text size="sm" weight={500}>{`${dayjs.utc(payment.subscriptionFrom).format("YYYY-MM-DD")} - ${dayjs
-                        .utc(payment.subscriptionTo)
-                        .format("YYYY-MM-DD")}`}</Text>
+                    <Text size="sm" weight={500} align="center">{`${dayjs
+                        .utc(payment.subscriptionFrom)
+                        .format("YYYY-MM-DD")} - ${dayjs.utc(payment.subscriptionTo).format("YYYY-MM-DD")}`}</Text>
                 ]
             };
         })
@@ -121,7 +121,7 @@ export function PaymentHistory() {
                 </ActionIcon>
             </Group>
             {userPayments && userPayments.length > 0 ? (
-                <ResponsiveTable data={tableData} />
+                <ResponsiveTable data={tableData} breakpoint="xl" />
             ) : (
                 <Skeleton height={50} width="100%" />
             )}

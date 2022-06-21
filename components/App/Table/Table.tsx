@@ -11,7 +11,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export type TableData = {
-    titles: string[];
+    titles: string[] | ReactNode[];
     rows: { id: string | number; values: ReactNode[] }[];
 };
 
@@ -39,28 +39,44 @@ export function ResponsiveTable({ data, breakpoint = "lg" }: { data: TableData; 
         );
     });
 
-    return (
-        <ScrollArea>
-            {mobile ? (
-                <>{rows}</>
+    return mobile ? (
+        <>
+            {rows && rows.length ? (
+                rows
             ) : (
-                <Table sx={{ minWidth: 800 }} verticalSpacing="xs">
-                    <thead>
-                        <tr>
-                            {data.titles.map((title, id) => {
-                                return (
-                                    <th key={id}>
-                                        <Text size="xs" color="dimmed">
-                                            {title}
-                                        </Text>
-                                    </th>
-                                );
-                            })}
-                        </tr>
-                    </thead>
-                    <tbody>{rows}</tbody>
-                </Table>
+                <Text color="dimmed" m="xs" align="center">
+                    No Data
+                </Text>
             )}
-        </ScrollArea>
+        </>
+    ) : (
+        <Table sx={{ minWidth: 800 }} verticalSpacing="xs">
+            <thead>
+                <tr>
+                    {data.titles.map((title, id) => {
+                        return (
+                            <th key={id}>
+                                {typeof title === "string" ? (
+                                    <Text size="sm" color="dimmed" align="center">
+                                        {title}
+                                    </Text>
+                                ) : (
+                                    title
+                                )}
+                            </th>
+                        );
+                    })}
+                </tr>
+            </thead>
+            <tbody>
+                {rows && rows.length ? (
+                    rows
+                ) : (
+                    <Text color="dimmed" m="xs">
+                        No Data
+                    </Text>
+                )}
+            </tbody>
+        </Table>
     );
 }
