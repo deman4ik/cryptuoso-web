@@ -13,7 +13,8 @@ const AreaChart = dynamic(() => import("@cryptuoso/components/Chart/AreaChart"),
 
 const useStyles = createStyles((theme, { heightMultiplier }: { heightMultiplier: number }) => ({
     chart: {
-        height: theme.spacing.xl * heightMultiplier
+        height: theme.spacing.xl * heightMultiplier,
+        padding: theme.spacing.xs
     }
 }));
 

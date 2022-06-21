@@ -28,7 +28,7 @@ import {
     getPortfolioOptionsIcons,
     isPortfolioStarted
 } from "@cryptuoso/helpers";
-import { MyPortfolioQuery } from "@cryptuoso/queries";
+import { UserPortfolioQuery } from "@cryptuoso/queries";
 import { ChangeUserPortfolioStatusForm, EditPortfolio } from ".";
 
 export function UserPortfolio() {
@@ -40,7 +40,7 @@ export function UserPortfolio() {
             userPortfolio: UserPortfolio[];
         },
         { userId: string }
-    >({ query: MyPortfolioQuery, variables: { userId: session?.user?.userId || "" } });
+    >({ query: UserPortfolioQuery, variables: { userId: session?.user?.userId || "" } });
     const { data, fetching, error } = result;
     const userPortfolio = data?.userPortfolio[0];
     const isStarted = isPortfolioStarted(userPortfolio?.status);

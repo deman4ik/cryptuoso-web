@@ -11,7 +11,6 @@ const useStyles = createStyles((theme) => ({
 
 export function BaseCard({
     fetching = false,
-
     children,
     sx,
     radius = "lg",
@@ -24,7 +23,7 @@ export function BaseCard({
     shadow?: MantineShadow;
     justify?: React.CSSProperties["justifyContent"];
     sx?: Sx;
-
+    mt?: React.CSSProperties["marginTop"];
     children: ReactNode;
 }) {
     const { classes } = useStyles();

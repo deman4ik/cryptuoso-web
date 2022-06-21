@@ -58,8 +58,8 @@ export const portfoliosQuery = gql`
     }
 `;
 
-export const MyPortfolioQuery = gql`
-    query MyPortfolio($userId: uuid!) {
+export const UserPortfolioQuery = gql`
+    query UserPortfolio($userId: uuid!) {
         userPortfolio: v_user_portfolios(where: { user_id: { _eq: $userId } }) {
             id
             userExAccId: user_ex_acc_id
@@ -71,6 +71,43 @@ export const MyPortfolioQuery = gql`
             activeFrom: active_from
             settings: user_portfolio_settings
             nextSettings: next_user_portfolio_settings
+        }
+    }
+`;
+
+export const UserPositionsQuery = gql`
+    query UserPortfolioPositions($userId: uuid!) {
+        userPortfolio: v_user_portfolios(where: { user_id: { _eq: $userId } }) {
+            openPositions: positions(where: { status: { _eq: "open" } }, order_by: { entry_date: desc_nulls_last }) {
+                id
+                direction
+                status
+                asset
+                entryAction: entry_action
+                entryPrice: entry_price
+                entryDate: entry_date
+                volume: entry_executed
+                profit
+            }
+            closedPositions: positions(
+                where: { status: { _in: ["closed", "closedAuto"] } }
+                order_by: { exit_date: desc_nulls_last }
+                limit: 20
+            ) {
+                id
+                direction
+                status
+                asset
+                entryAction: entry_action
+                entryPrice: entry_price
+                entryDate: entry_date
+                exitAction: exit_action
+                exitPrice: exit_price
+                exitDate: exit_date
+                barsHeld: bars_held
+                volume: exit_executed
+                profit
+            }
         }
     }
 `;

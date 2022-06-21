@@ -5,13 +5,13 @@ export function CoinIcon({
     alt,
     width,
     height,
-    type,
+    type = "color",
     ...others
 }: ImageProps & { type?: "black" | "white" | "icon" | "color"; src: string }) {
     return (
         <Image
             {...others}
-            src={`/coins/${type || "icon"}/${src.toLowerCase()}.svg`}
+            src={`/coins/${type}/${src.toLowerCase()}.svg`}
             alt={alt || src.toUpperCase()}
             width={width || 32}
             height={height || 32}
