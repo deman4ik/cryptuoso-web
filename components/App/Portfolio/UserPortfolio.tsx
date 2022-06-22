@@ -76,7 +76,7 @@ export function UserPortfolio() {
                     )
                 }
                 right={
-                    <Group spacing={0}>
+                    <Group spacing={0} position="right" align="flex-start">
                         <Button
                             color="gray"
                             variant="subtle"
@@ -84,6 +84,11 @@ export function UserPortfolio() {
                             uppercase
                             rightIcon={<Adjustments size={18} />}
                             onClick={() => setSettingsModalOpened(true)}
+                            styles={(theme) => ({
+                                rightIcon: {
+                                    marginLeft: 5
+                                }
+                            })}
                         >
                             Configure
                         </Button>
@@ -94,6 +99,11 @@ export function UserPortfolio() {
                             color={isStarted ? "gray" : "green"}
                             rightIcon={isStarted ? <PlayerStop size={18} /> : <PlayerPlay size={18} />}
                             onClick={() => setStatusModalOpened(true)}
+                            styles={(theme) => ({
+                                rightIcon: {
+                                    marginLeft: 5
+                                }
+                            })}
                         >
                             {isStarted ? "Stop" : "Start"}
                         </Button>

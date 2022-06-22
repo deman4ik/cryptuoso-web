@@ -95,7 +95,7 @@ const AreaChart = (props: { data?: (SingleValueData | WhitespaceData)[]; classNa
                 <Text color="dimmed">No chart data available</Text>
             </div>
         );
-    return <div ref={chartContainerRef} className={className} {...other} />;
+    return <div ref={chartContainerRef} className={className} style={{ maxWidth: "97%" }} {...other} />;
 };
 
 export default AreaChart;

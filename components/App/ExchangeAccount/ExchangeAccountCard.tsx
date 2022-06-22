@@ -49,7 +49,7 @@ export function ExchangeAccountCard() {
             <CardHeader
                 title="Exchange Account"
                 right={
-                    <Group spacing={0}>
+                    <Group spacing={0} position="right" align="flex-start">
                         {userExAcc?.id && (
                             <Button
                                 color="gray"
@@ -58,6 +58,11 @@ export function ExchangeAccountCard() {
                                 uppercase
                                 rightIcon={<Key size={18} />}
                                 onClick={() => setModalOpened(true)}
+                                styles={(theme) => ({
+                                    rightIcon: {
+                                        marginLeft: 5
+                                    }
+                                })}
                             >
                                 Edit
                             </Button>

@@ -1,5 +1,5 @@
 import { StatsInfo } from "@cryptuoso/types";
-import { ActionIcon, createStyles, Skeleton } from "@mantine/core";
+import { ActionIcon, Box, createStyles, Group, Skeleton } from "@mantine/core";
 import { Refresh } from "tabler-icons-react";
 import { OperationContext } from "urql";
 import { BaseCard, CardHeader } from "@cryptuoso/components/App/Card";
@@ -13,8 +13,7 @@ const AreaChart = dynamic(() => import("@cryptuoso/components/Chart/AreaChart"),
 
 const useStyles = createStyles((theme, { heightMultiplier }: { heightMultiplier: number }) => ({
     chart: {
-        height: theme.spacing.xl * heightMultiplier,
-        padding: theme.spacing.xs
+        height: theme.spacing.xl * heightMultiplier
     }
 }));
 
@@ -32,7 +31,7 @@ export function Equity({
     const { classes } = useStyles({ heightMultiplier });
 
     return (
-        <BaseCard fetching={fetching}>
+        <BaseCard fetching={fetching} justify="flex-start">
             <CardHeader
                 title="Equity"
                 right={
@@ -45,7 +44,9 @@ export function Equity({
                     </ActionIcon>
                 }
             />
-            <AreaChart data={formatAreaChartData(equity)} className={classes.chart} />
+            <Group grow style={{ maxWidth: "100%" }} align="flex-end" position="center">
+                <AreaChart data={formatAreaChartData(equity)} className={classes.chart} />
+            </Group>
         </BaseCard>
     );
 }

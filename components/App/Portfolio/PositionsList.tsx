@@ -26,17 +26,17 @@ export function PositionsList({ positions, type }: { positions: BasePosition[]; 
             ? {
                   titles: [
                       "Coin",
-                      <Text size="sm" color="dimmed" align="left">
+                      <Text size="sm" color="dimmed" align="left" weight={500}>
                           Direction
                       </Text>,
                       "Status",
-                      <Text size="sm" color="dimmed" align="right">
+                      <Text size="sm" color="dimmed" align="right" weight={500}>
                           Entry
                       </Text>,
-                      <Text size="sm" color="dimmed" align="right">
+                      <Text size="sm" color="dimmed" align="right" weight={500}>
                           Amount
                       </Text>,
-                      <Text size="sm" color="dimmed" align="right">
+                      <Text size="sm" color="dimmed" align="right" weight={500}>
                           Unrealized Profit / Loss
                       </Text>
                   ],
@@ -92,23 +92,23 @@ export function PositionsList({ positions, type }: { positions: BasePosition[]; 
             : {
                   titles: [
                       "Coin",
-                      <Text size="sm" color="dimmed" align="left">
+                      <Text size="sm" color="dimmed" align="left" weight={500}>
                           Direction
                       </Text>,
                       "Status",
-                      <Text size="sm" color="dimmed" align="right">
+                      <Text size="sm" color="dimmed" align="right" weight={500}>
                           Entry
                       </Text>,
-                      <Text size="sm" color="dimmed" align="right">
+                      <Text size="sm" color="dimmed" align="right" weight={500}>
                           Exit
                       </Text>,
-                      <Text size="sm" color="dimmed" align="right">
+                      <Text size="sm" color="dimmed" align="right" weight={500}>
                           Bars Held
                       </Text>,
-                      <Text size="sm" color="dimmed" align="right">
+                      <Text size="sm" color="dimmed" align="right" weight={500}>
                           Amount
                       </Text>,
-                      <Text size="sm" color="dimmed" align="right">
+                      <Text size="sm" color="dimmed" align="right" weight={500}>
                           Profit / Loss
                       </Text>
                   ],

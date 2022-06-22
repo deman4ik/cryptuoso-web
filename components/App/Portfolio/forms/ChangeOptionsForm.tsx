@@ -138,7 +138,7 @@ export function ChangeOptionsForm({
                 title="Selected Portfolio Performance History"
                 right={
                     subscribed && (
-                        <Group position="right">
+                        <Group spacing={0} position="right" align="flex-start">
                             <ThemeIcon color="green" size="sm">
                                 <Check />
                             </ThemeIcon>
