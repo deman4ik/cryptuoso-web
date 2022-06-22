@@ -1,4 +1,4 @@
-import { createStyles, Grid, Skeleton } from "@mantine/core";
+import { Container, Grid, Skeleton } from "@mantine/core";
 import Head from "next/head";
 import { gql, useQuery } from "urql";
 import { useSession } from "next-auth/react";
@@ -86,13 +86,17 @@ export default function DashboardPage() {
                         <Grid.Col span={12} xl={4}>
                             <UserPortfolio />
                         </Grid.Col>
+                        <Grid.Col span={12}>
+                            <Section title="Portfolio Perfomance">
+                                <PortfolioStats />
+                            </Section>
+                        </Grid.Col>
+                        <Grid.Col span={12}>
+                            <Section title="Portfolio Positions">
+                                <UserPortfolioPositions />
+                            </Section>
+                        </Grid.Col>
                     </Grid>
-                    <Section title="Portfolio Perfomance">
-                        <PortfolioStats />
-                    </Section>
-                    <Section title="Portfolio Positions">
-                        <UserPortfolioPositions />
-                    </Section>
                 </>
             ) : (
                 <GettingStarted

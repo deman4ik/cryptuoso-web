@@ -65,7 +65,7 @@ export function CurrentBalance() {
                     )
                 }
                 right={
-                    <Group spacing={0}>
+                    <Group spacing={0} position="right" align="flex-start">
                         <Button
                             component={SimpleLink}
                             href="/app/exchange-account"
@@ -74,6 +74,11 @@ export function CurrentBalance() {
                             compact
                             uppercase
                             rightIcon={<Key size={18} />}
+                            styles={(theme) => ({
+                                rightIcon: {
+                                    marginLeft: 5
+                                }
+                            })}
                         >
                             DETAILS
                         </Button>

@@ -97,6 +97,11 @@ export function Billing() {
                             compact
                             uppercase
                             rightIcon={<Receipt2 size={18} />}
+                            styles={(theme) => ({
+                                rightIcon: {
+                                    marginLeft: 5
+                                }
+                            })}
                         >
                             DETAILS
                         </Button>

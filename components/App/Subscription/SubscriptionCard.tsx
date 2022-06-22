@@ -238,7 +238,7 @@ export function SubscriptionCard({ onSuccess, sx }: { onSuccess?: () => void; sx
                         <CardHeader
                             title="Proceed payment"
                             right={
-                                <Group spacing={0}>
+                                <Group spacing={0} position="right" align="flex-start">
                                     <Button
                                         color="gray"
                                         variant="subtle"
@@ -246,6 +246,11 @@ export function SubscriptionCard({ onSuccess, sx }: { onSuccess?: () => void; sx
                                         uppercase
                                         onClick={handleCheckout}
                                         leftIcon={<Receipt size={18} />}
+                                        styles={(theme) => ({
+                                            rightIcon: {
+                                                marginLeft: 5
+                                            }
+                                        })}
                                     >
                                         Checkout
                                     </Button>
