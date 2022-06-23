@@ -45,7 +45,7 @@ export function PositionsList({ positions, type }: { positions: BasePosition[]; 
                           id: p.id,
                           values: [
                               <Group spacing={0} position="center">
-                                  <CoinIcon src={p.asset} />
+                                  <CoinIcon src={p.robot?.asset || p.asset} />
                               </Group>,
                               <Group spacing="xs" position="left">
                                   <ThemeIcon color={p.direction === "long" ? "green" : "red"} variant="light">
@@ -75,7 +75,7 @@ export function PositionsList({ positions, type }: { positions: BasePosition[]; 
                                   </Text>
                               </Stack>, // entry
                               <Text size="md" weight={500} align="right">
-                                  {`${p.volume} ${p.asset}`}
+                                  {`${p.volume} ${p.robot?.asset || p.asset}`}
                               </Text>, // volume
                               <Text
                                   size="md"
@@ -117,7 +117,7 @@ export function PositionsList({ positions, type }: { positions: BasePosition[]; 
                           id: p.id,
                           values: [
                               <Group spacing={0} position="center">
-                                  <CoinIcon src={p.asset} />
+                                  <CoinIcon src={p.robot?.asset || p.asset} />
                               </Group>,
                               <Group spacing="xs" position="left">
                                   <ThemeIcon color={p.direction === "long" ? "green" : "red"} variant="light">
@@ -158,7 +158,7 @@ export function PositionsList({ positions, type }: { positions: BasePosition[]; 
                                   {p.barsHeld}
                               </Text>, // bars held
                               <Text size="md" weight={500} align="right">
-                                  {`${p.volume} ${p.asset}`}
+                                  {`${p.volume} ${p.robot?.asset || p.asset}`}
                               </Text>, // volume
                               <Text
                                   size="md"

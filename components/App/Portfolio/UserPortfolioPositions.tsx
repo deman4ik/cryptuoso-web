@@ -20,7 +20,7 @@ export function UserPortfolioPositions() {
         { userId: string }
     >({ query: UserPositionsQuery, variables: { userId: session?.user?.userId || "" } });
     const { data, fetching, error } = result;
-    console.log(data);
+
     const openPositions = data?.userPortfolio[0]?.openPositions || [];
     const closedPositions = data?.userPortfolio[0]?.closedPositions || [];
     if (error) console.error(error);

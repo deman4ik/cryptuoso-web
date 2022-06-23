@@ -1,4 +1,10 @@
+import { Avatar } from "@mantine/core";
 import Image, { ImageProps } from "next/image";
+
+function fallback(name: string) {
+    if (name === "CELR") return true;
+    return false;
+}
 
 export function CoinIcon({
     src,
@@ -8,13 +14,15 @@ export function CoinIcon({
     type = "color",
     ...others
 }: ImageProps & { type?: "black" | "white" | "icon" | "color"; src: string }) {
-    return (
+    return fallback(src) ? (
+        <Avatar radius="xl">{src}</Avatar>
+    ) : (
         <Image
             {...others}
             src={`/coins/${type}/${src.toLowerCase()}.svg`}
             alt={alt || src.toUpperCase()}
-            width={width || 32}
-            height={height || 32}
+            width={width || 38}
+            height={height || 38}
         />
     );
 }

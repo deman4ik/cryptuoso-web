@@ -8,6 +8,10 @@ export const headerLinks = [
         label: "FEATURES"
     },
     {
+        link: "/portfolios",
+        label: "PORTFOLIOS"
+    },
+    {
         link: "/#pricing",
         label: "PRICING"
     },

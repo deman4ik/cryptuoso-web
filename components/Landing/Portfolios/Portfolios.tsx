@@ -15,7 +15,18 @@ import {
     Alert
 } from "@mantine/core";
 import { Option } from "@cryptuoso/types";
-import { AlertCircle, Coin, CurrencyDollar, ListCheck, Minus, Plus, Scale } from "tabler-icons-react";
+import {
+    AlertCircle,
+    Bolt,
+    Coin,
+    CurrencyDollar,
+    ListCheck,
+    Minus,
+    Plus,
+    PresentationAnalytics,
+    Scale,
+    Trophy
+} from "tabler-icons-react";
 import { gql, useQuery } from "urql";
 import { StatsCard } from "./StatsCard";
 import { round } from "helpers";
@@ -97,7 +108,7 @@ function calcPercentValue(num: number, percent: number) {
 export function Portfolios() {
     const { classes } = useStyles();
     let [options, setOptions] = useState<Option[]>([Option.profit]);
-    if (!options.length) options = [Option.profit];
+
     const [balance, setBalance] = useState(1000);
     const selectedOptions: { [key: string]: boolean } = {
         profit: false,
@@ -245,13 +256,13 @@ export function Portfolios() {
                                 desc="Average yearly trades"
                             />
                             <StatsCard
-                                Icon={Plus}
+                                Icon={Trophy}
                                 title="Win Rate"
                                 value={`${round(portfolioStats.winRate)} %`}
                                 desc="Average yearly trades win rate"
                             />
                             <StatsCard
-                                Icon={Minus}
+                                Icon={Bolt}
                                 title="Max Drawdown"
                                 value={`-${calcPercentValue(
                                     addPercent(balance, portfolioStats.percentNetProfit),
@@ -267,7 +278,7 @@ export function Portfolios() {
                                 desc="Average yearly ratio between wins and losses"
                             />
                             <StatsCard
-                                Icon={Scale}
+                                Icon={PresentationAnalytics}
                                 title="Sharpe Ratio"
                                 value={portfolioStats.sharpeRatio}
                                 desc="Average yearly return ratio compared to risk"

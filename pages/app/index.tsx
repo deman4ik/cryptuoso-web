@@ -1,4 +1,4 @@
-import { Container, Grid, Skeleton } from "@mantine/core";
+import { Button, Container, Grid, Skeleton } from "@mantine/core";
 import Head from "next/head";
 import { gql, useQuery } from "urql";
 import { useSession } from "next-auth/react";
@@ -9,12 +9,17 @@ import { CurrentBalance } from "@cryptuoso/components/App/ExchangeAccount";
 import { Billing } from "@cryptuoso/components/App/Subscription";
 import { PortfolioStats, UserPortfolio } from "@cryptuoso/components/App/Portfolio";
 import { UserPortfolioPositions } from "@cryptuoso/components/App/Portfolio/UserPortfolioPositions";
+import { SimpleLink } from "@cryptuoso/components/Link";
+import { Briefcase } from "tabler-icons-react";
+import { Url, UrlObject } from "url";
+import { LinkProps } from "next/link";
 export { getServerSideProps } from "@cryptuoso/libs/graphql/shared";
 
 const DashboardQuery = gql`
     query DashboardInfo($userId: uuid!) {
-        portfolioExists: user_portfolios(where: { user_id: { _eq: $userId } }) {
+        portfolioExists: v_user_portfolios(where: { user_id: { _eq: $userId } }) {
             id
+            settings: user_portfolio_settings
         }
         userExAcExists: user_exchange_accs(
             where: { user_id: { _eq: $userId } }
@@ -22,6 +27,7 @@ const DashboardQuery = gql`
             order_by: { created_at: desc }
         ) {
             id
+            exchange
         }
         userSubExists: user_subs(
             where: { user_id: { _eq: $userId } }
@@ -45,7 +51,7 @@ export default function DashboardPage() {
     const [result, reexecuteQuery] = useQuery({ query: DashboardQuery, variables: { userId: session?.user?.userId } });
 
     const { data, fetching, error } = result;
-    if (data) console.log(data);
+
     if (error) console.error(error);
     let userExAccExists = data?.userExAcExists[0];
     let userSubExists = data?.userSubExists[0];
@@ -87,7 +93,36 @@ export default function DashboardPage() {
                             <UserPortfolio />
                         </Grid.Col>
                         <Grid.Col span={12}>
-                            <Section title="Portfolio Perfomance">
+                            <Section
+                                title="Portfolio Perfomance"
+                                right={
+                                    <Button
+                                        component={SimpleLink}
+                                        href={
+                                            {
+                                                pathname: "/app/portfolios/[[...slug]]",
+                                                query: {
+                                                    exchange: userExAccExists?.exchange,
+                                                    ...portfolioExists?.settings?.options
+                                                }
+                                            } as any //TODO: correct type?
+                                        }
+                                        target="_blank"
+                                        color="gray"
+                                        variant="subtle"
+                                        compact
+                                        uppercase
+                                        rightIcon={<Briefcase size={18} />}
+                                        styles={(theme) => ({
+                                            rightIcon: {
+                                                marginLeft: 5
+                                            }
+                                        })}
+                                    >
+                                        Public Performance
+                                    </Button>
+                                }
+                            >
                                 <PortfolioStats />
                             </Section>
                         </Grid.Col>

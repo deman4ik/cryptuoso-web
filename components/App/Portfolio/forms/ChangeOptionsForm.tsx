@@ -1,5 +1,5 @@
 import { ExchangeAccountQuery, portfoliosQuery } from "@cryptuoso/queries";
-import { PortfolioOptions, PortfolioSettings, UserPortfolio, Option, StatsInfo } from "@cryptuoso/types";
+import { PortfolioOptions, PortfolioSettings, UserPortfolio, Option, StatsInfo, UserExAcc } from "@cryptuoso/types";
 import { Button, Group, LoadingOverlay, Stack, useMantineTheme, Text, ThemeIcon } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useSession } from "next-auth/react";
@@ -9,7 +9,8 @@ import { BaseCard, CardHeader } from "@cryptuoso/components/App/Card";
 import { OptionsPicker, TradingAmountFormControls } from "../controls";
 import { PortfolioSimpleStats } from "../PortfolioSimpleStats";
 import { equals } from "@cryptuoso/helpers";
-import { Check } from "tabler-icons-react";
+import { Briefcase, Check } from "tabler-icons-react";
+import { SimpleLink } from "@cryptuoso/components/Link";
 
 export function ChangeOptionsForm({
     onSuccess,
@@ -27,7 +28,7 @@ export function ChangeOptionsForm({
         .filter(([key, value]) => value)
         .map(([key]) => key as Option);
     let [options, setOptions] = useState<Option[]>(portfolioOptionsArray || [Option.profit]);
-    if (!options.length) options = [Option.profit];
+
     const selectedOptions: PortfolioOptions = {
         profit: false,
         risk: false,
@@ -41,15 +42,7 @@ export function ChangeOptionsForm({
     }
     const [userExAccResult] = useQuery<
         {
-            userExAcc: {
-                id: string;
-                exchange: string;
-                name: string;
-                status: string;
-                balance: number;
-                balanceUpdatedAt: string;
-                error?: string;
-            }[];
+            userExAcc: UserExAcc[];
         },
         { userId: string }
     >({ query: ExchangeAccountQuery, variables: { userId: session?.user?.userId || "" } });
@@ -114,9 +107,9 @@ export function ChangeOptionsForm({
         <BaseCard fetching={userExAccFetching || portfoliosFetching || loading} justify="flex-start">
             <CardHeader title="Choose Portfolio Options" />
             <OptionsPicker options={options} setOptions={setOptions} />
-            {(userExAccError || portfoliosError || error) && (
+            {(userExAccError?.message || portfoliosError?.message || error) && (
                 <Text color="red" size="sm" mt="sm" weight={500}>
-                    {userExAccError || portfoliosError || error}
+                    {userExAccError?.message || portfoliosError?.message || error}
                 </Text>
             )}
             <Group position="center" my="xl" grow>
@@ -137,16 +130,42 @@ export function ChangeOptionsForm({
             <CardHeader
                 title="Selected Portfolio Performance History"
                 right={
-                    subscribed && (
-                        <Group spacing={0} position="right" align="flex-start">
-                            <ThemeIcon color="green" size="sm">
-                                <Check />
-                            </ThemeIcon>
-                            <Text color="green" weight={500}>
-                                You are subscribed to this portfolio
-                            </Text>
-                        </Group>
-                    )
+                    <Group>
+                        {subscribed && (
+                            <Group spacing={5} position="right" align="flex-start">
+                                <ThemeIcon color="green" size="sm">
+                                    <Check />
+                                </ThemeIcon>
+                                <Text color="green" weight={500}>
+                                    You are subscribed to this portfolio
+                                </Text>
+                            </Group>
+                        )}
+                        <Button
+                            component={SimpleLink}
+                            href={
+                                {
+                                    pathname: "/app/portfolios/[[...slug]]",
+                                    query: {
+                                        exchange: userExAcc?.exchange,
+                                        ...selectedOptions
+                                    }
+                                } as any //TODO: correct type?
+                            }
+                            color="gray"
+                            variant="subtle"
+                            compact
+                            uppercase
+                            rightIcon={<Briefcase size={18} />}
+                            styles={(theme) => ({
+                                rightIcon: {
+                                    marginLeft: 5
+                                }
+                            })}
+                        >
+                            Details
+                        </Button>
+                    </Group>
                 }
             />
             <PortfolioSimpleStats

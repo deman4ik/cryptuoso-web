@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FullStats, Option, PortfolioOptions, PortfolioSettings, StatsInfo } from "@cryptuoso/types";
+import { FullStats, Option, PortfolioOptions, PortfolioSettings, StatsInfo, UserExAcc } from "@cryptuoso/types";
 import { gql, useMutation, useQuery } from "urql";
 import {
     Button,
@@ -17,7 +17,7 @@ import {
 import { OptionsPicker } from "../controls/OptionsPicker";
 import { BaseCard, CardHeader, CardLine } from "@cryptuoso/components/App/Card";
 import { PortfolioSimpleStats } from "../PortfolioSimpleStats";
-import { Plus } from "tabler-icons-react";
+import { Briefcase, Plus } from "tabler-icons-react";
 import { getPortfolioOptionsIcons } from "@cryptuoso/helpers/portfolio";
 import Image from "next/image";
 import { portfoliosQuery, ExchangeAccountQuery } from "@cryptuoso/queries";
@@ -26,6 +26,7 @@ import dayjs from "@cryptuoso/libs/dayjs";
 import { round } from "@cryptuoso/helpers/number";
 import { useForm } from "@mantine/form";
 import { TradingAmountFormControls } from "../controls/TradingAmountFormControls";
+import { SimpleLink } from "@cryptuoso/components/Link";
 
 export function CreateUserPortfolio({ onSuccess }: { onSuccess?: () => void }) {
     const { data: session } = useSession<true>({ required: true });
@@ -34,7 +35,7 @@ export function CreateUserPortfolio({ onSuccess }: { onSuccess?: () => void }) {
     const [error, setError] = useState<string | null>(null);
 
     let [options, setOptions] = useState<Option[]>([Option.profit]);
-    if (!options.length) options = [Option.profit];
+
     const selectedOptions: PortfolioOptions = {
         profit: false,
         risk: false,
@@ -49,15 +50,7 @@ export function CreateUserPortfolio({ onSuccess }: { onSuccess?: () => void }) {
 
     const [userExAccResult, reexecuteMyUserExAccQuery] = useQuery<
         {
-            userExAcc: {
-                id: string;
-                exchange: string;
-                name: string;
-                status: string;
-                balance: number;
-                balanceUpdatedAt: string;
-                error?: string;
-            }[];
+            userExAcc: UserExAcc[];
         },
         { userId: string }
     >({ query: ExchangeAccountQuery, variables: { userId: session?.user?.userId || "" } });
@@ -191,7 +184,36 @@ export function CreateUserPortfolio({ onSuccess }: { onSuccess?: () => void }) {
             >
                 Subscribe
             </Button>
-            <CardHeader title="Selected Portfolio Performance History" />
+            <CardHeader
+                title="Selected Portfolio Performance History"
+                right={
+                    <Button
+                        component={SimpleLink}
+                        href={
+                            {
+                                pathname: "/app/portfolios/[[...slug]]",
+                                query: {
+                                    exchange: userExAcc?.exchange,
+                                    ...selectedOptions
+                                }
+                            } as any //TODO: correct type?
+                        }
+                        target="_blank"
+                        color="gray"
+                        variant="subtle"
+                        compact
+                        uppercase
+                        rightIcon={<Briefcase size={18} />}
+                        styles={(theme) => ({
+                            rightIcon: {
+                                marginLeft: 5
+                            }
+                        })}
+                    >
+                        Details
+                    </Button>
+                }
+            />
             <PortfolioSimpleStats
                 stats={portfolioStats}
                 fetching={portfoliosFetching}

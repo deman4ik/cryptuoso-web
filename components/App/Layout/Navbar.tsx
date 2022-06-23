@@ -91,9 +91,12 @@ export function AppNavbar({ ...others }) {
     const { classes, cx } = useStyles();
     const router = useRouter();
     const { data: session } = useSession();
+    console.log(router.pathname.replace(/\/+$/, ""));
     const links = data.map((item) => (
         <SimpleLink
-            className={cx(classes.link, { [classes.linkActive]: item.link === router.pathname })}
+            className={cx(classes.link, {
+                [classes.linkActive]: item.link === router.pathname.replace("/[[...slug]]", "")
+            })}
             href={item.link}
             key={item.label}
         >
