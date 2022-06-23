@@ -156,7 +156,7 @@ export function ChooseSubForm({ onSuccess }: { onSuccess: () => void }) {
                     />
 
                     <Grid grow gutter="xl" align="center" justify="space-between">
-                        <Grid.Col span={4}>
+                        <Grid.Col span={12} sm={4}>
                             <Stack>
                                 <Stack className={classes.priceTotalBox}>
                                     {option?.discount && (
@@ -199,7 +199,7 @@ export function ChooseSubForm({ onSuccess }: { onSuccess: () => void }) {
                                 </Button>
                             </Stack>
                         </Grid.Col>
-                        <Grid.Col span={8}>
+                        <Grid.Col span={12} sm={8}>
                             <SimpleGrid cols={2} spacing={40} breakpoints={[{ maxWidth: "md", cols: 1 }]}>
                                 {items}
                             </SimpleGrid>

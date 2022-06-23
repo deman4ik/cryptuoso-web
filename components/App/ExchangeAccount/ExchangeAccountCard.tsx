@@ -8,6 +8,7 @@ import dayjs from "@cryptuoso/libs/dayjs";
 import { Key, Refresh } from "tabler-icons-react";
 import { BaseCard, CardHeader, CardLine, RefreshAction } from "@cryptuoso/components/App/Card";
 import { ExchangeAccountForm } from "./ExchangeAccountForm";
+import { UserExAcc } from "@cryptuoso/types";
 
 const ExchangeAccountQuery = gql`
     query ExchangeAccount($userId: uuid!) {
@@ -28,15 +29,7 @@ export function ExchangeAccountCard() {
     const { data: session } = useSession<true>({ required: true });
     const [result, reexecuteQuery] = useQuery<
         {
-            userExAcc: {
-                id: string;
-                exchange: string;
-                name: string;
-                status: string;
-                balance: number;
-                balanceUpdatedAt: string;
-                error?: string;
-            }[];
+            userExAcc: UserExAcc[];
         },
         { userId: string }
     >({ query: ExchangeAccountQuery, variables: { userId: session?.user?.userId || "" } });

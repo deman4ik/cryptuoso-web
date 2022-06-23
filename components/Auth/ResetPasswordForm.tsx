@@ -39,7 +39,7 @@ export function ResetPasswordForm() {
                 }
             )
             .toPromise();
-        console.log(result);
+
         if (result?.error) {
             setLoading(false);
             setError(result.error.message.replace("[GraphQL] ", ""));

@@ -1,5 +1,5 @@
 import { ExchangeAccountQuery } from "@cryptuoso/queries";
-import { PortfolioSettings, UserPortfolio } from "@cryptuoso/types";
+import { PortfolioSettings, UserExAcc, UserPortfolio } from "@cryptuoso/types";
 import { Button, Group, LoadingOverlay, Stack, useMantineTheme, Text } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useSession } from "next-auth/react";
@@ -22,15 +22,7 @@ export function ChangeTradingAmountForm({
     const [error, setError] = useState<string | null>(null);
     const [userExAccResult] = useQuery<
         {
-            userExAcc: {
-                id: string;
-                exchange: string;
-                name: string;
-                status: string;
-                balance: number;
-                balanceUpdatedAt: string;
-                error?: string;
-            }[];
+            userExAcc: UserExAcc[];
         },
         { userId: string }
     >({ query: ExchangeAccountQuery, variables: { userId: session?.user?.userId || "" } });
@@ -114,9 +106,9 @@ export function ChangeTradingAmountForm({
                 currentBalance={userExAcc?.balance}
                 currentBalanceUpdatedAt={userExAcc?.balanceUpdatedAt}
             />
-            {(userExAccError || error) && (
+            {(userExAccError?.message || error) && (
                 <Text color="red" size="sm" mt="sm" weight={500}>
-                    {userExAccError || error}
+                    {userExAccError?.message || error}
                 </Text>
             )}
             <Group position="center" mt="xl" grow>

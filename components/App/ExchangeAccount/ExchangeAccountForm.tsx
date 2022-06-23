@@ -1,18 +1,10 @@
 import { SimpleLink } from "@cryptuoso/components/Link";
+import { ExchangesQuery } from "@cryptuoso/queries";
 import { Button, Group, LoadingOverlay, Paper, TextInput, Select, Text, Anchor, PasswordInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useState } from "react";
 import { Key, ShieldLock, Wallet } from "tabler-icons-react";
 import { gql, useMutation, useQuery } from "urql";
-
-const ExchangesQuery = gql`
-    query Exchanges {
-        exchanges {
-            code
-            name
-        }
-    }
-`;
 
 export function ExchangeAccountForm({
     exchange,

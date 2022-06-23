@@ -78,7 +78,7 @@ export function SubscriptionCard({ onSuccess, sx }: { onSuccess?: () => void; sx
     const { data, fetching, error: queryError } = result;
     const myUserSub = data?.myUserSub[0];
     const payment = myUserSub?.userPayments && myUserSub?.userPayments[0];
-    console.log(myUserSub);
+
     if (queryError) console.error(queryError);
 
     let expires = "";

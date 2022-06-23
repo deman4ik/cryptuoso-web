@@ -56,7 +56,7 @@ export function getOptionIcon(option: keyof PortfolioOptions) {
 export function getPortfolioOptionsIcons(options?: PortfolioOptions, sort: "key" | "value" = "key") {
     const optionRows = options ? (
         Object.entries(options)
-            .sort(sort === "key" ? ([, value]) => (value ? -1 : 1) : ([a], [b]) => a.localeCompare(b))
+            .sort(sort === "value" ? ([, value]) => (value ? -1 : 1) : ([a], [b]) => a.localeCompare(b))
             .map(([key, value]) => {
                 return (
                     <Tooltip

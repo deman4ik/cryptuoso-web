@@ -1,7 +1,7 @@
 import round from "@cryptuoso/helpers/round";
 import { Grid } from "@mantine/core";
 import { useSession } from "next-auth/react";
-import { Coin, ListCheck, Minus, Plus, Scale } from "tabler-icons-react";
+import { Bolt, Coin, ListCheck, Minus, Plus, PresentationAnalytics, Scale, Trophy } from "tabler-icons-react";
 import { gql, useQuery } from "urql";
 import { StatsCard, Equity } from "@cryptuoso/components/App/Portfolio";
 import { UserPortfolio } from "@cryptuoso/types";
@@ -58,7 +58,6 @@ export function PortfolioStats() {
     const { data, fetching, error } = result;
     const userPortfolioStats = data?.userPortfolioStats[0];
 
-    if (data) console.log(data);
     if (error) console.error(error);
     return (
         <Grid gutter="xs">
@@ -128,7 +127,7 @@ export function PortfolioStats() {
             <Grid.Col span={12} sm={6} lg={4}>
                 <StatsCard
                     fetching={fetching}
-                    Icon={Plus}
+                    Icon={Trophy}
                     title="Win Rate"
                     values={[
                         {
@@ -142,7 +141,7 @@ export function PortfolioStats() {
             <Grid.Col span={12} sm={6} lg={4}>
                 <StatsCard
                     fetching={fetching}
-                    Icon={Minus}
+                    Icon={Bolt}
                     title="Max Drawdown"
                     values={[
                         {
@@ -170,7 +169,7 @@ export function PortfolioStats() {
             <Grid.Col span={12} sm={6} lg={4}>
                 <StatsCard
                     fetching={fetching}
-                    Icon={Scale}
+                    Icon={PresentationAnalytics}
                     title="Sharpe Ratio"
                     values={[
                         {

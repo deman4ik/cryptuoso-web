@@ -3,6 +3,7 @@ import { SimpleLink } from "@cryptuoso/components/Link";
 import { round } from "@cryptuoso/helpers/number";
 import dayjs from "@cryptuoso/libs/dayjs";
 import { ExchangeAccountQuery } from "@cryptuoso/queries";
+import { UserExAcc } from "@cryptuoso/types";
 import { ActionIcon, createStyles, Group, Skeleton, Stack, Text, Tooltip, Badge, Button } from "@mantine/core";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -25,15 +26,7 @@ export function CurrentBalance() {
     const { data: session } = useSession<true>({ required: true });
     const [result, reexecuteQuery] = useQuery<
         {
-            userExAcc: {
-                id: string;
-                exchange: string;
-                name: string;
-                status: string;
-                balance: number;
-                balanceUpdatedAt: string;
-                error?: string;
-            }[];
+            userExAcc: UserExAcc[];
         },
         { userId: string }
     >({ query: ExchangeAccountQuery, variables: { userId: session?.user?.userId || "" } });

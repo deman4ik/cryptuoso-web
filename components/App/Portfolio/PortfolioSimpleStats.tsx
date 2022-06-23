@@ -2,7 +2,19 @@ import { round } from "@cryptuoso/helpers";
 import dayjs from "@cryptuoso/libs/dayjs";
 import { StatsInfo } from "@cryptuoso/types";
 import { Grid } from "@mantine/core";
-import { Cash, CashBanknote, Coin, ListCheck, Minus, Plus, Scale } from "tabler-icons-react";
+import {
+    Bolt,
+    CalendarStats,
+    Cash,
+    CashBanknote,
+    Coin,
+    ListCheck,
+    Minus,
+    Plus,
+    PresentationAnalytics,
+    Scale,
+    Trophy
+} from "tabler-icons-react";
 import { OperationContext } from "urql";
 import { Equity } from "./Equity";
 import { StatsCard } from "./StatsCard";
@@ -31,7 +43,7 @@ export function PortfolioSimpleStats({
                 <StatsCard
                     fetching={fetching}
                     Icon={CashBanknote}
-                    title="Initial Balance"
+                    title="Starting Balance"
                     values={[
                         {
                             value: round(stats?.initialBalance || 0),
@@ -58,7 +70,7 @@ export function PortfolioSimpleStats({
             <Grid.Col span={12} sm={6} lg={4}>
                 <StatsCard
                     fetching={fetching}
-                    Icon={Coin}
+                    Icon={CalendarStats}
                     title="First trade"
                     values={[
                         {
@@ -103,7 +115,7 @@ export function PortfolioSimpleStats({
             <Grid.Col span={12} sm={6} lg={4}>
                 <StatsCard
                     fetching={fetching}
-                    Icon={Plus}
+                    Icon={Trophy}
                     title="Win Rate"
                     values={[
                         {
@@ -117,7 +129,7 @@ export function PortfolioSimpleStats({
             <Grid.Col span={12} sm={6} lg={4}>
                 <StatsCard
                     fetching={fetching}
-                    Icon={Minus}
+                    Icon={Bolt}
                     title="Max Drawdown"
                     values={[
                         {
@@ -145,7 +157,7 @@ export function PortfolioSimpleStats({
             <Grid.Col span={12} sm={6} lg={4}>
                 <StatsCard
                     fetching={fetching}
-                    Icon={Scale}
+                    Icon={PresentationAnalytics}
                     title="Sharpe Ratio"
                     values={[
                         {

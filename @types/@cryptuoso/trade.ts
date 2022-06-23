@@ -76,4 +76,7 @@ export interface BasePosition {
     volume: number;
     profit?: number;
     barsHeld?: number;
+    robot?: {
+        asset: string;
+    };
 }

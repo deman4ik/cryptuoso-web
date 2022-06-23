@@ -7,9 +7,7 @@ import { getSession, SessionProvider } from "next-auth/react";
 import { useHotkeys } from "@mantine/hooks";
 import GraphqlProvider from "@cryptuoso/libs/graphql/provider";
 import { useState } from "react";
-import { Session } from "next-auth";
-import { Provider as URQLProvider } from "urql";
-import { gqlPublicClient } from "@cryptuoso/libs/graphql/client";
+import { ModalsProvider } from "@mantine/modals";
 
 export default function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
     const { Component, pageProps } = props;
@@ -115,9 +113,11 @@ export default function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
                                 }
                             }}
                         >
-                            <NotificationsProvider>
-                                <Component {...pageProps} />
-                            </NotificationsProvider>
+                            <ModalsProvider>
+                                <NotificationsProvider>
+                                    <Component {...pageProps} />
+                                </NotificationsProvider>
+                            </ModalsProvider>
                         </MantineProvider>
                     </ColorSchemeProvider>
                 </GraphqlProvider>

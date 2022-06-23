@@ -75,7 +75,7 @@ export function AuthenticationForm() {
         setError(null);
         if (formType === "login") {
             let result;
-            console.log(data);
+
             if (type === "telegram") {
                 result = await signIn<"credentials">("telegram", {
                     redirect: false,
@@ -93,7 +93,7 @@ export function AuthenticationForm() {
                 setLoading(false);
                 const error = result.error.replace("[GraphQL] ", "");
                 setError(error);
-                console.log(result);
+
                 if (error.includes("User account is not activated.")) {
                     setTimeout(() => {
                         router.replace(`/auth/activate-account/manual?email=${form.values.email}`);

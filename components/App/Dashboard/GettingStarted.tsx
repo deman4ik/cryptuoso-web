@@ -3,6 +3,7 @@ import { useState } from "react";
 import { ExchangeAccountForm } from "@cryptuoso/components/App/ExchangeAccount";
 import { ChooseSubForm, SubscriptionCard } from "@cryptuoso/components/App/Subscription";
 import { CreateUserPortfolio } from "../Portfolio";
+import { BaseCard, CardHeader } from "../Card";
 
 function initialStep(
     userExAccExists: boolean,
@@ -37,17 +38,23 @@ export function GettingStarted({
     refetch: () => void;
 }) {
     const [active, setActive] = useState(
-        initialStep(userExAccExists, userSubExists, userSubActive, userPaymentExists, portfolioExists)
+        1 || initialStep(userExAccExists, userSubExists, userSubActive, userPaymentExists, portfolioExists)
     );
     const nextStep = () => setActive((current) => (current < 4 ? current + 1 : current));
     return (
         <Container mt="xs" size="xl">
             <Stepper active={active} breakpoint="sm">
                 <Stepper.Step label="API Keys" description="Create Exchange Account">
-                    <ExchangeAccountForm onSuccess={nextStep} />
+                    <BaseCard justify="flex-start">
+                        <CardHeader title="Create Exchange Account" />
+                        <ExchangeAccountForm onSuccess={nextStep} />
+                    </BaseCard>
                 </Stepper.Step>
                 <Stepper.Step label="Subscribe" description="Create subscription">
-                    <ChooseSubForm onSuccess={nextStep} />
+                    <BaseCard justify="flex-start">
+                        <CardHeader title="Create subscription" />
+                        <ChooseSubForm onSuccess={nextStep} />
+                    </BaseCard>
                 </Stepper.Step>
                 <Stepper.Step label="Checkout" description="Make payment">
                     <SubscriptionCard sx={{ width: "100%" }} onSuccess={nextStep} />
