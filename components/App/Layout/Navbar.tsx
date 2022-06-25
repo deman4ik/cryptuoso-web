@@ -1,20 +1,24 @@
 import React, { useState } from "react";
-import { createStyles, Navbar, Group, Text, ScrollArea } from "@mantine/core";
+import { createStyles, Navbar, Group, Text, ScrollArea, Indicator } from "@mantine/core";
 import {
     BellRinging,
     Key,
     Receipt2,
-    Dashboard,
     Logout,
     UserCircle,
     BrandTelegram,
     Tools,
-    Briefcase
+    Briefcase,
+    ChartCandle
 } from "tabler-icons-react";
 import { signOut, useSession } from "next-auth/react";
 import { ColorSchemeToggleBig } from "@cryptuoso/components/Landing/Layout";
 import { SimpleLink } from "@cryptuoso/components/Link";
 import { useRouter } from "next/router";
+import { Logo } from "@cryptuoso/components/Image";
+import { useMediaQuery } from "@mantine/hooks";
+import { useQuery } from "urql";
+import { UnreadNotificationsCount } from "@cryptuoso/queries";
 
 const useStyles = createStyles((theme, _params, getRef) => {
     const icon: string = getRef("icon");
@@ -28,7 +32,6 @@ const useStyles = createStyles((theme, _params, getRef) => {
             marginBottom: theme.spacing.md * 1.5
             //   borderBottom: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[2]}`
         },
-
         footer: {
             paddingTop: theme.spacing.md,
             marginTop: theme.spacing.md,
@@ -78,35 +81,80 @@ const useStyles = createStyles((theme, _params, getRef) => {
     };
 });
 
-const data = [
-    { link: "/app", label: "Dashboard", icon: Dashboard },
-    { link: "/app/portfolios", label: "Public Portfolios", icon: Briefcase },
-    { link: "/app/notifications", label: "Notifications", icon: BellRinging },
-    { link: "/app/profile", label: "Profile", icon: UserCircle },
-    { link: "/app/exchange-account", label: "Exchange Account", icon: Key },
-    { link: "/app/billing", label: "Billing", icon: Receipt2 }
+export const linksData = [
+    { link: "/app", label: "Trading", icon: ChartCandle, showOnMobile: true, notifications: false },
+    { link: "/app/portfolios", label: "Public Portfolios", icon: Briefcase, showOnMobile: true, notifications: false },
+    { link: "/app/notifications", label: "Notifications", icon: BellRinging, showOnMobile: false, notifications: true },
+    { link: "/app/accounts", label: "Accounts", icon: UserCircle, showOnMobile: false, notifications: false }
 ];
 
 export function AppNavbar({ ...others }) {
-    const { classes, cx } = useStyles();
+    const { classes, cx, theme } = useStyles();
+    const mobile = useMediaQuery(`(max-width: ${theme.breakpoints["md"]}px)`, false);
+
     const router = useRouter();
-    const { data: session } = useSession();
-    console.log(router.pathname.replace(/\/+$/, ""));
-    const links = data.map((item) => (
-        <SimpleLink
-            className={cx(classes.link, {
-                [classes.linkActive]: item.link === router.pathname.replace("/[[...slug]]", "")
-            })}
-            href={item.link}
-            key={item.label}
-        >
-            <item.icon className={classes.linkIcon} />
-            <span>{item.label}</span>
-        </SimpleLink>
-    ));
+    const { data: session } = useSession<true>({ required: true });
+    const [unreadNotificationsResult, reexecuteUnreadNotificationsQuery] = useQuery<{
+        notifications: {
+            aggregate: {
+                count: number;
+            };
+        };
+    }>({
+        query: UnreadNotificationsCount,
+        variables: { userId: session?.user?.userId || "" }
+    });
+    const { data, fetching, error } = unreadNotificationsResult;
+
+    if (error) console.error(error);
+    const notifications = data?.notifications?.aggregate?.count
+        ? data?.notifications?.aggregate?.count > 99
+            ? "99+"
+            : `${data?.notifications?.aggregate?.count}`
+        : null;
+    const links = linksData
+        .filter(({ showOnMobile }) => {
+            if (mobile) {
+                return showOnMobile;
+            } else return true;
+        })
+        .map((item) => (
+            <SimpleLink
+                className={cx(classes.link, {
+                    [classes.linkActive]: item.link === router.pathname.replace("/[[...slug]]", "")
+                })}
+                href={item.link}
+                key={item.label}
+            >
+                <Indicator
+                    key={item.label}
+                    color="indigo"
+                    position="top-end"
+                    disabled={!item.notifications || !notifications}
+                    withBorder
+                    inline
+                    label={notifications}
+                    size={14}
+                    offset={-3}
+                >
+                    <item.icon className={classes.linkIcon} />
+                </Indicator>
+                <span>{item.label}</span>
+            </SimpleLink>
+        ));
 
     return (
         <Navbar fixed className={classes.navbar} {...others}>
+            {!mobile && (
+                <Group mb="sm" mx="xs">
+                    <SimpleLink href="/app" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                        <Logo />
+                    </SimpleLink>
+                    <Text component={SimpleLink} transform="uppercase" weight={700} size="lg" href="/app">
+                        Cryptuoso
+                    </Text>
+                </Group>
+            )}
             <Navbar.Section grow component={ScrollArea} mx="-xs" px="xs">
                 {links}
             </Navbar.Section>

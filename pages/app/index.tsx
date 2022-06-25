@@ -3,8 +3,8 @@ import Head from "next/head";
 import { gql, useQuery } from "urql";
 import { useSession } from "next-auth/react";
 import { Layout } from "@cryptuoso/components/App/Layout";
-import { Section } from "@cryptuoso/components/App/Dashboard";
-import { GettingStarted } from "@cryptuoso/components/App/Dashboard/GettingStarted";
+import { Section } from "@cryptuoso/components/App/Trading";
+import { GettingStarted } from "@cryptuoso/components/App/Trading/GettingStarted";
 import { CurrentBalance } from "@cryptuoso/components/App/ExchangeAccount";
 import { Billing } from "@cryptuoso/components/App/Subscription";
 import { PortfolioStats, UserPortfolio } from "@cryptuoso/components/App/Portfolio";
@@ -15,8 +15,8 @@ import { Url, UrlObject } from "url";
 import { LinkProps } from "next/link";
 export { getServerSideProps } from "@cryptuoso/libs/graphql/shared";
 
-const DashboardQuery = gql`
-    query DashboardInfo($userId: uuid!) {
+const TradingQuery = gql`
+    query TradingInfo($userId: uuid!) {
         portfolioExists: v_user_portfolios(where: { user_id: { _eq: $userId } }) {
             id
             settings: user_portfolio_settings
@@ -46,9 +46,9 @@ const DashboardQuery = gql`
         }
     }
 `;
-export default function DashboardPage() {
+export default function TradingPage() {
     const { data: session } = useSession<true>({ required: true });
-    const [result, reexecuteQuery] = useQuery({ query: DashboardQuery, variables: { userId: session?.user?.userId } });
+    const [result, reexecuteQuery] = useQuery({ query: TradingQuery, variables: { userId: session?.user?.userId } });
 
     const { data, fetching, error } = result;
 
@@ -62,7 +62,7 @@ export default function DashboardPage() {
     return (
         <Layout>
             <Head>
-                <title>Dashboard | CRYPTUOSO</title>
+                <title>Trading | CRYPTUOSO</title>
             </Head>
             {fetching ? (
                 <>
