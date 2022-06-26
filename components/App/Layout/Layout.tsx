@@ -2,6 +2,7 @@ import React, { ReactNode, useState } from "react";
 import { Header, AppShell, createStyles } from "@mantine/core";
 import { AppNavbar } from "./Navbar";
 import { AppHeader } from "./Header";
+import { useMediaQuery } from "@mantine/hooks";
 
 const useStyles = createStyles((theme) => ({
     shell: {
@@ -16,8 +17,18 @@ const useStyles = createStyles((theme) => ({
 export function Layout({ children }: { children: ReactNode }) {
     const [opened, setOpened] = useState(false);
 
-    const { classes } = useStyles();
+    const { classes, theme } = useStyles();
 
+    const mobile = useMediaQuery(`(max-width: ${theme.breakpoints["md"]}px)`, false);
+
+    let header;
+
+    if (mobile)
+        header = (
+            <Header height={60} p="md" className={classes.header}>
+                <AppHeader opened={opened} setOpened={setOpened} />
+            </Header>
+        );
     return (
         <AppShell
             navbarOffsetBreakpoint="md"
@@ -32,11 +43,7 @@ export function Layout({ children }: { children: ReactNode }) {
                     position={{ top: 0, left: 0 }}
                 />
             }
-            header={
-                <Header height={60} p="md" className={classes.header}>
-                    <AppHeader opened={opened} setOpened={setOpened} />
-                </Header>
-            }
+            header={header}
             className={classes.shell}
         >
             {children}

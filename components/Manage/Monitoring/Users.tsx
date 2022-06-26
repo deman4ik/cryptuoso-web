@@ -1,12 +1,11 @@
 import { RefreshAction } from "@cryptuoso/components/App/Card";
-import { Section } from "@cryptuoso/components/App/Dashboard";
+import { Section } from "@cryptuoso/components/App/Trading";
 import { StatsCard } from "@cryptuoso/components/App/Portfolio";
-import { Grid, Group, Text } from "@mantine/core";
+import { Grid } from "@mantine/core";
 import dayjs from "dayjs";
 import { useContext, useEffect } from "react";
 import { UserPlus, Users } from "tabler-icons-react";
 import { gql, useQuery } from "urql";
-import { filterDatesToQuery, periodToDate } from "../Filters";
 import { FiltersContext } from "../Layout";
 import ms from "ms";
 

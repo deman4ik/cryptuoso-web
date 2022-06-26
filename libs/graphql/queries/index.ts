@@ -211,3 +211,13 @@ export const ExchangesQuery = gql`
         }
     }
 `;
+
+export const UnreadNotificationsCount = gql`
+    query NotificationsCount($userId: uuid!) {
+        notifications: notifications_aggregate(where: { user_id: { _eq: $userId }, readed: { _eq: false } }) {
+            aggregate {
+                count
+            }
+        }
+    }
+`;
