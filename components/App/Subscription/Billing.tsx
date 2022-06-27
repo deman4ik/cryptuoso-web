@@ -3,11 +3,11 @@ import { Logo } from "@cryptuoso/components/Image";
 import { SimpleLink } from "@cryptuoso/components/Link";
 import { getSubStatusColor } from "@cryptuoso/helpers/pricing";
 import dayjs from "@cryptuoso/libs/dayjs";
+import { UserSub } from "@cryptuoso/types";
 import { ActionIcon, createStyles, Group, Skeleton, Stack, Text, Tooltip, Badge, Button } from "@mantine/core";
 import { useSession } from "next-auth/react";
 import { Receipt2, Refresh } from "tabler-icons-react";
 import { gql, useQuery } from "urql";
-import { IUserSub } from "../Subscription";
 
 const useStyles = createStyles((theme) => ({
     value: {
@@ -42,7 +42,7 @@ export function Billing() {
     const { data: session } = useSession<true>({ required: true });
     const [result, reexecuteQuery] = useQuery<
         {
-            myUserSub: IUserSub[];
+            myUserSub: UserSub[];
         },
         { userId: string }
     >({ query: SubscriptionQuery, variables: { userId: session?.user?.userId || "" } });
@@ -91,7 +91,7 @@ export function Billing() {
                     <Group spacing={0}>
                         <Button
                             component={SimpleLink}
-                            href="/app/billing"
+                            href="/app/accounts"
                             color="gray"
                             variant="subtle"
                             compact

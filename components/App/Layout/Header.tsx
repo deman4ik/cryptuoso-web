@@ -6,7 +6,7 @@ import { useMediaQuery } from "@mantine/hooks";
 import { linksData } from "./Navbar";
 import { useRouter } from "next/router";
 import { useQuery } from "urql";
-import { UnreadNotificationsCount } from "@cryptuoso/queries";
+import { UnreadNotificationsCountQuery } from "@cryptuoso/queries";
 import { useSession } from "next-auth/react";
 
 const useStyles = createStyles((theme, _params, getRef) => {
@@ -58,32 +58,15 @@ const useStyles = createStyles((theme, _params, getRef) => {
 export function AppHeader({
     opened,
     setOpened,
+    notifications,
     ...other
 }: {
     opened: boolean;
     setOpened: React.Dispatch<React.SetStateAction<boolean>>;
+    notifications: string | null;
 }) {
     const { classes, cx } = useStyles();
     const router = useRouter();
-    const { data: session } = useSession<true>({ required: true });
-    const [unreadNotificationsResult, reexecuteUnreadNotificationsQuery] = useQuery<{
-        notifications: {
-            aggregate: {
-                count: number;
-            };
-        };
-    }>({
-        query: UnreadNotificationsCount,
-        variables: { userId: session?.user?.userId || "" }
-    });
-    const { data, fetching, error } = unreadNotificationsResult;
-
-    if (error) console.error(error);
-    const notifications = data?.notifications?.aggregate?.count
-        ? data?.notifications?.aggregate?.count > 99
-            ? "99+"
-            : `${data?.notifications?.aggregate?.count}`
-        : null;
 
     const links = linksData
         .filter(({ showOnMobile }) => showOnMobile === false)
@@ -93,7 +76,6 @@ export function AppHeader({
                 color="indigo"
                 position="top-end"
                 disabled={!item.notifications || !notifications}
-                withBorder
                 inline
                 label={notifications}
                 size={14}

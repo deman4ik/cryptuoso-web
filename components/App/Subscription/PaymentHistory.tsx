@@ -12,12 +12,12 @@ import {
 } from "@mantine/core";
 import { gql, useQuery } from "urql";
 import { useSession } from "next-auth/react";
-import { IUserPayment } from "./types";
 import { TextLink } from "@cryptuoso/components/Link/TextLink";
 import dayjs from "@cryptuoso/libs/dayjs";
 import { Refresh } from "tabler-icons-react";
 import { ResponsiveTable } from "../Table/Table";
 import { getPaymentStatusColor } from "@cryptuoso/helpers/pricing";
+import { UserPayment } from "@cryptuoso/types";
 
 const useStyles = createStyles((theme) => ({
     card: {
@@ -55,7 +55,7 @@ export function PaymentHistory() {
     const { data: session } = useSession<true>({ required: true });
     const [result, reexecuteQuery] = useQuery<
         {
-            userPayments: IUserPayment[];
+            userPayments: UserPayment[];
         },
         { userId: string }
     >({ query: PaymentHistoryQuery, variables: { userId: session?.user?.userId || "" } });

@@ -18,10 +18,11 @@ import { useSession } from "next-auth/react";
 import { gql, useMutation, useQuery } from "urql";
 import dayjs from "@cryptuoso/libs/dayjs";
 import { ArrowRight, Receipt, Receipt2, Refresh, Wallet, ZoomMoney } from "tabler-icons-react";
-import { ChooseSubForm, IUserSub } from "@cryptuoso/components/App/Subscription";
+import { ChooseSubForm } from "@cryptuoso/components/App/Subscription";
 import { BaseCard, CardHeader, CardLine, RefreshAction } from "@cryptuoso/components/App/Card";
 import { getPaymentStatusColor, getSubStatusColor } from "@cryptuoso/helpers/pricing";
 import { SimpleLink, TextLink } from "@cryptuoso/components/Link";
+import { UserSub } from "@cryptuoso/types";
 
 const SubscriptionQuery = gql`
     query Subscription($userId: uuid!) {
@@ -71,7 +72,7 @@ export function SubscriptionCard({ onSuccess, sx }: { onSuccess?: () => void; sx
     const { data: session } = useSession<true>({ required: true });
     const [result, reexecuteQuery] = useQuery<
         {
-            myUserSub: IUserSub[];
+            myUserSub: UserSub[];
         },
         { userId: string }
     >({ query: SubscriptionQuery, variables: { userId: session?.user?.userId || "" } });

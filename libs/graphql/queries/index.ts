@@ -212,12 +212,43 @@ export const ExchangesQuery = gql`
     }
 `;
 
-export const UnreadNotificationsCount = gql`
-    query NotificationsCount($userId: uuid!) {
-        notifications: notifications_aggregate(where: { user_id: { _eq: $userId }, readed: { _eq: false } }) {
+export const UnreadNotificationsCountQuery = gql`
+    query UnreadNotificationsCount($userId: uuid!) {
+        unreadNotificationsCount: notifications_aggregate(
+            where: { user_id: { _eq: $userId }, readed: { _eq: false } }
+        ) {
             aggregate {
                 count
             }
+        }
+    }
+`;
+
+export const NotificationsQuery = gql`
+    query Notifications($userId: uuid!, $limit: Int!, $offset: Int!) {
+        unreadNotificationsCount: notifications_aggregate(
+            where: { user_id: { _eq: $userId }, readed: { _eq: false } }
+        ) {
+            aggregate {
+                count
+            }
+        }
+        allNotificationsCount: notifications_aggregate(where: { user_id: { _eq: $userId } }) {
+            aggregate {
+                count
+            }
+        }
+        notifications(
+            where: { user_id: { _eq: $userId } }
+            order_by: { timestamp: desc_nulls_last }
+            limit: $limit
+            offset: $offset
+        ) {
+            id
+            type
+            timestamp
+            data
+            readed
         }
     }
 `;

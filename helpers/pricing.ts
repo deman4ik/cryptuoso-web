@@ -1,6 +1,6 @@
-import { IUserPayment, IUserSub } from "@cryptuoso/components/App/Subscription/types";
 import { DefaultMantineColor } from "@mantine/core";
 import { Briefcase, LockAccess, ReceiptTax, SettingsAutomation } from "tabler-icons-react";
+import { UserPayment, UserSub } from "@cryptuoso/types";
 
 export const paidFeatures = [
     {
@@ -55,7 +55,7 @@ export const freeOption: Option = {
     highlight: false
 };
 
-export function getPaymentStatusColor(status: IUserPayment["status"]): DefaultMantineColor {
+export function getPaymentStatusColor(status: UserPayment["status"]): DefaultMantineColor {
     switch (status) {
         case "NEW":
         case "PENDING":
@@ -72,7 +72,7 @@ export function getPaymentStatusColor(status: IUserPayment["status"]): DefaultMa
     }
 }
 
-export function getSubStatusColor(status?: IUserSub["status"]): DefaultMantineColor {
+export function getSubStatusColor(status?: UserSub["status"]): DefaultMantineColor {
     switch (status) {
         case "pending":
             return "blue";
