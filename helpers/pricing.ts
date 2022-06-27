@@ -1,6 +1,6 @@
-import { UserPayment, UserSub } from "@cryptuoso/components/App/Subscription/types";
 import { DefaultMantineColor } from "@mantine/core";
 import { Briefcase, LockAccess, ReceiptTax, SettingsAutomation } from "tabler-icons-react";
+import { UserPayment, UserSub } from "@cryptuoso/types";
 
 export const paidFeatures = [
     {
