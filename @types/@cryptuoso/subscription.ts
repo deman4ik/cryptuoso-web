@@ -1,6 +1,6 @@
 import { UnitType } from "dayjs";
 
-export interface IUserSub {
+export interface UserSub {
     id: string;
     userId: string;
     status: "active" | "trial" | "expired" | "pending" | "canceled" | "expiring";
@@ -18,10 +18,10 @@ export interface IUserSub {
         name: string;
         priceTotal: number;
     };
-    userPayments?: IUserPayment[];
+    userPayments?: UserPayment[];
 }
 
-export interface IUserPayment {
+export interface UserPayment {
     id: string;
     code: string;
     url?: string;
@@ -43,7 +43,7 @@ export interface IUserPayment {
     };
 }
 
-export interface ISubscription {
+export interface Subscription {
     id: string;
     name: string;
     description?: string;

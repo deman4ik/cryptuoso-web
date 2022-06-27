@@ -1,22 +1,21 @@
 import { ResponsiveTable } from "@cryptuoso/components/App/Table";
 import { CoinIcon } from "@cryptuoso/components/Image";
+import { plusNum } from "@cryptuoso/helpers";
 import dayjs from "@cryptuoso/libs/dayjs";
-import { BasePosition, RobotPositionStatus } from "@cryptuoso/types";
+import { BasePosition, PositionStatus } from "@cryptuoso/types";
 import { Badge, Group, Text, Stack, ThemeIcon, useMantineTheme } from "@mantine/core";
 import { ArrowDown, ArrowUp } from "tabler-icons-react";
 
-const getPositionStatusColor = (status?: RobotPositionStatus) => {
+const getPositionStatusColor = (status?: PositionStatus) => {
     if (status === "open") return "blue";
     else if (status === "closedAuto") return "yellow";
     else return "green";
 };
 
-const getPositionStatusText = (status?: RobotPositionStatus) => {
+const getPositionStatusText = (status?: PositionStatus) => {
     if (status === "closedAuto") return "closed auto";
     else return status;
 };
-
-export const plusNum = (value?: number) => (value && value > 0 ? `+${value} $` : `${value} $`);
 
 export function PositionsList({ positions, type }: { positions: BasePosition[]; type: string }) {
     const theme = useMantineTheme();

@@ -18,7 +18,7 @@ import { useRouter } from "next/router";
 import { Logo } from "@cryptuoso/components/Image";
 import { useMediaQuery } from "@mantine/hooks";
 import { useQuery } from "urql";
-import { UnreadNotificationsCount } from "@cryptuoso/queries";
+import { UnreadNotificationsCountQuery } from "@cryptuoso/queries";
 
 const useStyles = createStyles((theme, _params, getRef) => {
     const icon: string = getRef("icon");
@@ -88,30 +88,12 @@ export const linksData = [
     { link: "/app/accounts", label: "Accounts", icon: UserCircle, showOnMobile: false, notifications: false }
 ];
 
-export function AppNavbar({ ...others }) {
+export function AppNavbar({ notifications, ...others }: { notifications: string | null } & any) {
     const { classes, cx, theme } = useStyles();
     const mobile = useMediaQuery(`(max-width: ${theme.breakpoints["md"]}px)`, false);
-
-    const router = useRouter();
     const { data: session } = useSession<true>({ required: true });
-    const [unreadNotificationsResult, reexecuteUnreadNotificationsQuery] = useQuery<{
-        notifications: {
-            aggregate: {
-                count: number;
-            };
-        };
-    }>({
-        query: UnreadNotificationsCount,
-        variables: { userId: session?.user?.userId || "" }
-    });
-    const { data, fetching, error } = unreadNotificationsResult;
+    const router = useRouter();
 
-    if (error) console.error(error);
-    const notifications = data?.notifications?.aggregate?.count
-        ? data?.notifications?.aggregate?.count > 99
-            ? "99+"
-            : `${data?.notifications?.aggregate?.count}`
-        : null;
     const links = linksData
         .filter(({ showOnMobile }) => {
             if (mobile) {
@@ -131,7 +113,6 @@ export function AppNavbar({ ...others }) {
                     color="indigo"
                     position="top-end"
                     disabled={!item.notifications || !notifications}
-                    withBorder
                     inline
                     label={notifications}
                     size={14}

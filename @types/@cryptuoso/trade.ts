@@ -13,9 +13,11 @@ export const enum ValidTimeframe {
 
 export type PositionDirection = "long" | "short";
 
-export const enum RobotPositionStatus {
+export const enum PositionStatus {
+    delayed = "delayed",
     new = "new",
     open = "open",
+    canceled = "canceled",
     closed = "closed",
     closedAuto = "closedAuto"
 }
@@ -41,6 +43,7 @@ export const enum OrderDirection {
 export const enum OrderStatus {
     new = "new",
     open = "open",
+    partial = "partial",
     closed = "closed",
     canceled = "canceled"
 }
@@ -62,7 +65,7 @@ export interface BasePosition {
     code?: string;
     parentId?: string;
     direction: PositionDirection;
-    status: RobotPositionStatus;
+    status: PositionStatus;
     entryStatus?: RobotTradeStatus;
     entryPrice?: number;
     entryDate?: string;

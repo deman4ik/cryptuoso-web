@@ -9,14 +9,15 @@ import {
     Check,
     Coin,
     PlayerPlay,
-    PlayerStop,
+    PlayerPause,
     PresentationAnalytics,
     Receipt,
     ReceiptRefund,
     Scale,
     TrendingDown,
     Trophy,
-    X
+    X,
+    Settings
 } from "tabler-icons-react";
 import { BaseCard, CardHeader, CardLine, RefreshAction } from "@cryptuoso/components/App/Card";
 import { PortfolioOptions, UserPortfolio } from "@cryptuoso/types";
@@ -82,7 +83,7 @@ export function UserPortfolio() {
                             variant="subtle"
                             compact
                             uppercase
-                            rightIcon={<Adjustments size={18} />}
+                            rightIcon={<Settings size={18} />}
                             onClick={() => setSettingsModalOpened(true)}
                             styles={(theme) => ({
                                 rightIcon: {
@@ -97,7 +98,7 @@ export function UserPortfolio() {
                             compact
                             uppercase
                             color={isStarted ? "gray" : "green"}
-                            rightIcon={isStarted ? <PlayerStop size={18} /> : <PlayerPlay size={18} />}
+                            rightIcon={isStarted ? <PlayerPause size={18} /> : <PlayerPlay size={18} />}
                             onClick={() => setStatusModalOpened(true)}
                             styles={(theme) => ({
                                 rightIcon: {

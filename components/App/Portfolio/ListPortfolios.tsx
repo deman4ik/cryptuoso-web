@@ -27,6 +27,7 @@ import { PortfolioSimpleStats } from "@cryptuoso/components/App/Portfolio/Portfo
 import { useModals } from "@mantine/modals";
 import { useRouter } from "next/router";
 import { PositionsList } from "./PositionsList";
+import { Section } from "../Trading/Section";
 
 export function ListPortfolios({
     userExAcc,
@@ -177,10 +178,10 @@ export function ListPortfolios({
     };
 
     return (
-        <BaseCard fetching={fetching || exchangesFetching || portfoliosFetching || loading} justify="flex-start">
+        <Stack spacing={0}>
             <Grid grow>
-                <Grid.Col span={4}>
-                    <Stack spacing={0}>
+                <Grid.Col span={12} lg={5}>
+                    <BaseCard fetching={fetching || exchangesFetching} justify="flex-start">
                         <CardHeader title="Exchange" />
                         <Select
                             data={exchanges.map(({ code, name }) => ({ label: name, value: code }))}
@@ -189,10 +190,10 @@ export function ListPortfolios({
                             disabled={!!userExAcc}
                             onChange={(value) => value && setExchange(value)}
                         />
-                    </Stack>
+                    </BaseCard>
                 </Grid.Col>
-                <Grid.Col span={6}>
-                    <Stack spacing={0}>
+                <Grid.Col span={12} lg={7}>
+                    <BaseCard fetching={fetching || portfoliosFetching} justify="flex-start">
                         <CardHeader title="Portfolio Options" />
 
                         <OptionsPicker options={options} setOptions={setOptions} />
@@ -201,12 +202,11 @@ export function ListPortfolios({
                                 {portfoliosError?.message || error}
                             </Text>
                         )}
-                    </Stack>
+                    </BaseCard>
                 </Grid.Col>
             </Grid>
-            <CardHeader
+            <Section
                 title="Portfolio Performance History"
-                mt="lg"
                 right={
                     subscribed ? (
                         <Group spacing={5} position="right" align="flex-start">
@@ -225,20 +225,26 @@ export function ListPortfolios({
                                 disabled={subscribed}
                                 gradient={{ from: "indigo", to: "cyan", deg: 45 }}
                                 onClick={openConfirmModal}
+                                loading={loading}
                             >
                                 Subscribe
                             </Button>
                         )
                     )
                 }
-            />
-            <PortfolioSimpleStats
-                stats={portfolioStats}
-                fetching={portfoliosFetching}
-                reexecuteQuery={reexecutePortfoliosQuery}
-            />
-            <CardHeader title="Latest Positions" mt="lg" />
-            <PositionsList positions={closedPositions} type={"closed"} />
-        </BaseCard>
+            >
+                <PortfolioSimpleStats
+                    stats={portfolioStats}
+                    fetching={portfoliosFetching}
+                    reexecuteQuery={reexecutePortfoliosQuery}
+                />
+            </Section>
+
+            <Section title="Latest Positions">
+                <BaseCard fetching={portfoliosFetching} justify="flex-start">
+                    <PositionsList positions={closedPositions} type={"closed"} />
+                </BaseCard>
+            </Section>
+        </Stack>
     );
 }
