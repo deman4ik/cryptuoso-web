@@ -116,7 +116,6 @@ export const portfoliosWithPositionsQuery = gql`
                 exitAction: exit_action
                 exitPrice: exit_price
                 exitDate: exit_date
-                barsHeld: bars_held
                 volume
                 profit
             }
@@ -170,7 +169,6 @@ export const UserPositionsQuery = gql`
                 exitAction: exit_action
                 exitPrice: exit_price
                 exitDate: exit_date
-                barsHeld: bars_held
                 volume: exit_executed
                 profit
             }
