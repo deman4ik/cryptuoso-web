@@ -102,9 +102,6 @@ export function PositionsList({ positions, type }: { positions: BasePosition[]; 
                           Exit
                       </Text>,
                       <Text size="sm" color="dimmed" align="right" weight={500}>
-                          Bars Held
-                      </Text>,
-                      <Text size="sm" color="dimmed" align="right" weight={500}>
                           Amount
                       </Text>,
                       <Text size="sm" color="dimmed" align="right" weight={500}>
@@ -153,9 +150,6 @@ export function PositionsList({ positions, type }: { positions: BasePosition[]; 
                                       {p.exitDate && dayjs.utc(p.exitDate).format("YYYY-MM-DD HH:mm:ss UTC")}
                                   </Text>
                               </Stack>, // exit
-                              <Text size="md" weight={500} align="right">
-                                  {p.barsHeld}
-                              </Text>, // bars held
                               <Text size="md" weight={500} align="right">
                                   {`${p.volume} ${p.robot?.asset || p.asset}`}
                               </Text>, // volume
