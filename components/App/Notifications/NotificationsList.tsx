@@ -6,10 +6,11 @@ import { NotificationsQuery } from "@cryptuoso/queries";
 import { Button, Center, Group, Pagination, Skeleton, Stack, Text } from "@mantine/core";
 import { NotificationComponent } from "./NotificationItem";
 import { ListCheck } from "tabler-icons-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import round from "@cryptuoso/helpers/round";
+import { sleep } from "@cryptuoso/helpers";
 
-const ITEMS_LIMIT = 10;
+const ITEMS_LIMIT = 12;
 
 export function NotificationsList() {
     const [loading, setLoading] = useState(false);
@@ -63,6 +64,25 @@ export function NotificationsList() {
         `
     );
 
+    const [, markNotifications] = useMutation<
+        { result: { affected_rows: number } },
+        {
+            userId: string;
+            ids: string[];
+        }
+    >(
+        gql`
+            mutation MarkNotifications($userId: uuid!, $ids: [uuid!]) {
+                result: update_notifications(
+                    _set: { readed: true }
+                    where: { readed: { _eq: false }, user_id: { _eq: $userId }, id: { _in: $ids } }
+                ) {
+                    affected_rows
+                }
+            }
+        `
+    );
+
     const handleMark = async () => {
         setLoading(true);
         setError(null);
@@ -79,6 +99,24 @@ export function NotificationsList() {
             reexecuteQuery();
         }
     };
+
+    useEffect(() => {
+        const mutate = async () => {
+            await sleep(2000);
+            const result = await markNotifications({
+                userId: session?.user?.userId || "",
+                ids: notifications?.map(({ id }) => id) || []
+            });
+            if (result?.error) console.error(result?.error);
+            else if (result?.data?.result) {
+                reexecuteQuery();
+            }
+        };
+
+        if (notifications && Array.isArray(notifications) && notifications.length) {
+            mutate().catch(console.error);
+        }
+    }, [notifications, markNotifications, session?.user?.userId, reexecuteQuery]);
 
     return (
         <BaseCard fetching={fetching} justify="flex-start">
