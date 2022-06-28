@@ -5,6 +5,7 @@ import dayjs from "@cryptuoso/libs/dayjs";
 import { BasePosition, PositionStatus } from "@cryptuoso/types";
 import { Badge, Group, Text, Stack, ThemeIcon, useMantineTheme } from "@mantine/core";
 import { ArrowDown, ArrowUp } from "tabler-icons-react";
+import { PositionDirectionLabel } from "./controls/PositionDirectionLabel";
 
 const getPositionStatusColor = (status?: PositionStatus) => {
     if (status === "open") return "blue";
@@ -46,20 +47,7 @@ export function PositionsList({ positions, type }: { positions: BasePosition[]; 
                               <Group spacing={0} position="center">
                                   <CoinIcon src={p.robot?.asset || p.asset} />
                               </Group>,
-                              <Group spacing="xs" position="left">
-                                  <ThemeIcon color={p.direction === "long" ? "green" : "red"} variant="light">
-                                      {p.direction === "long" ? <ArrowUp /> : <ArrowDown />}
-                                  </ThemeIcon>
-                                  <Text
-                                      size="sm"
-                                      weight={500}
-                                      transform="uppercase"
-                                      color={p.direction === "long" ? "green" : "red"}
-                                      align="left"
-                                  >
-                                      {p.direction}
-                                  </Text>
-                              </Group>, // direction
+                              <PositionDirectionLabel direction={p.direction} />, // direction
                               <Group spacing={0} position="center">
                                   <Badge size="lg" color={getPositionStatusColor(p.status)}>
                                       {getPositionStatusText(p.status)}
@@ -115,20 +103,7 @@ export function PositionsList({ positions, type }: { positions: BasePosition[]; 
                               <Group spacing={0} position="center">
                                   <CoinIcon src={p.robot?.asset || p.asset} />
                               </Group>,
-                              <Group spacing="xs" position="left">
-                                  <ThemeIcon color={p.direction === "long" ? "green" : "red"} variant="light">
-                                      {p.direction === "long" ? <ArrowUp /> : <ArrowDown />}
-                                  </ThemeIcon>
-                                  <Text
-                                      size="sm"
-                                      weight={500}
-                                      transform="uppercase"
-                                      color={p.direction === "long" ? "green" : "red"}
-                                      align="left"
-                                  >
-                                      {p.direction}
-                                  </Text>
-                              </Group>, // direction
+                              <PositionDirectionLabel direction={p.direction} />, // direction
                               <Group spacing={0} position="center">
                                   <Badge size="lg" color={getPositionStatusColor(p.status)}>
                                       {getPositionStatusText(p.status)}

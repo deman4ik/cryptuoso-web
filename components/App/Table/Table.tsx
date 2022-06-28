@@ -72,9 +72,11 @@ export function ResponsiveTable({ data, breakpoint = "lg" }: { data: TableData; 
                 {rows && rows.length ? (
                     rows
                 ) : (
-                    <Text color="dimmed" m="xs">
-                        No Data
-                    </Text>
+                    <tr>
+                        <Text color="dimmed" m="xs">
+                            No Data
+                        </Text>
+                    </tr>
                 )}
             </tbody>
         </Table>

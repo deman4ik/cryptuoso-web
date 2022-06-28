@@ -54,7 +54,7 @@ export interface UserTradeNotification {
     barsHeld?: number;
 }
 
-export interface SignalSubscriptionNotification {
+export interface SignalSubTradeNotification {
     id: string;
     signalSubscriptionId: string;
     subscriptionRobotId: string;
