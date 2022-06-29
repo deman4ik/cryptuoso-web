@@ -92,13 +92,23 @@ export function Hero() {
                 <Group className={classes.controls}>
                     <Button
                         component={SimpleLink}
-                        href="https://t.me/cryptuoso_bot"
+                        href="/app"
                         size="xl"
                         className={classes.control}
                         variant="gradient"
                         gradient={{ from: "indigo", to: "cyan", deg: 45 }}
                     >
-                        Get started
+                        Get started on Web
+                    </Button>
+                    <Button
+                        component={SimpleLink}
+                        href="https://t.me/cryptuoso_bot"
+                        size="xl"
+                        className={classes.control}
+                        variant="gradient"
+                        gradient={{ from: "indigo", to: "blue", deg: 45 }}
+                    >
+                        or with Telegram
                     </Button>
                 </Group>
             </Container>

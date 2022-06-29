@@ -112,10 +112,7 @@ export function LandingHeader({ links }: HeaderActionProps) {
                 </Group>
 
                 <Group spacing={4} className={cx(classes.flex, classes.right)}>
-                    {/****** 
-                    DISABLE AUTH FOR NOW
-                    ******
-                    session ? (
+                    {session ? (
                         <>
                             <TextLink
                                 href="/app"
@@ -147,7 +144,7 @@ export function LandingHeader({ links }: HeaderActionProps) {
                         >
                             SIGN IN
                         </TextLink>
-                    )*/}
+                    )}
                     <ColorSchemeToggle />
                 </Group>
 

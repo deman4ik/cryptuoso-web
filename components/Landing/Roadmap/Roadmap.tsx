@@ -17,7 +17,11 @@ const items = [
         text: "Trading Telegram Bot",
         icon: <BrandTelegram size={20} />
     },
-
+    {
+        title: "2020",
+        text: "Trading Web App",
+        icon: <Browser size={20} />
+    },
     {
         title: "2021",
         text: "Portfolio management",
@@ -25,11 +29,6 @@ const items = [
     },
     {
         title: "2022",
-        text: "Trading Web App",
-        icon: <Browser size={20} />
-    },
-    {
-        title: "2023",
         text: "More Coins and Robots",
         icon: <Robot size={20} />
     }
@@ -85,7 +84,7 @@ export function Roadmap() {
             <div className={classes.inner}>
                 <Stepper
                     size="md"
-                    active={4}
+                    active={5}
                     breakpoint="lg"
                     color={theme.primaryColor}
                     className={classes.stepper}

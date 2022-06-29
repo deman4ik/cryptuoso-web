@@ -167,11 +167,7 @@ export function Pricing() {
 
                                     <Button
                                         component={SimpleLink}
-                                        href={
-                                            option?.code === "free"
-                                                ? "https://t.me/cryptuoso"
-                                                : "https://t.me/cryptuoso_bot"
-                                        }
+                                        href={option?.code === "free" ? "https://t.me/cryptuoso" : "/app"}
                                         size="md"
                                         variant="gradient"
                                         gradient={{ from: theme.primaryColor, to: "cyan", deg: 45 }}
