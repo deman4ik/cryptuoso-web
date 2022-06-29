@@ -16,12 +16,14 @@ export function BaseCard({
     radius = "lg",
     shadow = "sm",
     justify = "space-between",
+    align,
     ...other
 }: {
     fetching?: boolean;
     radius?: MantineNumberSize;
     shadow?: MantineShadow;
     justify?: React.CSSProperties["justifyContent"];
+    align?: React.CSSProperties["alignItems"];
     sx?: Sx;
     mt?: React.CSSProperties["marginTop"];
     children: ReactNode;
@@ -31,7 +33,7 @@ export function BaseCard({
         <Card shadow={shadow} p="sm" radius={radius} className={classes.card} sx={sx} {...other} withBorder={false}>
             <LoadingOverlay visible={fetching} />
 
-            <Stack justify={justify} spacing={0} sx={{ height: "100%" }}>
+            <Stack justify={justify} align={align} spacing={0} sx={{ height: "100%" }}>
                 {children}
             </Stack>
         </Card>

@@ -155,12 +155,13 @@ export function NotificationsList() {
                 <Stack spacing="sm">
                     {rows}
                     {allNotificationsCount > ITEMS_LIMIT && (
-                        <Pagination
-                            page={page}
-                            onChange={setPage}
-                            total={round(allNotificationsCount / ITEMS_LIMIT)}
-                            withEdges
-                        />
+                        <Center>
+                            <Pagination
+                                page={page}
+                                onChange={setPage}
+                                total={round(allNotificationsCount / ITEMS_LIMIT)}
+                            />
+                        </Center>
                     )}
                 </Stack>
             ) : (

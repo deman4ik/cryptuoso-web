@@ -18,7 +18,7 @@ import {
     UserSubErrorNotification,
     UserTradeNotification
 } from "@cryptuoso/types";
-import { Group, Paper, Stack, Text, ThemeIcon, Tooltip, TypographyStylesProvider } from "@mantine/core";
+import { createStyles, Group, Paper, Stack, Text, ThemeIcon, Tooltip, TypographyStylesProvider } from "@mantine/core";
 import { ReactNode } from "react";
 import {
     AlertTriangle,
@@ -55,6 +55,17 @@ function ActionText({ action, ...other }: { action?: TradeAction }) {
         );
 }
 
+const useStyles = createStyles((theme) => ({
+    container: {
+        display: "flex",
+        flexDirection: "row"
+    },
+    icon: {
+        marginRight: theme.spacing.md,
+        minWidth: 34
+    }
+}));
+
 export function NotificationItem({
     Icon,
     timestamp,
@@ -66,6 +77,7 @@ export function NotificationItem({
     readed: boolean;
     data: ReactNode;
 }) {
+    const { classes, cx } = useStyles();
     return (
         <Paper
             shadow="xs"
@@ -81,8 +93,8 @@ export function NotificationItem({
                         : theme.white
             })}
         >
-            <Group>
-                {Icon}
+            <div className={classes.container}>
+                <div className={classes.icon}>{Icon}</div>
                 <Stack spacing={0}>
                     {data}
                     <Tooltip
@@ -97,7 +109,7 @@ export function NotificationItem({
                         </Text>
                     </Tooltip>
                 </Stack>
-            </Group>
+            </div>
         </Paper>
     );
 }
