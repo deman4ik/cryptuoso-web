@@ -5,11 +5,10 @@ import { gql, useMutation, useQuery } from "urql";
 import { Edit, Key, Mail, Refresh } from "tabler-icons-react";
 import { BaseCard, CardHeader, CardLine } from "../Card";
 import { User } from "@cryptuoso/helpers/types";
-import { UserAuthData, UserSession } from "@cryptuoso/helpers/types";
 import { TelegramLoginData, TelegramLoginWidget } from "@cryptuoso/components/Auth";
-import { ChangeNameForm } from "./changeNameForm";
 import { ChangeEmailForm } from "./ChangeEmailForm";
 import { ChangePasswordForm } from "./ChangePasswordForm";
+import { ChangeNameForm } from "./ChangeNameForm";
 
 const UserQuery = gql`
     query UserProfile($userId: uuid!) {

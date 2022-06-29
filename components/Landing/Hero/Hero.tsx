@@ -108,7 +108,7 @@ export function Hero() {
                         variant="gradient"
                         gradient={{ from: "indigo", to: "blue", deg: 45 }}
                     >
-                        or with Telegram
+                        or Telegram Bot
                     </Button>
                 </Group>
             </Container>
