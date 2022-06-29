@@ -9,7 +9,7 @@ import { PositionDirectionLabel } from "./controls/PositionDirectionLabel";
 
 const getPositionStatusColor = (status?: PositionStatus) => {
     if (status === "open") return "blue";
-    else if (status === "closedAuto") return "yellow";
+    else if (status === "closedAuto") return "violet";
     else return "green";
 };
 

@@ -141,7 +141,7 @@ export const UserPortfolioQuery = gql`
 `;
 
 export const UserPositionsQuery = gql`
-    query UserPortfolioPositions($userId: uuid!) {
+    query UserPortfolioPositions($userId: uuid!, $limit: Int!, $offset: Int!) {
         userPortfolio: v_user_portfolios(where: { user_id: { _eq: $userId } }) {
             openPositions: positions(where: { status: { _eq: "open" } }, order_by: { entry_date: desc_nulls_last }) {
                 id
@@ -154,10 +154,16 @@ export const UserPositionsQuery = gql`
                 volume: entry_executed
                 profit
             }
+            closedPositionsCount: positions_aggregate(where: { status: { _in: ["closed", "closedAuto"] } }) {
+                aggregate {
+                    count
+                }
+            }
             closedPositions: positions(
                 where: { status: { _in: ["closed", "closedAuto"] } }
                 order_by: { exit_date: desc_nulls_last }
-                limit: 20
+                limit: $limit
+                offset: $offset
             ) {
                 id
                 direction

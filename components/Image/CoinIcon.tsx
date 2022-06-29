@@ -3,6 +3,7 @@ import Image, { ImageProps } from "next/image";
 
 function fallback(name: string) {
     if (name === "CELR") return true;
+    if (name === "KAVA") return true;
     return false;
 }
 
