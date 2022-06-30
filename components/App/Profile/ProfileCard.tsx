@@ -9,6 +9,7 @@ import { TelegramLoginData, TelegramLoginWidget } from "@cryptuoso/components/Au
 import { ChangeEmailForm } from "./ChangeEmailForm";
 import { ChangePasswordForm } from "./ChangePasswordForm";
 import { ChangeNameForm } from "./ChangeNameForm";
+import { refetchOptions } from "@cryptuoso/libs/graphql";
 
 const UserQuery = gql`
     query UserProfile($userId: uuid!) {
@@ -136,11 +137,7 @@ export function ProfileCard() {
                                 Change password
                             </Button>
                         )}
-                        <ActionIcon
-                            color="gray"
-                            variant="hover"
-                            onClick={() => reexecuteQuery({ requestPolicy: "network-only" })}
-                        >
+                        <ActionIcon color="gray" variant="hover" onClick={() => reexecuteQuery(refetchOptions)}>
                             <Refresh size={18} />
                         </ActionIcon>
                     </Group>
@@ -246,7 +243,7 @@ export function ProfileCard() {
                 <ChangeNameForm
                     name={myUser?.name}
                     onSuccess={() => {
-                        reexecuteQuery({ requestPolicy: "network-only" });
+                        reexecuteQuery(refetchOptions);
                         setChangeNameModalOpened(false);
                     }}
                 />
@@ -262,7 +259,7 @@ export function ProfileCard() {
             >
                 <ChangeEmailForm
                     onSuccess={() => {
-                        reexecuteQuery({ requestPolicy: "network-only" });
+                        reexecuteQuery(refetchOptions);
                         setChangeEmailModalOpened(false);
                     }}
                 />

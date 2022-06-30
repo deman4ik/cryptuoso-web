@@ -31,6 +31,7 @@ import {
 } from "@cryptuoso/helpers";
 import { UserPortfolioQuery } from "@cryptuoso/queries";
 import { ChangeUserPortfolioStatusForm, EditPortfolio } from ".";
+import { refetchOptions } from "@cryptuoso/libs/graphql";
 
 export function UserPortfolio() {
     const { data: session } = useSession<true>({ required: true });
@@ -152,7 +153,7 @@ export function UserPortfolio() {
                     id={userPortfolio?.id || ""}
                     isStarted={isStarted}
                     onSuccess={() => {
-                        reexecuteQuery({ requestPolicy: "network-only" });
+                        reexecuteQuery(refetchOptions);
                         setStatusModalOpened(false);
                     }}
                     onCancel={() => setStatusModalOpened(false)}
@@ -172,7 +173,7 @@ export function UserPortfolio() {
                 <EditPortfolio
                     userPortfolio={userPortfolio}
                     onSuccess={() => {
-                        reexecuteQuery({ requestPolicy: "network-only" });
+                        reexecuteQuery(refetchOptions);
                         setSettingsModalOpened(false);
                     }}
                     onCancel={() => setSettingsModalOpened(false)}

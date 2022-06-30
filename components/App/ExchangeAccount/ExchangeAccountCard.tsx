@@ -9,6 +9,7 @@ import { Key, Refresh } from "tabler-icons-react";
 import { BaseCard, CardHeader, CardLine, RefreshAction } from "@cryptuoso/components/App/Card";
 import { ExchangeAccountForm } from "./ExchangeAccountForm";
 import { UserExAcc } from "@cryptuoso/types";
+import { refetchOptions } from "@cryptuoso/libs/graphql";
 
 const ExchangeAccountQuery = gql`
     query ExchangeAccount($userId: uuid!) {
@@ -139,7 +140,7 @@ export function ExchangeAccountCard() {
                     id={userExAcc?.id}
                     exchange={userExAcc?.exchange}
                     onSuccess={() => {
-                        reexecuteQuery({ requestPolicy: "network-only" });
+                        reexecuteQuery(refetchOptions);
                         setModalOpened(false);
                     }}
                 />

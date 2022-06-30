@@ -18,6 +18,7 @@ import { Refresh } from "tabler-icons-react";
 import { ResponsiveTable } from "../Table/Table";
 import { getPaymentStatusColor } from "@cryptuoso/helpers/pricing";
 import { UserPayment } from "@cryptuoso/types";
+import { refetchOptions } from "@cryptuoso/libs/graphql";
 
 const useStyles = createStyles((theme) => ({
     card: {
@@ -112,11 +113,7 @@ export function PaymentHistory() {
                     Payment History
                 </Text>
 
-                <ActionIcon
-                    color="gray"
-                    variant="hover"
-                    onClick={() => reexecuteQuery({ requestPolicy: "network-only" })}
-                >
+                <ActionIcon color="gray" variant="hover" onClick={() => reexecuteQuery(refetchOptions)}>
                     <Refresh size={18} />
                 </ActionIcon>
             </Group>

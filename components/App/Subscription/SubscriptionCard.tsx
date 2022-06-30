@@ -23,6 +23,7 @@ import { BaseCard, CardHeader, CardLine, RefreshAction } from "@cryptuoso/compon
 import { getPaymentStatusColor, getSubStatusColor } from "@cryptuoso/helpers/pricing";
 import { SimpleLink, TextLink } from "@cryptuoso/components/Link";
 import { UserSub } from "@cryptuoso/types";
+import { refetchOptions } from "@cryptuoso/libs/graphql";
 
 const SubscriptionQuery = gql`
     query Subscription($userId: uuid!) {
@@ -136,7 +137,7 @@ export function SubscriptionCard({ onSuccess, sx }: { onSuccess?: () => void; sx
         if (result?.error) {
             setError(result.error.message.replace("[GraphQL] ", ""));
         } else if (result?.data?.result) {
-            reexecuteQuery({ requestPolicy: "network-only" });
+            reexecuteQuery(refetchOptions);
         }
     };
 
@@ -152,7 +153,7 @@ export function SubscriptionCard({ onSuccess, sx }: { onSuccess?: () => void; sx
         if (result?.error) {
             setError(result.error.message.replace("[GraphQL] ", ""));
         } else if (result?.data?.result) {
-            reexecuteQuery({ requestPolicy: "network-only" });
+            reexecuteQuery(refetchOptions);
         }
     };
 
@@ -373,7 +374,7 @@ export function SubscriptionCard({ onSuccess, sx }: { onSuccess?: () => void; sx
                 <ChooseSubForm
                     onSuccess={() => {
                         setChangePlanModalOpened(false);
-                        reexecuteQuery({ requestPolicy: "network-only" });
+                        reexecuteQuery(refetchOptions);
                     }}
                 />
             </Modal>

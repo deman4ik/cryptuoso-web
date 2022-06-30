@@ -7,6 +7,7 @@ import { Time } from "lightweight-charts";
 import dynamic from "next/dynamic";
 import dayjs from "@cryptuoso/libs/dayjs";
 import { formatAreaChartData } from "@cryptuoso/components/Chart/helpers";
+import { refetchOptions } from "@cryptuoso/libs/graphql";
 const AreaChart = dynamic(() => import("@cryptuoso/components/Chart/AreaChart"), {
     ssr: false
 });
@@ -35,11 +36,7 @@ export function Equity({
             <CardHeader
                 title="Equity"
                 right={
-                    <ActionIcon
-                        color="gray"
-                        variant="hover"
-                        onClick={() => reexecuteQuery({ requestPolicy: "network-only" })}
-                    >
+                    <ActionIcon color="gray" variant="hover" onClick={() => reexecuteQuery(refetchOptions)}>
                         <Refresh size={18} />
                     </ActionIcon>
                 }
