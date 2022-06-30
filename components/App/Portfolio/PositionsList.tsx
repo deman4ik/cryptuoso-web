@@ -1,6 +1,6 @@
 import { ResponsiveTable } from "@cryptuoso/components/App/Table";
 import { CoinIcon } from "@cryptuoso/components/Image";
-import { plusNum } from "@cryptuoso/helpers";
+import { plusNum, roundAmount } from "@cryptuoso/helpers";
 import dayjs from "@cryptuoso/libs/dayjs";
 import { BasePosition, PositionStatus } from "@cryptuoso/types";
 import { Badge, Group, Text, Stack, ThemeIcon, useMantineTheme } from "@mantine/core";
@@ -62,7 +62,7 @@ export function PositionsList({ positions, type }: { positions: BasePosition[]; 
                                   </Text>
                               </Stack>, // entry
                               <Text size="md" weight={500} align="right">
-                                  {`${p.volume} ${p.robot?.asset || p.asset}`}
+                                  {`${roundAmount(p.volume)} ${p.robot?.asset || p.asset}`}
                               </Text>, // volume
                               <Text
                                   size="md"
@@ -126,7 +126,7 @@ export function PositionsList({ positions, type }: { positions: BasePosition[]; 
                                   </Text>
                               </Stack>, // exit
                               <Text size="md" weight={500} align="right">
-                                  {`${p.volume} ${p.robot?.asset || p.asset}`}
+                                  {`${roundAmount(p.volume)} ${p.robot?.asset || p.asset}`}
                               </Text>, // volume
                               <Text
                                   size="md"
