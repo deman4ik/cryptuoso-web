@@ -13,6 +13,7 @@ import { SimpleLink } from "@cryptuoso/components/Link";
 import { Briefcase } from "tabler-icons-react";
 import { Url, UrlObject } from "url";
 import { LinkProps } from "next/link";
+import { refetchOptions } from "@cryptuoso/libs/graphql";
 export { getServerSideProps } from "@cryptuoso/libs/graphql/shared";
 
 const TradingQuery = gql`
@@ -140,7 +141,7 @@ export default function TradingPage() {
                     userSubActive={userSubActive}
                     userPaymentExists={userPaymentExists}
                     portfolioExists={portfolioExists}
-                    refetch={() => reexecuteQuery({ requestPolicy: "network-only" })}
+                    refetch={() => reexecuteQuery(refetchOptions)}
                 />
             )}
         </Layout>

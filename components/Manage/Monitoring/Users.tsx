@@ -8,6 +8,7 @@ import { UserPlus, Users } from "tabler-icons-react";
 import { gql, useQuery } from "urql";
 import { FiltersContext } from "../Layout";
 import ms from "ms";
+import { refetchOptions } from "@cryptuoso/libs/graphql";
 
 const UsersQuery = gql`
     query usersCount($dateFrom: timestamp!, $dateTo: timestamp!) {
@@ -109,7 +110,7 @@ export function UsersSection() {
 
     useEffect(() => {
         if (filters.refreshRate !== "off" && !fetching) {
-            const id = setTimeout(() => reexecuteQuery({ requestPolicy: "network-only" }), ms(filters.refreshRate));
+            const id = setTimeout(() => reexecuteQuery(refetchOptions), ms(filters.refreshRate));
             return () => clearTimeout(id);
         }
     }, [fetching, reexecuteQuery, filters.refreshRate]);

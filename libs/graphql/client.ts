@@ -1,7 +1,7 @@
 import { cacheExchange, createClient, dedupExchange, fetchExchange } from "@urql/core";
 import { requestPolicyExchange } from "@urql/exchange-request-policy";
 import { refocusExchange } from "@urql/exchange-refocus";
-import { errorExchange } from "urql";
+import { errorExchange, OperationContext } from "urql";
 import { signIn, useSession } from "next-auth/react";
 import * as React from "react";
 
@@ -67,3 +67,8 @@ export const gqlPublicClient = createClient({
     url: `${process.env.NEXT_PUBLIC_HASURA_URL}`,
     requestPolicy: "cache-and-network"
 });
+
+export const refetchOptions: Partial<OperationContext> = {
+    requestPolicy: "network-only",
+    fetchOptions: { headers: { "bypass-cache": "true" } }
+};

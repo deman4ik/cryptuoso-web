@@ -1,3 +1,4 @@
+import { refetchOptions } from "@cryptuoso/libs/graphql";
 import { ActionIcon } from "@mantine/core";
 import { Refresh } from "tabler-icons-react";
 import { OperationContext } from "urql";
@@ -8,7 +9,7 @@ export function RefreshAction({
     reexecuteQuery: (opts?: { requestPolicy?: OperationContext["requestPolicy"] }) => void;
 }) {
     return (
-        <ActionIcon color="gray" variant="hover" onClick={() => reexecuteQuery({ requestPolicy: "network-only" })}>
+        <ActionIcon color="gray" variant="hover" onClick={() => reexecuteQuery(refetchOptions)}>
             <Refresh size={18} />
         </ActionIcon>
     );
