@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Group, Badge, Button, Tooltip, Skeleton, ThemeIcon, Text, Stack, Modal } from "@mantine/core";
+import { Group, Badge, Button, Tooltip, Skeleton, ThemeIcon, Text, Stack, Modal, useMantineTheme } from "@mantine/core";
 import { useSession } from "next-auth/react";
 import { gql, useMutation, useQuery } from "urql";
 import {
@@ -32,8 +32,11 @@ import {
 import { UserPortfolioQuery } from "@cryptuoso/queries";
 import { ChangeUserPortfolioStatusForm, EditPortfolio } from ".";
 import { refetchOptions } from "@cryptuoso/libs/graphql";
+import { useMediaQuery } from "@mantine/hooks";
 
 export function UserPortfolio() {
+    const theme = useMantineTheme();
+    const mobile = useMediaQuery(`(max-width: ${theme.breakpoints["md"]}px)`, false);
     const { data: session } = useSession<true>({ required: true });
     const [statusModalOpened, setStatusModalOpened] = useState(false);
     const [settingsModalOpened, setSettingsModalOpened] = useState(false);
@@ -168,7 +171,7 @@ export function UserPortfolio() {
                         Configure portfolio
                     </Text>
                 }
-                size="90%"
+                size={mobile ? "99%" : "80%"}
             >
                 <EditPortfolio
                     userPortfolio={userPortfolio}

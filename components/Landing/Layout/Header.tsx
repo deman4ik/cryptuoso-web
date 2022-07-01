@@ -113,27 +113,15 @@ export function LandingHeader({ links }: HeaderActionProps) {
 
                 <Group spacing={4} className={cx(classes.flex, classes.right)}>
                     {session ? (
-                        <>
-                            <TextLink
-                                href="/app"
-                                transform="uppercase"
-                                variant="gradient"
-                                className={classes.link}
-                                gradient={{ from: "indigo", to: "cyan", deg: 45 }}
-                            >
-                                TRADING
-                            </TextLink>
-                            <TextLink
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    signOut();
-                                }}
-                                className={classes.link}
-                                transform="uppercase"
-                            >
-                                SIGN OUT
-                            </TextLink>
-                        </>
+                        <TextLink
+                            href="/app"
+                            transform="uppercase"
+                            variant="gradient"
+                            className={classes.link}
+                            gradient={{ from: "indigo", to: "cyan", deg: 45 }}
+                        >
+                            TRADING
+                        </TextLink>
                     ) : (
                         <TextLink
                             href="/auth/signin"

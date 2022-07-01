@@ -43,7 +43,7 @@ export function UserPortfolioPositions() {
             <CardHeader
                 title={statusFilter === "open" ? "Open Trades" : "Closed Trades"}
                 right={
-                    <Group spacing="xs">
+                    <Group spacing={0} position="right" align="center">
                         <SegmentedControl
                             size="sm"
                             value={statusFilter}
