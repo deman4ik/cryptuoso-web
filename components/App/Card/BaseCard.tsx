@@ -30,7 +30,7 @@ export function BaseCard({
 }) {
     const { classes } = useStyles();
     return (
-        <Card shadow={shadow} p="sm" radius={radius} className={classes.card} sx={sx} {...other} withBorder={false}>
+        <Card shadow={shadow} p="xs" radius={radius} className={classes.card} sx={sx} {...other} withBorder={false}>
             <LoadingOverlay visible={fetching} />
 
             <Stack justify={justify} align={align} spacing={0} sx={{ height: "100%" }}>

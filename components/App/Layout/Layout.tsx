@@ -55,7 +55,7 @@ export function Layout({ children }: { children: ReactNode }) {
         <AppShell
             navbarOffsetBreakpoint="md"
             fixed
-            padding="xs"
+            padding={5}
             navbar={
                 <AppNavbar
                     hidden={!opened}

@@ -130,7 +130,7 @@ export function ChangeOptionsForm({
             <CardHeader
                 title="Selected Portfolio Performance History"
                 right={
-                    <Group>
+                    <Group spacing={0} position="right" align="flex-start">
                         {subscribed && (
                             <Group spacing={5} position="right" align="flex-start">
                                 <ThemeIcon color="green" size="sm">
