@@ -44,7 +44,7 @@ export function Exchanges() {
     return (
         <div>
             <Container className={classes.wrapper} id="exchanges">
-                <Grid grow justify="center">
+                <Grid grow justify="center" gutter="xs">
                     <Grid.Col md={5}>
                         <Text
                             variant="gradient"

@@ -55,7 +55,7 @@ export function FAQ() {
                 Frequently Asked Questions
             </Title>
 
-            <Grid columns={12} grow>
+            <Grid columns={12} grow gutter="xs">
                 <Grid.Col md={1} lg={2}>
                     <Accordion
                         iconPosition="right"

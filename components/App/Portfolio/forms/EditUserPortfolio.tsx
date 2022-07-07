@@ -18,12 +18,12 @@ export function EditPortfolio({
     const [mode, setMode] = useState<"edit" | "amount" | "options">("edit");
     const theme = useMantineTheme();
     return (
-        <Stack>
+        <div>
             {mode === "edit" && (
-                <Stack my="xl" mx="sm">
+                <Stack my="xl">
                     <Button
                         fullWidth
-                        size="lg"
+                        size="md"
                         variant="gradient"
                         gradient={{ from: theme.primaryColor, to: "grape", deg: 45 }}
                         rightIcon={<BoxMultiple size={24} />}
@@ -33,9 +33,9 @@ export function EditPortfolio({
                     </Button>
                     <Button
                         fullWidth
-                        size="lg"
+                        size="md"
                         variant="gradient"
-                        gradient={{ from: theme.primaryColor, to: "violet", deg: 45 }}
+                        gradient={{ from: "cyan", to: "violet", deg: 45 }}
                         rightIcon={<Calculator size={24} />}
                         onClick={() => setMode("amount")}
                     >
@@ -51,6 +51,6 @@ export function EditPortfolio({
             {mode === "options" && (
                 <ChangeOptionsForm onSuccess={onSuccess} onCancel={onCancel} userPortfolio={userPortfolio} />
             )}
-        </Stack>
+        </div>
     );
 }

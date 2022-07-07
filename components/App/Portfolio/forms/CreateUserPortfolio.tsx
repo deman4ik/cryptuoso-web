@@ -150,23 +150,21 @@ export function CreateUserPortfolio({ onSuccess }: { onSuccess?: () => void }) {
     };
     return (
         <BaseCard fetching={userExAccFetching || portfoliosFetching || loading} justify="flex-start">
-            <div style={{ position: "relative" }}>
-                <LoadingOverlay visible={userExAccFetching || portfoliosFetching || loading} />
-                <SimpleGrid cols={2} breakpoints={[{ maxWidth: "md", cols: 1 }]} spacing="xl">
-                    <Stack spacing={0}>
-                        <CardHeader title="Choose Portfolio Options" />
-                        <OptionsPicker options={options} setOptions={setOptions} />
-                    </Stack>
-                    <Stack spacing={0}>
-                        <CardHeader title="Choose Trading Amount" />
-                        <TradingAmountFormControls
-                            form={form}
-                            currentBalance={userExAcc?.balance}
-                            currentBalanceUpdatedAt={userExAcc?.balanceUpdatedAt}
-                        />
-                    </Stack>
-                </SimpleGrid>
-            </div>
+            <SimpleGrid cols={2} breakpoints={[{ maxWidth: "md", cols: 1 }]} spacing="xl">
+                <Stack spacing={0}>
+                    <CardHeader title="Choose Portfolio Options" />
+                    <OptionsPicker options={options} setOptions={setOptions} />
+                </Stack>
+                <Stack spacing={0}>
+                    <CardHeader title="Choose Trading Amount" />
+                    <TradingAmountFormControls
+                        form={form}
+                        currentBalance={userExAcc?.balance}
+                        currentBalanceUpdatedAt={userExAcc?.balanceUpdatedAt}
+                    />
+                </Stack>
+            </SimpleGrid>
+
             {error && (
                 <Text color="red" size="sm" mt="sm" weight={500}>
                     {error}

@@ -76,7 +76,7 @@ export default function DocsPage({
                 {frontmatter.metaDescription && <meta name="description" content={frontmatter.metaDescription} />}
             </Head>
             <Layout>
-                <Grid grow>
+                <Grid grow gutter="md">
                     <Grid.Col md={3}>
                         <TableOfContents links={links} active={slug} />
                     </Grid.Col>
