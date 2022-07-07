@@ -38,11 +38,11 @@ export function GettingStarted({
     refetch: () => void;
 }) {
     const [active, setActive] = useState(
-        1 || initialStep(userExAccExists, userSubExists, userSubActive, userPaymentExists, portfolioExists)
+        initialStep(userExAccExists, userSubExists, userSubActive, userPaymentExists, portfolioExists)
     );
     const nextStep = () => setActive((current) => (current < 4 ? current + 1 : current));
     return (
-        <Container mt="xs" size="xl">
+        <Container mt="xs" size="xl" px={0}>
             <Stepper active={active} breakpoint="sm">
                 <Stepper.Step label="API Keys" description="Create Exchange Account">
                     <BaseCard justify="flex-start">

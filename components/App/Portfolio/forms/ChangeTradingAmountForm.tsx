@@ -99,7 +99,7 @@ export function ChangeTradingAmountForm({
     };
 
     return (
-        <BaseCard fetching={userExAccFetching || loading} justify="flex-start">
+        <div>
             <CardHeader title="Choose Trading Amount" />
             <TradingAmountFormControls
                 form={form}
@@ -121,10 +121,11 @@ export function ChangeTradingAmountForm({
                     variant="gradient"
                     gradient={{ from: "indigo", to: "cyan", deg: 45 }}
                     onClick={handleSubmit}
+                    loading={loading}
                 >
                     Confirm
                 </Button>
             </Group>
-        </BaseCard>
+        </div>
     );
 }

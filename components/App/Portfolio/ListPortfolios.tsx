@@ -179,7 +179,7 @@ export function ListPortfolios({
 
     return (
         <Stack spacing={0}>
-            <Grid grow>
+            <Grid grow gutter="xs">
                 <Grid.Col span={12} lg={5}>
                     <BaseCard fetching={fetching || exchangesFetching} justify="flex-start">
                         <CardHeader title="Exchange" />

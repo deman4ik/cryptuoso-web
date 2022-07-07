@@ -104,7 +104,7 @@ export function ChangeOptionsForm({
     };
 
     return (
-        <BaseCard fetching={userExAccFetching || portfoliosFetching || loading} justify="flex-start">
+        <div>
             <CardHeader title="Choose Portfolio Options" />
             <OptionsPicker options={options} setOptions={setOptions} />
             {(userExAccError?.message || portfoliosError?.message || error) && (
@@ -121,6 +121,7 @@ export function ChangeOptionsForm({
                     size="lg"
                     variant="gradient"
                     disabled={subscribed}
+                    loading={loading}
                     gradient={{ from: "indigo", to: "cyan", deg: 45 }}
                     onClick={handleSubmit}
                 >
@@ -173,6 +174,6 @@ export function ChangeOptionsForm({
                 fetching={portfoliosFetching}
                 reexecuteQuery={reexecutePortfoliosQuery}
             />
-        </BaseCard>
+        </div>
     );
 }

@@ -1,4 +1,4 @@
-import { Grid } from "@mantine/core";
+import { Container, Grid } from "@mantine/core";
 import Head from "next/head";
 import { Layout } from "@cryptuoso/components/App/Layout/Layout";
 import { ProfileCard } from "@cryptuoso/components/App/Profile/ProfileCard";
@@ -13,7 +13,7 @@ export default function AccountsPage() {
                 <title>Accounts | CRYPTUOSO</title>
             </Head>
 
-            <Grid grow>
+            <Grid grow gutter="xs">
                 <Grid.Col sm={12} md={6}>
                     <ProfileCard />
                 </Grid.Col>
