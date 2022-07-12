@@ -2,7 +2,7 @@ import { cacheExchange, createClient, dedupExchange, fetchExchange } from "@urql
 import { requestPolicyExchange } from "@urql/exchange-request-policy";
 import { refocusExchange } from "@urql/exchange-refocus";
 import { errorExchange, OperationContext } from "urql";
-import { signIn, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import * as React from "react";
 
 /**
@@ -48,8 +48,7 @@ const useClient = (options?: RequestInit) => {
                         );
 
                         if (isAuthError) {
-                            signIn(); //TODO: disable redirects? or just log out?
-                            // clear storage, log the user out etc
+                            signOut();
                         }
                     }
                 }),
