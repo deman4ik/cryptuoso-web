@@ -23,6 +23,7 @@ import { gqlPublicClient } from "@cryptuoso/libs/graphql";
 import { gql } from "urql";
 import { TelegramLoginData, TelegramLoginWidget } from "./TelegramLoginWidget";
 import { Lock, Mail } from "tabler-icons-react";
+import { useReward } from "react-rewards";
 
 interface FormValues {
     name: string;
@@ -32,7 +33,7 @@ interface FormValues {
     termsOfService: boolean;
 }
 export function AuthenticationForm() {
-    const [formType, setFormType] = useState<"register" | "login" | "success">("login");
+    const [formType, setFormType] = useState<"register" | "login" | "successLogin" | "successReg">("login");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const router = useRouter();
@@ -68,6 +69,11 @@ export function AuthenticationForm() {
             confirmPassword: (val, values) =>
                 formType === "login" || val === values?.password ? null : "Passwords don't match. Try again"
         } //TODO: fastest-validator
+    });
+
+    const { reward } = useReward("success", "confetti", {
+        startVelocity: 15,
+        spread: 85
     });
 
     const handleSubmit = async (data?: FormValues | TelegramLoginData, event?: React.FormEvent, type = "email") => {
@@ -107,7 +113,12 @@ export function AuthenticationForm() {
                     } else url = router.query?.callbackUrl as string;
                 }
                 router.replace(url || "/app"); */
-                router.replace("/app");
+                setFormType("successLogin");
+                setLoading(false);
+                reward();
+                setTimeout(() => {
+                    router.replace("/app");
+                }, 1500);
             }
         } else {
             const result = await gqlPublicClient
@@ -137,7 +148,7 @@ export function AuthenticationForm() {
                     }, 1500);
                 }
             } else if (result?.data?.result.userId) {
-                setFormType("success");
+                setFormType("successReg");
                 setTimeout(() => {
                     router.replace(`/auth/activate-account/manual?email=${form.values.email}`);
                 }, 1500);
@@ -147,6 +158,7 @@ export function AuthenticationForm() {
 
     let title;
     let subtitle;
+
     switch (formType) {
         case "login":
             title = (
@@ -178,7 +190,21 @@ export function AuthenticationForm() {
                 </Text>
             );
             break;
-        case "success":
+        case "successLogin":
+            title = (
+                <Stack>
+                    <Title align="center" sx={(theme) => ({ fontWeight: 900 })} id="success">
+                        Success!
+                    </Title>
+                </Stack>
+            );
+            subtitle = (
+                <Text color="dimmed" size="sm" align="center" mt={5}>
+                    Redirecting...
+                </Text>
+            );
+            break;
+        case "successReg":
             title = (
                 <Stack>
                     <Title align="center" sx={(theme) => ({ fontWeight: 900 })}>
@@ -204,7 +230,7 @@ export function AuthenticationForm() {
                 {title}
                 {subtitle}
             </Stack>
-            {formType !== "success" && (
+            {formType !== "successReg" && formType !== "successLogin" && (
                 <Paper shadow="md" p={20} mt={20} radius="md">
                     <form onSubmit={form.onSubmit(handleSubmit)}>
                         {formType === "register" && (
