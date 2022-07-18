@@ -25,11 +25,15 @@ export function PositionsList({ positions, type }: { positions: BasePosition[]; 
         type === "open"
             ? {
                   titles: [
-                      "Coin",
+                      <Text size="sm" color="dimmed" align="left" weight={500}>
+                          Coin
+                      </Text>,
                       <Text size="sm" color="dimmed" align="left" weight={500}>
                           Direction
                       </Text>,
-                      "Status",
+                      <Text size="sm" color="dimmed" align="left" weight={500}>
+                          Status
+                      </Text>,
                       <Text size="sm" color="dimmed" align="right" weight={500}>
                           Entry
                       </Text>,
@@ -78,11 +82,15 @@ export function PositionsList({ positions, type }: { positions: BasePosition[]; 
               }
             : {
                   titles: [
-                      "Coin",
+                      <Text size="sm" color="dimmed" align="left" weight={500}>
+                          Coin
+                      </Text>,
                       <Text size="sm" color="dimmed" align="left" weight={500}>
                           Direction
                       </Text>,
-                      "Status",
+                      <Text size="sm" color="dimmed" align="left" weight={500}>
+                          Status
+                      </Text>,
                       <Text size="sm" color="dimmed" align="right" weight={500}>
                           Entry
                       </Text>,

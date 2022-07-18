@@ -95,7 +95,7 @@ export default function TradingPage() {
                         </Grid.Col>
                         <Grid.Col span={12}>
                             <Section
-                                title="Portfolio Perfomance"
+                                title="My Portfolio Perfomance"
                                 right={
                                     <Button
                                         component={SimpleLink}
@@ -128,7 +128,7 @@ export default function TradingPage() {
                             </Section>
                         </Grid.Col>
                         <Grid.Col span={12}>
-                            <Section title="Portfolio Positions">
+                            <Section title="My Portfolio Positions">
                                 <UserPortfolioPositions />
                             </Section>
                         </Grid.Col>
