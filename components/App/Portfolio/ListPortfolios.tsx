@@ -206,7 +206,7 @@ export function ListPortfolios({
                 </Grid.Col>
             </Grid>
             <Section
-                title="Portfolio Performance History"
+                title="Public Portfolio Performance History"
                 right={
                     subscribed ? (
                         <Group spacing={5} position="right" align="flex-start">

@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { createStyles, Navbar, Group, Text, ScrollArea, Indicator } from "@mantine/core";
 import {
     BellRinging,
-    Key,
-    Receipt2,
     Logout,
     UserCircle,
     BrandTelegram,
     Tools,
     Briefcase,
-    ChartCandle
+    ChartCandle,
+    InfoCircle,
+    Help
 } from "tabler-icons-react";
 import { signOut, useSession } from "next-auth/react";
 import { ColorSchemeToggleBig } from "@cryptuoso/components/Landing/Layout";
@@ -17,8 +17,6 @@ import { SimpleLink } from "@cryptuoso/components/Link";
 import { useRouter } from "next/router";
 import { Logo } from "@cryptuoso/components/Image";
 import { useMediaQuery } from "@mantine/hooks";
-import { useQuery } from "urql";
-import { UnreadNotificationsCountQuery } from "@cryptuoso/queries";
 
 const useStyles = createStyles((theme, _params, getRef) => {
     const icon: string = getRef("icon");
@@ -30,7 +28,6 @@ const useStyles = createStyles((theme, _params, getRef) => {
         header: {
             paddingBottom: theme.spacing.md,
             marginBottom: theme.spacing.md * 1.5
-            //   borderBottom: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[2]}`
         },
         footer: {
             paddingTop: theme.spacing.md,
@@ -38,7 +35,6 @@ const useStyles = createStyles((theme, _params, getRef) => {
             [theme.fn.smallerThan("md")]: {
                 marginBottom: theme.spacing.xl * 5
             }
-            //  borderTop: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[2]}`
         },
 
         link: {
@@ -148,10 +144,19 @@ export function AppNavbar({ notifications, ...others }: { notifications: string 
                     </SimpleLink>
                 )}
 
-                <SimpleLink href="https://t.me/cryptuoso_bot" className={classes.link}>
+                <SimpleLink href="https://t.me/cryptuoso_bot" className={classes.link} target="_blank">
                     <BrandTelegram className={classes.linkIcon} />
                     <span>Telegram Trading Bot</span>
                 </SimpleLink>
+                <SimpleLink href="/docs" className={classes.link} target="_blank">
+                    <InfoCircle className={classes.linkIcon} />
+                    <span>Docs</span>
+                </SimpleLink>
+                <SimpleLink href="/docs/support" className={classes.link} target="_blank">
+                    <Help className={classes.linkIcon} />
+                    <span>Support</span>
+                </SimpleLink>
+
                 <ColorSchemeToggleBig />
 
                 <a
