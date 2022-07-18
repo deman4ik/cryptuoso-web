@@ -68,6 +68,6 @@ export const gqlPublicClient = createClient({
 });
 
 export const refetchOptions: Partial<OperationContext> = {
-    requestPolicy: "network-only",
-    fetchOptions: { headers: { "bypass-cache": "true" } }
+    requestPolicy: "network-only"
+    //fetchOptions: { headers: { "bypass-gql-cache": "true" } }
 };
