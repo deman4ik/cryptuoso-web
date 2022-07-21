@@ -1,5 +1,5 @@
 import React from "react";
-import { createStyles, Navbar, Group, Text, ScrollArea, Indicator } from "@mantine/core";
+import { createStyles, Navbar, Group, Text, ScrollArea, Indicator, Space } from "@mantine/core";
 import {
     BellRinging,
     Logout,
@@ -9,7 +9,8 @@ import {
     Briefcase,
     ChartCandle,
     InfoCircle,
-    Help
+    Help,
+    InfoSquare
 } from "tabler-icons-react";
 import { signOut, useSession } from "next-auth/react";
 import { ColorSchemeToggleBig } from "@cryptuoso/components/Landing/Layout";
@@ -144,17 +145,18 @@ export function AppNavbar({ notifications, ...others }: { notifications: string 
                     </SimpleLink>
                 )}
 
-                <SimpleLink href="https://t.me/cryptuoso_bot" className={classes.link} target="_blank">
-                    <BrandTelegram className={classes.linkIcon} />
-                    <span>Telegram Trading Bot</span>
-                </SimpleLink>
                 <SimpleLink href="/docs" className={classes.link} target="_blank">
-                    <InfoCircle className={classes.linkIcon} />
+                    <InfoSquare className={classes.linkIcon} />
                     <span>Docs</span>
                 </SimpleLink>
                 <SimpleLink href="/docs/support" className={classes.link} target="_blank">
                     <Help className={classes.linkIcon} />
                     <span>Support</span>
+                </SimpleLink>
+                <Space h="lg" />
+                <SimpleLink href="https://t.me/cryptuoso_bot" className={classes.link} target="_blank">
+                    <BrandTelegram className={classes.linkIcon} />
+                    <span>Telegram Trading Bot</span>
                 </SimpleLink>
 
                 <ColorSchemeToggleBig />
