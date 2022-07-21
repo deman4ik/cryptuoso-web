@@ -48,11 +48,11 @@ export function PositionsList({ positions, type }: { positions: BasePosition[]; 
                       return {
                           id: p.id,
                           values: [
-                              <Group spacing={0} position="center">
+                              <Group spacing={0} position="left">
                                   <CoinIcon src={p.robot?.asset || p.asset} />
                               </Group>,
                               <PositionDirectionLabel direction={p.direction} />, // direction
-                              <Group spacing={0} position="center">
+                              <Group spacing={0} position="left">
                                   <Badge size="lg" color={getPositionStatusColor(p.status)}>
                                       {getPositionStatusText(p.status)}
                                   </Badge>
@@ -108,11 +108,11 @@ export function PositionsList({ positions, type }: { positions: BasePosition[]; 
                       return {
                           id: p.id,
                           values: [
-                              <Group spacing={0} position="center">
+                              <Group spacing={0} position="left">
                                   <CoinIcon src={p.robot?.asset || p.asset} />
                               </Group>,
                               <PositionDirectionLabel direction={p.direction} />, // direction
-                              <Group spacing={0} position="center">
+                              <Group spacing={0} position="left">
                                   <Badge size="lg" color={getPositionStatusColor(p.status)}>
                                       {getPositionStatusText(p.status)}
                                   </Badge>

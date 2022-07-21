@@ -23,6 +23,7 @@ const useClient = (options?: RequestInit) => {
             fetchOptions: () => {
                 if (token)
                     return {
+                        ...options,
                         headers: {
                             authorization: `Bearer ${token}`,
                             ...options?.headers
@@ -30,6 +31,7 @@ const useClient = (options?: RequestInit) => {
                     };
                 else
                     return {
+                        ...options,
                         headers: { ...(options?.headers ? options.headers : {}) }
                     };
             },
@@ -69,5 +71,8 @@ export const gqlPublicClient = createClient({
 
 export const refetchOptions: Partial<OperationContext> = {
     requestPolicy: "network-only"
-    //fetchOptions: { headers: { "bypass-gql-cache": "true" } }
+    /* fetchOptions: (options?: RequestInit) => ({
+        ...options,
+        headers: { ...options?.headers, "bypass-gql-cache": "true" }
+    }) */
 };
