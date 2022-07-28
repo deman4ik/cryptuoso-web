@@ -1,10 +1,9 @@
 import { round } from "@cryptuoso/helpers/number";
 import dayjs from "@cryptuoso/libs/dayjs";
 import { PortfolioSettings } from "@cryptuoso/types";
-import { createStyles, NumberInput, Select, Group, Stack } from "@mantine/core";
-import { UseFormReturnType } from "@mantine/form/lib/use-form";
-import { CurrencyDollar, Percentage } from "tabler-icons-react";
+import { createStyles, NumberInput, Select, Group } from "@mantine/core";
 import { CardLine } from "@cryptuoso/components/App/Card";
+import { UseFormReturnType } from "@mantine/form";
 
 const useStyles = createStyles((theme) => ({
     label: {

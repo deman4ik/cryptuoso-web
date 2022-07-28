@@ -144,7 +144,7 @@ export default NextAuth({
             return { ...session, user: { ...session.user, ...(token.user as UserAuthData) } };
         },
         async jwt(params) {
-            //    console.log("jwt callback", params);
+            //  console.log("jwt callback", params);
             const { token, user } = params;
 
             if (user) {

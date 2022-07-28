@@ -113,7 +113,7 @@ export function PaymentHistory() {
                     Payment History
                 </Text>
 
-                <ActionIcon color="gray" variant="hover" onClick={() => reexecuteQuery(refetchOptions)}>
+                <ActionIcon color="gray" variant="subtle" onClick={() => reexecuteQuery(refetchOptions)}>
                     <Refresh size={18} />
                 </ActionIcon>
             </Group>

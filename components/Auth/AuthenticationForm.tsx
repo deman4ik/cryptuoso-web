@@ -94,7 +94,7 @@ export function AuthenticationForm() {
                     password: form.values.password
                 });
             }
-
+            // console.log(result);
             if (result?.error) {
                 setLoading(false);
                 const error = result.error.replace("[GraphQL] ", "");
@@ -115,7 +115,11 @@ export function AuthenticationForm() {
                 router.replace(url || "/app"); */
                 setFormType("successLogin");
                 setLoading(false);
-                reward();
+
+                setTimeout(() => {
+                    reward();
+                }, 500);
+
                 setTimeout(() => {
                     router.replace("/app");
                 }, 1500);

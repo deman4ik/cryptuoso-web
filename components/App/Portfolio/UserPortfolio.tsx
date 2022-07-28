@@ -67,8 +67,6 @@ export function UserPortfolio() {
                         <Tooltip
                             transition="fade"
                             transitionDuration={500}
-                            transitionTimingFunction="ease"
-                            placement="start"
                             label={isStarted ? "Active" : userPortfolio?.message || "Disabled"}
                             color={isStarted ? "green" : "red"}
                         >
@@ -127,12 +125,7 @@ export function UserPortfolio() {
                     </Text>
                 </Stack>
                 <Stack spacing={0}>
-                    <Tooltip
-                        transition="fade"
-                        transitionDuration={500}
-                        transitionTimingFunction="ease"
-                        label={amountTypeText}
-                    >
+                    <Tooltip transition="fade" transitionDuration={500} label={amountTypeText}>
                         <Text size="md" weight={700}>
                             {amountText}
                         </Text>

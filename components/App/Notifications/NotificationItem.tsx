@@ -100,8 +100,6 @@ export function NotificationItem({
                     <Tooltip
                         transition="fade"
                         transitionDuration={500}
-                        transitionTimingFunction="ease"
-                        placement="start"
                         label={dayjs.utc(timestamp).format("YYYY-MM-DD HH:mm:ss UTC")}
                     >
                         <Text size="xs" color="dimmed">
@@ -584,9 +582,7 @@ export function NotificationComponent({ notification }: { notification: UserNoti
                     data={
                         <Group>
                             {Object.entries(data).map(([key, value]) => (
-                                <Text key={key}>
-                                    {key}: {value}
-                                </Text>
+                                <Text key={key}>{`${key}: ${value}`}</Text>
                             ))}
                         </Group>
                     }

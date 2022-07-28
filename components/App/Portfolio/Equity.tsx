@@ -36,7 +36,7 @@ export function Equity({
             <CardHeader
                 title="Equity"
                 right={
-                    <ActionIcon color="gray" variant="hover" onClick={() => reexecuteQuery(refetchOptions)}>
+                    <ActionIcon color="gray" variant="subtle" onClick={() => reexecuteQuery(refetchOptions)}>
                         <Refresh size={18} />
                     </ActionIcon>
                 }

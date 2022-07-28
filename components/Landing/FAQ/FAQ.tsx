@@ -18,25 +18,9 @@ const useStyles = createStyles((theme, _params, getRef) => {
             marginBottom: theme.spacing.xl * 1.5
         },
 
-        control: {
-            ref: control,
-
-            "&:hover": {
-                backgroundColor: "transparent"
-            }
-        },
-
         item: {
-            //  borderRadius: theme.radius.md,
             marginBottom: theme.spacing.lg,
             border: "1px solid transparent"
-            //  border: `0.5px solid ${theme.colorScheme === "dark" ? theme.colors.dark[3] : theme.colors.gray[3]}`
-        },
-
-        itemOpened: {
-            [`& .${control}`]: {
-                color: theme.colors[theme.primaryColor][theme.colorScheme === "dark" ? 4 : 6]
-            }
         },
 
         text: {
@@ -57,41 +41,42 @@ export function FAQ() {
 
             <Grid columns={12} grow gutter="xs">
                 <Grid.Col md={1} lg={2}>
-                    <Accordion
-                        iconPosition="right"
-                        classNames={{
-                            item: classes.item,
-                            itemOpened: classes.itemOpened,
-                            control: classes.control
-                        }}
-                    >
+                    <Accordion variant="filled">
                         {leftFaqContent.map((c, i) => (
-                            <Accordion.Item label={c.title} key={i}>
-                                {c.text.map((t, i) => (
-                                    <Text className={classes.text} key={i}>
-                                        {t}
+                            <Accordion.Item className={classes.item} value={c.title} key={i}>
+                                <Accordion.Control>
+                                    <Text size="lg" weight={700}>
+                                        {c.title}
                                     </Text>
-                                ))}
+                                </Accordion.Control>
+                                <Accordion.Panel>
+                                    {c.text.map((t, i) => (
+                                        <Text className={classes.text} key={i} weight={500}>
+                                            {t}
+                                        </Text>
+                                    ))}
+                                </Accordion.Panel>
                             </Accordion.Item>
                         ))}
                     </Accordion>
                 </Grid.Col>
                 <Grid.Col md={1} lg={2}>
-                    <Accordion
-                        iconPosition="right"
-                        classNames={{
-                            item: classes.item,
-                            itemOpened: classes.itemOpened,
-                            control: classes.control
-                        }}
-                    >
+                    <Accordion variant="filled">
                         {rightFaqContent.map((c, i) => (
-                            <Accordion.Item label={c.title} key={i}>
-                                {c.text.map((t, i) => (
-                                    <Text className={classes.text} key={i}>
-                                        {t}
+                            <Accordion.Item className={classes.item} value={c.title} key={i}>
+                                <Accordion.Control>
+                                    {" "}
+                                    <Text size="lg" weight={700}>
+                                        {c.title}
                                     </Text>
-                                ))}
+                                </Accordion.Control>
+                                <Accordion.Panel>
+                                    {c.text.map((t, i) => (
+                                        <Text className={classes.text} key={i} weight={500}>
+                                            {t}
+                                        </Text>
+                                    ))}
+                                </Accordion.Panel>
                             </Accordion.Item>
                         ))}
                     </Accordion>

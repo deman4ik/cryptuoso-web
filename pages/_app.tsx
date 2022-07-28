@@ -1,7 +1,6 @@
 import App, { AppContext, AppProps } from "next/app";
 import Head from "next/head";
 import { MantineProvider, ColorSchemeProvider, ColorScheme } from "@mantine/core";
-import { NotificationsProvider } from "@mantine/notifications";
 import { getCookie, setCookies } from "cookies-next";
 import { getSession, SessionProvider } from "next-auth/react";
 import { useHotkeys } from "@mantine/hooks";
@@ -114,9 +113,7 @@ export default function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
                             }}
                         >
                             <ModalsProvider>
-                                <NotificationsProvider>
-                                    <Component {...pageProps} />
-                                </NotificationsProvider>
+                                <Component {...pageProps} />
                             </ModalsProvider>
                         </MantineProvider>
                     </ColorSchemeProvider>

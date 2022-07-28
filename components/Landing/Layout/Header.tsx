@@ -1,6 +1,6 @@
 import React from "react";
 import { createStyles, Header, Container, Group, Burger, Transition, Paper } from "@mantine/core";
-import { useBooleanToggle } from "@mantine/hooks";
+import { useToggle } from "@mantine/hooks";
 import { useSession, signOut } from "next-auth/react";
 import { Logo } from "@cryptuoso/components/Image";
 import { TextLink, SimpleLink } from "@cryptuoso/components/Link";
@@ -83,7 +83,7 @@ interface HeaderActionProps {
 
 export function LandingHeader({ links }: HeaderActionProps) {
     const { classes, cx } = useStyles();
-    const [opened, toggleOpened] = useBooleanToggle(false);
+    const [opened, toggleOpened] = useToggle([false, true]);
     const { data: session } = useSession();
 
     const items = links.map((link) => {

@@ -55,7 +55,7 @@ export function Layout({ children, containerSize }: { children: ReactNode; conta
     return (
         <div className={classes.root}>
             <AppShell header={<LandingHeader links={headerLinks} />}>
-                <Container size={containerSize || "lg"} mt={60} mb={20} px={0}>
+                <Container size={containerSize || "lg"} mb={20} px={0}>
                     {children}
                 </Container>
             </AppShell>
