@@ -14,7 +14,7 @@ import { Logo } from "@cryptuoso/components/Image";
 import { SimpleLink } from "@cryptuoso/components/Link";
 import { PeriodFilter, RefreshRate } from "@cryptuoso/components/Manage/Filters";
 import { FiltersContext } from "./Layout";
-import { useBooleanToggle } from "@mantine/hooks";
+import { useToggle } from "@mantine/hooks";
 import { Filter, X } from "tabler-icons-react";
 
 const HEADER_HEIGHT = 60;
@@ -84,7 +84,7 @@ export function AppHeader({
 }) {
     const { classes } = useStyles({ size: "md" });
     const filters = useContext(FiltersContext);
-    const [filtersOpened, toggleFiltersOpened] = useBooleanToggle(false);
+    const [filtersOpened, toggleFiltersOpened] = useToggle([false, true]);
     const items = (
         <>
             <PeriodFilter dates={filters.dates} setDates={filters.setDates} />

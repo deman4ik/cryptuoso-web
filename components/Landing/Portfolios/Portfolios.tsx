@@ -10,7 +10,6 @@ import {
     SimpleGrid,
     LoadingOverlay,
     Text,
-    Chips,
     Chip,
     Alert
 } from "@mantine/core";
@@ -191,32 +190,31 @@ export function Portfolios() {
                             <Text size="xl" weight={500} mt="xl">
                                 Select portfolio options
                             </Text>
-                            <Chips
+                            <Chip.Group
                                 mt="md"
                                 multiple={true}
                                 value={options}
                                 onChange={(val) => setOptions(val as Option[])}
-                                size="xl"
                                 spacing="lg"
                                 align="center"
                             >
-                                <Chip value={Option.profit}>
+                                <Chip value={Option.profit} size="xl">
                                     {/*  <Tooltip wrapLines label="Profit maximization" withArrow> */}
                                     Profit
                                     {/*   </Tooltip>*/}
                                 </Chip>
 
-                                <Chip value={Option.winRate}>
+                                <Chip value={Option.winRate} size="xl">
                                     {/*   <Tooltip wrapLines label="Maximizing the number of profitable trades" withArrow>*/}
                                     Win Rate
                                     {/*  </Tooltip>*/}
                                 </Chip>
-                                <Chip value={Option.risk}>
+                                <Chip value={Option.risk} size="xl">
                                     {/*   <Tooltip wrapLines label="Earnings with minimal risk" withArrow>*/}
                                     Risk
                                     {/*  </Tooltip>*/}
                                 </Chip>
-                                <Chip value={Option.moneyManagement}>
+                                <Chip value={Option.moneyManagement} size="xl">
                                     {/*   <Tooltip
                                         wrapLines
                                         label="Increase the ratio between the size of the win and the loss's size"
@@ -225,7 +223,7 @@ export function Portfolios() {
                                     Money Management
                                     {/*   </Tooltip>*/}
                                 </Chip>
-                                <Chip value={Option.efficiency}>
+                                <Chip value={Option.efficiency} size="xl">
                                     {/*    <Tooltip
                                         wrapLines
                                         label="The return of an investment compared to it's risk"
@@ -234,7 +232,7 @@ export function Portfolios() {
                                     Efficiency
                                     {/*    </Tooltip>*/}
                                 </Chip>
-                            </Chips>
+                            </Chip.Group>
                         </Stack>
                     </Stack>
                 </Grid.Col>

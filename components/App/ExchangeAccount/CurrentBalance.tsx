@@ -44,8 +44,6 @@ export function CurrentBalance() {
                         <Tooltip
                             transition="fade"
                             transitionDuration={500}
-                            transitionTimingFunction="ease"
-                            placement="start"
                             label={userExAcc?.status === "enabled" ? "Checked" : userExAcc?.error}
                             color={userExAcc?.status === "enabled" ? "green" : "red"}
                         >
@@ -85,8 +83,6 @@ export function CurrentBalance() {
                         <Tooltip
                             transition="fade"
                             transitionDuration={500}
-                            transitionTimingFunction="ease"
-                            placement="start"
                             label={`Updated ${dayjs.utc().to(dayjs.utc(userExAcc?.balanceUpdatedAt))}`}
                         >
                             <Text className={classes.value} weight={500}>{`${round(

@@ -2,7 +2,9 @@ import React from "react";
 import { Provider } from "urql";
 import useClient from "./client";
 
-interface GraphqlProviderProps {}
+interface GraphqlProviderProps {
+    children: React.ReactNode;
+}
 
 const GraphqlProvider: React.FC<GraphqlProviderProps> = ({ children }) => {
     const client = useClient();

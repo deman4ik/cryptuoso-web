@@ -1,29 +1,13 @@
 import { useState } from "react";
-import { FullStats, Option, PortfolioOptions, PortfolioSettings, StatsInfo, UserExAcc } from "@cryptuoso/types";
+import { Option, PortfolioOptions, PortfolioSettings, StatsInfo, UserExAcc } from "@cryptuoso/types";
 import { gql, useMutation, useQuery } from "urql";
-import {
-    Button,
-    Container,
-    Grid,
-    Group,
-    LoadingOverlay,
-    SimpleGrid,
-    Skeleton,
-    Stack,
-    Text,
-    Tooltip,
-    useMantineTheme
-} from "@mantine/core";
+import { Button, SimpleGrid, Stack, Text, useMantineTheme } from "@mantine/core";
 import { OptionsPicker } from "../controls/OptionsPicker";
-import { BaseCard, CardHeader, CardLine } from "@cryptuoso/components/App/Card";
+import { BaseCard, CardHeader } from "@cryptuoso/components/App/Card";
 import { PortfolioSimpleStats } from "../PortfolioSimpleStats";
 import { Briefcase, Plus } from "tabler-icons-react";
-import { getPortfolioOptionsIcons } from "@cryptuoso/helpers/portfolio";
-import Image from "next/image";
 import { portfoliosQuery, ExchangeAccountQuery } from "@cryptuoso/queries";
 import { useSession } from "next-auth/react";
-import dayjs from "@cryptuoso/libs/dayjs";
-import { round } from "@cryptuoso/helpers/number";
 import { useForm } from "@mantine/form";
 import { TradingAmountFormControls } from "../controls/TradingAmountFormControls";
 import { SimpleLink } from "@cryptuoso/components/Link";

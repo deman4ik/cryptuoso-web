@@ -63,7 +63,6 @@ export function getPortfolioOptionsIcons(options?: PortfolioOptions, sort: "key"
                         key={key}
                         transition="fade"
                         transitionDuration={500}
-                        transitionTimingFunction="ease"
                         label={
                             <span style={{ whiteSpace: "pre-line" }}>{`${getOptionName(key as keyof PortfolioOptions)}${
                                 value ? " ✅" : " ❌"

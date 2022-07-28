@@ -145,9 +145,9 @@ export function NotificationsList() {
                     </Group>
                 }
             />
-            {(queryError || error) && (
+            {(queryError?.message || error) && (
                 <Text color="red" size="sm" mt="sm" weight={500}>
-                    {queryError || error}
+                    {queryError?.message || error}
                 </Text>
             )}
 

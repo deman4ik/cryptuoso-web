@@ -50,7 +50,7 @@ export function ActivateAccountForm() {
 
         validate: {
             email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
-            secret: (value) => (`${value}`.length === 6 && Number.isInteger(value) ? null : "Invalid secret")
+            secret: (value: number) => (`${value}`.length === 6 && Number.isInteger(value) ? null : "Invalid secret")
         }
     });
 

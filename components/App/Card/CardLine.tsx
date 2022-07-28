@@ -30,9 +30,9 @@ export function CardLine({
     loading: boolean;
     title?: ReactNode | string;
     titleTooltip?: ReactNode | string;
-    titleProps?: TextProps<"div">;
+    titleProps?: TextProps;
     value?: ReactNode | string;
-    valueProps?: TextProps<"div">;
+    valueProps?: TextProps;
     valueTooltip?: ReactNode | string;
     valueTooltipColor?: DefaultMantineColor;
     position?: GroupPosition;
@@ -51,13 +51,7 @@ export function CardLine({
         );
     if (titleTooltip) {
         Title = (
-            <Tooltip
-                wrapLines
-                transition="fade"
-                transitionDuration={500}
-                transitionTimingFunction="ease"
-                label={titleTooltip}
-            >
+            <Tooltip multiline transition="fade" transitionDuration={500} label={titleTooltip}>
                 {TitleComponent}
             </Tooltip>
         );
@@ -75,10 +69,9 @@ export function CardLine({
     if (valueTooltip) {
         Value = (
             <Tooltip
-                wrapLines
+                multiline
                 transition="fade"
                 transitionDuration={500}
-                transitionTimingFunction="ease"
                 color={valueTooltipColor}
                 label={valueTooltip}
             >

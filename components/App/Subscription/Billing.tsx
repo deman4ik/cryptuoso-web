@@ -70,8 +70,6 @@ export function Billing() {
                         <Tooltip
                             transition="fade"
                             transitionDuration={500}
-                            transitionTimingFunction="ease"
-                            placement="start"
                             label={
                                 <Text transform="capitalize" size="sm" weight={500}>
                                     {myUserSub?.status}
@@ -112,13 +110,7 @@ export function Billing() {
             <Group position="apart">
                 <Stack spacing="xs" mt={25}>
                     {myUserSub ? (
-                        <Tooltip
-                            transition="fade"
-                            transitionDuration={500}
-                            transitionTimingFunction="ease"
-                            placement="start"
-                            label={expiresDate}
-                        >
+                        <Tooltip transition="fade" transitionDuration={500} label={expiresDate}>
                             <Text className={classes.value} weight={500}>
                                 {expires}
                             </Text>

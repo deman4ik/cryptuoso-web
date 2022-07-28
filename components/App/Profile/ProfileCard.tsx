@@ -137,7 +137,7 @@ export function ProfileCard() {
                                 Change password
                             </Button>
                         )}
-                        <ActionIcon color="gray" variant="hover" onClick={() => reexecuteQuery(refetchOptions)}>
+                        <ActionIcon color="gray" variant="subtle" onClick={() => reexecuteQuery(refetchOptions)}>
                             <Refresh size={18} />
                         </ActionIcon>
                     </Group>
@@ -155,7 +155,7 @@ export function ProfileCard() {
                         </Text>
                         <ActionIcon
                             color="gray"
-                            variant="hover"
+                            variant="subtle"
                             size="sm"
                             onClick={() => setChangeNameModalOpened(true)}
                         >
@@ -175,7 +175,7 @@ export function ProfileCard() {
                             </Text>
                             <ActionIcon
                                 color="gray"
-                                variant="hover"
+                                variant="subtle"
                                 size="sm"
                                 onClick={() => setChangeEmailModalOpened(true)}
                             >

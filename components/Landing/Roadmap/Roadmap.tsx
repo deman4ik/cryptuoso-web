@@ -1,4 +1,4 @@
-import { createStyles, Container, Title, Stepper, useMantineTheme } from "@mantine/core";
+import { createStyles, Container, Title, Stepper, useMantineTheme, StepperProps } from "@mantine/core";
 import { BrandTelegram, Urgent, Engine, Browser, Briefcase, Robot } from "tabler-icons-react";
 
 const items = [
@@ -89,9 +89,9 @@ export function Roadmap() {
                     color={theme.primaryColor}
                     className={classes.stepper}
                     classNames={{
-                        separatorActive: classes.separatorActive,
-                        stepProgress: classes.stepProgress,
-                        stepCompleted: classes.stepCompleted
+                        separatorActive: classes.separatorActive
+                        //  stepProgress: classes.stepProgress,
+                        // stepCompleted: classes.stepCompleted
                     }}
                 >
                     {items.map(({ title, text, icon }) => (

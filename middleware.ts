@@ -12,6 +12,8 @@ export default withAuth(
     {
         callbacks: {
             authorized: ({ req, token }) => {
+                // console.log("req", req);
+                // console.log("token", token);
                 if (req.nextUrl.pathname.startsWith("/app") || req.nextUrl.pathname.startsWith("/manage")) {
                     if (!token) return false;
                     if (!token.user) return false;
