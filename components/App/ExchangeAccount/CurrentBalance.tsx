@@ -46,6 +46,7 @@ export function CurrentBalance() {
                             transitionDuration={500}
                             label={userExAcc?.status === "enabled" ? "Checked" : userExAcc?.error}
                             color={userExAcc?.status === "enabled" ? "green" : "red"}
+                            events={{ hover: true, touch: true, focus: false }}
                         >
                             <Badge color={userExAcc?.status === "enabled" ? "green" : "red"} size="sm">
                                 {userExAcc?.status}
@@ -84,6 +85,7 @@ export function CurrentBalance() {
                             transition="fade"
                             transitionDuration={500}
                             label={`Updated ${dayjs.utc().to(dayjs.utc(userExAcc?.balanceUpdatedAt))}`}
+                            events={{ hover: true, touch: true, focus: false }}
                         >
                             <Text className={classes.value} weight={500}>{`${round(
                                 userExAcc?.balance || 0,

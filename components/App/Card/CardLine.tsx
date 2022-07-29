@@ -51,7 +51,13 @@ export function CardLine({
         );
     if (titleTooltip) {
         Title = (
-            <Tooltip multiline transition="fade" transitionDuration={500} label={titleTooltip}>
+            <Tooltip
+                multiline
+                transition="fade"
+                transitionDuration={500}
+                label={titleTooltip}
+                events={{ hover: true, touch: true, focus: false }}
+            >
                 {TitleComponent}
             </Tooltip>
         );
@@ -74,6 +80,7 @@ export function CardLine({
                 transitionDuration={500}
                 color={valueTooltipColor}
                 label={valueTooltip}
+                events={{ hover: true, touch: true, focus: false }}
             >
                 {ValueComponent}
             </Tooltip>

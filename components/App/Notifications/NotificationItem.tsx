@@ -101,6 +101,7 @@ export function NotificationItem({
                         transition="fade"
                         transitionDuration={500}
                         label={dayjs.utc(timestamp).format("YYYY-MM-DD HH:mm:ss UTC")}
+                        events={{ hover: true, touch: true, focus: false }}
                     >
                         <Text size="xs" color="dimmed">
                             {dayjs.utc().to(dayjs.utc(timestamp))} {readed && <Check size={10} />}

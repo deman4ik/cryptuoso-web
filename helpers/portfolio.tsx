@@ -68,6 +68,7 @@ export function getPortfolioOptionsIcons(options?: PortfolioOptions, sort: "key"
                                 value ? " ✅" : " ❌"
                             }\n${getOptionDesc(key as keyof PortfolioOptions)}`}</span>
                         }
+                        events={{ hover: true, touch: true, focus: false }}
                     >
                         <ThemeIcon size="md" variant="light" color={value ? "indigo" : "gray"}>
                             {getOptionIcon(key as keyof PortfolioOptions)}
