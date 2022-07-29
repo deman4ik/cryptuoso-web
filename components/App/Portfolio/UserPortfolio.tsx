@@ -69,6 +69,7 @@ export function UserPortfolio() {
                             transitionDuration={500}
                             label={isStarted ? "Active" : userPortfolio?.message || "Disabled"}
                             color={isStarted ? "green" : "red"}
+                            events={{ hover: true, touch: true, focus: false }}
                         >
                             <Badge color={isStarted ? "green" : "red"} size="sm">
                                 {userPortfolio?.status}
@@ -125,7 +126,12 @@ export function UserPortfolio() {
                     </Text>
                 </Stack>
                 <Stack spacing={0}>
-                    <Tooltip transition="fade" transitionDuration={500} label={amountTypeText}>
+                    <Tooltip
+                        transition="fade"
+                        transitionDuration={500}
+                        label={amountTypeText}
+                        events={{ hover: true, touch: true, focus: false }}
+                    >
                         <Text size="md" weight={700}>
                             {amountText}
                         </Text>

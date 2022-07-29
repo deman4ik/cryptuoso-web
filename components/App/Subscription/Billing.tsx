@@ -76,6 +76,7 @@ export function Billing() {
                                 </Text>
                             }
                             color={getSubStatusColor(myUserSub?.status)}
+                            events={{ hover: true, touch: true, focus: false }}
                         >
                             <Badge color={getSubStatusColor(myUserSub?.status)} size="sm">
                                 {myUserSub?.status}
@@ -110,7 +111,12 @@ export function Billing() {
             <Group position="apart">
                 <Stack spacing="xs" mt={25}>
                     {myUserSub ? (
-                        <Tooltip transition="fade" transitionDuration={500} label={expiresDate}>
+                        <Tooltip
+                            transition="fade"
+                            transitionDuration={500}
+                            label={expiresDate}
+                            events={{ hover: true, touch: true, focus: false }}
+                        >
                             <Text className={classes.value} weight={500}>
                                 {expires}
                             </Text>
