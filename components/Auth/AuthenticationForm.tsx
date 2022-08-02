@@ -37,11 +37,11 @@ export function AuthenticationForm() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const router = useRouter();
-    const { data: session } = useSession<false>({ required: false });
+    /* const { data: session } = useSession<false>({ required: false });
 
     if (session) {
         router.replace("/app");
-    }
+    } */
 
     const toggleFormType = () => {
         setFormType((current) => (current === "register" ? "login" : "register"));
@@ -106,8 +106,8 @@ export function AuthenticationForm() {
                 setError(error);
 
                 if (error.includes("User account is not activated.")) {
-                    setTimeout(() => {
-                        router.replace(`/auth/activate-account/manual?email=${form.values.email}`);
+                    setTimeout(async () => {
+                        await router.replace(`/auth/activate-account/manual?email=${form.values.email}`);
                     }, 1500);
                 }
             } else if (result?.ok) {
@@ -125,8 +125,8 @@ export function AuthenticationForm() {
                     reward();
                 }, 500);
 
-                setTimeout(() => {
-                    router.replace("/app");
+                setTimeout(async () => {
+                    await router.replace("/app");
                 }, 1500);
             }
         } else {
@@ -152,14 +152,14 @@ export function AuthenticationForm() {
                 const error = result.error.message.replace("[GraphQL] ", "");
                 setError(error);
                 if (error.includes("User account is not activated.")) {
-                    setTimeout(() => {
-                        router.replace(`/auth/activate-account/manual?email=${form.values.email}`);
+                    setTimeout(async () => {
+                        await router.replace(`/auth/activate-account/manual?email=${form.values.email}`);
                     }, 1500);
                 }
             } else if (result?.data?.result.userId) {
                 setFormType("successReg");
-                setTimeout(() => {
-                    router.replace(`/auth/activate-account/manual?email=${form.values.email}`);
+                setTimeout(async () => {
+                    await router.replace(`/auth/activate-account/manual?email=${form.values.email}`);
                 }, 1500);
             }
         }
