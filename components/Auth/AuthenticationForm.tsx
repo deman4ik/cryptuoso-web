@@ -99,8 +99,26 @@ export function AuthenticationForm() {
                     password: form.values.password
                 });
             }
-            console.log(result);
-            if (result?.error) {
+            // console.log(result);
+            if (result?.ok) {
+                /*let url;
+                if (router.query?.callbackUrl) {
+                    if (Array.isArray(router.query?.callbackUrl) && router.query?.callbackUrl.length > 0) {
+                        url = router.query?.callbackUrl[router.query?.callbackUrl.length - 1];
+                    } else url = router.query?.callbackUrl as string;
+                }
+                router.replace(url || "/app"); */
+                //  setFormType("successLogin");
+                //setLoading(false);
+
+                // setTimeout(() => {
+                //reward();
+                //  }, 500);
+
+                // setTimeout(async () => {
+                window.location.href = "/app";
+                // }, 1500);
+            } else if (result?.error) {
                 setLoading(false);
                 console.error(result.error);
                 const error = result.error.replace("[GraphQL] ", "");
@@ -111,24 +129,6 @@ export function AuthenticationForm() {
                         await router.replace(`/auth/activate-account/manual?email=${form.values.email}`);
                     }, 1500);
                 }
-            } else if (result?.ok) {
-                /*let url;
-                if (router.query?.callbackUrl) {
-                    if (Array.isArray(router.query?.callbackUrl) && router.query?.callbackUrl.length > 0) {
-                        url = router.query?.callbackUrl[router.query?.callbackUrl.length - 1];
-                    } else url = router.query?.callbackUrl as string;
-                }
-                router.replace(url || "/app"); */
-                setFormType("successLogin");
-                setLoading(false);
-
-                // setTimeout(() => {
-                reward();
-                //  }, 500);
-
-                // setTimeout(async () => {
-                await router.replace("/app");
-                // }, 1500);
             }
         } else {
             const result = await gqlPublicClient
