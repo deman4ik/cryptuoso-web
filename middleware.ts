@@ -15,15 +15,26 @@ export default withAuth(
                 // console.log("req", req);
                 console.log("token", token);
                 if (req.nextUrl.pathname.startsWith("/app") || req.nextUrl.pathname.startsWith("/manage")) {
-                    if (!token) return false;
-                    if (!token.user) return false;
+                    if (!token) {
+                        console.error("No token found.");
+                        return false;
+                    }
+                    if (!token.user) {
+                        console.error("No user token found.");
+                        return false;
+                    }
                     const exp = token.exp as number;
                     const user = token.user as UserAuthData;
                     //    console.log(dayjs.utc(user.exp * 1000).toISOString());
                     //console.log(dayjs.utc(exp * 1000).toISOString());
-                    if (user.exp * 1000 < dayjs.utc().valueOf() || exp * 1000 < dayjs.utc().valueOf()) return false;
-                    if (req.nextUrl.pathname.startsWith("/manage") && !user.allowedRoles.includes("manager"))
+                    if (user.exp * 1000 < dayjs.utc().valueOf() || exp * 1000 < dayjs.utc().valueOf()) {
+                        console.error("Token expired.");
                         return false;
+                    }
+                    if (req.nextUrl.pathname.startsWith("/manage") && !user.allowedRoles.includes("manager")) {
+                        console.error("User is not allowed to access this page.");
+                        return false;
+                    }
                 }
                 return true;
             }

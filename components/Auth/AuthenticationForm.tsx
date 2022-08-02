@@ -16,7 +16,7 @@ import {
     SimpleGrid,
     Center
 } from "@mantine/core";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { SimpleLink, TextLink } from "@cryptuoso/components/Link";
 import { gqlPublicClient } from "@cryptuoso/libs/graphql";
@@ -37,6 +37,11 @@ export function AuthenticationForm() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const router = useRouter();
+    const { data: session } = useSession<false>({ required: false });
+
+    if (session) {
+        router.replace("/app");
+    }
 
     const toggleFormType = () => {
         setFormType((current) => (current === "register" ? "login" : "register"));
