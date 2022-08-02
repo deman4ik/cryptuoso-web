@@ -107,7 +107,7 @@ export const authOptions: NextAuthOptions = {
                             }
                         )
                         .toPromise();
-                    console.log(result);
+                    //  console.log(result);
                     if (result.error) {
                         throw result.error;
                     }
@@ -116,7 +116,7 @@ export const authOptions: NextAuthOptions = {
 
                     if (accessToken) {
                         const token = jwt.decode(accessToken) as jwt.JwtPayload;
-                        console.log(token);
+                        //    console.log(token);
                         return {
                             id: token.userId,
                             accessToken,

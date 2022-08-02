@@ -3,7 +3,7 @@ import Head from "next/head";
 import { Layout, FiltersContext } from "@cryptuoso/components/Manage/Layout";
 import { UsersSection } from "@cryptuoso/components/Manage/Monitoring/Users";
 import { useContext } from "react";
-export { getServerSideProps } from "@cryptuoso/libs/graphql/shared";
+export { getServerSideProps } from "@cryptuoso/libs/shared";
 
 export default function MonitoringPage() {
     return (

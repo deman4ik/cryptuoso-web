@@ -1,7 +1,7 @@
 import { Layout } from "@cryptuoso/components/Landing/Layout";
 import Head from "next/head";
 import { ListPortfolios } from "@cryptuoso/components/App/Portfolio/ListPortfolios";
-export { getServerSideProps } from "@cryptuoso/libs/graphql/shared";
+export { getServerSideProps } from "@cryptuoso/libs/shared";
 import { withUrqlClient } from "next-urql";
 
 function PortfoliosPage() {

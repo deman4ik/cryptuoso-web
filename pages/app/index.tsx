@@ -14,7 +14,7 @@ import { Briefcase } from "tabler-icons-react";
 import { Url, UrlObject } from "url";
 import { LinkProps } from "next/link";
 import { refetchOptions } from "@cryptuoso/libs/graphql";
-export { getServerSideProps } from "@cryptuoso/libs/graphql/shared";
+export { getServerSideProps } from "@cryptuoso/libs/shared";
 
 const TradingQuery = gql`
     query TradingInfo($userId: uuid!) {
