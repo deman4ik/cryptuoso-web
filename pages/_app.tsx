@@ -128,7 +128,7 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
     let session: Session | null | undefined = undefined;
     // getSession works both server-side and client-side but we want to avoid any calls to /api/auth/session
     // on page load, so we only call it server-side.
-    if (typeof window === "undefined") session = await getSession(appContext.ctx);
+    if (appContext.ctx.req) session = await getSession(appContext.ctx);
     const appProps = await App.getInitialProps(appContext);
     return {
         ...appProps,
