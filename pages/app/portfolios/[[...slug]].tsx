@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import { useQuery } from "urql";
 import { UserExAcc, UserPortfolio } from "@cryptuoso/types";
 import { UserExAccAndPortfolioQuery } from "@cryptuoso/queries";
-export { getServerSideProps } from "@cryptuoso/libs/graphql/shared";
+export { getServerSideProps } from "@cryptuoso/libs/shared";
 
 export default function PortfoliosPage() {
     const { data: session } = useSession<true>({ required: true });

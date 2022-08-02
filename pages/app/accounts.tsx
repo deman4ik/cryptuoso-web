@@ -4,7 +4,7 @@ import { Layout } from "@cryptuoso/components/App/Layout/Layout";
 import { ProfileCard } from "@cryptuoso/components/App/Profile/ProfileCard";
 import { ExchangeAccountCard } from "@cryptuoso/components/App/ExchangeAccount";
 import { PaymentHistory, SubscriptionCard } from "@cryptuoso/components/App/Subscription";
-export { getServerSideProps } from "@cryptuoso/libs/graphql/shared";
+export { getServerSideProps } from "@cryptuoso/libs/shared";
 
 export default function AccountsPage() {
     return (
