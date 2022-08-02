@@ -99,9 +99,10 @@ export function AuthenticationForm() {
                     password: form.values.password
                 });
             }
-            // console.log(result);
+            console.log(result);
             if (result?.error) {
                 setLoading(false);
+                console.error(result.error);
                 const error = result.error.replace("[GraphQL] ", "");
                 setError(error);
 
@@ -121,13 +122,13 @@ export function AuthenticationForm() {
                 setFormType("successLogin");
                 setLoading(false);
 
-                setTimeout(() => {
-                    reward();
-                }, 500);
+                // setTimeout(() => {
+                reward();
+                //  }, 500);
 
-                setTimeout(async () => {
-                    await router.replace("/app");
-                }, 1500);
+                // setTimeout(async () => {
+                await router.replace("/app");
+                // }, 1500);
             }
         } else {
             const result = await gqlPublicClient
@@ -149,6 +150,7 @@ export function AuthenticationForm() {
 
             setLoading(false);
             if (result?.error) {
+                console.error(result.error);
                 const error = result.error.message.replace("[GraphQL] ", "");
                 setError(error);
                 if (error.includes("User account is not activated.")) {

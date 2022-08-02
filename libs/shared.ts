@@ -1,5 +1,5 @@
 import dayjs from "@cryptuoso/libs/dayjs";
-import { getSession } from "next-auth/react";
+import { getSession, signOut } from "next-auth/react";
 
 export async function getServerSideProps(ctx: any) {
     const session = await getSession(ctx);
@@ -11,6 +11,7 @@ export async function getServerSideProps(ctx: any) {
             dayjs.utc(session.user.exp * 1000).isBefore(dayjs.utc()) ||
             dayjs.utc(session.expires).isBefore(dayjs.utc()))
     ) {
+        await signOut();
         return {
             redirect: {
                 destination: "/auth/signin",
