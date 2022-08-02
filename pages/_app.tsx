@@ -2,12 +2,11 @@ import App, { AppContext, AppProps } from "next/app";
 import Head from "next/head";
 import { MantineProvider, ColorSchemeProvider, ColorScheme } from "@mantine/core";
 import { getCookie, setCookies } from "cookies-next";
-import { getSession, SessionProvider } from "next-auth/react";
+import { SessionProvider } from "next-auth/react";
 import { useHotkeys } from "@mantine/hooks";
 import GraphqlProvider from "@cryptuoso/libs/graphql/provider";
 import { useState } from "react";
 import { ModalsProvider } from "@mantine/modals";
-import { Session } from "next-auth";
 
 export default function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
     const { Component, pageProps } = props;
@@ -125,14 +124,14 @@ export default function MyApp(props: AppProps & { colorScheme: ColorScheme }) {
 }
 
 MyApp.getInitialProps = async (appContext: AppContext) => {
-    let session: Session | null | undefined = undefined;
+    // let session: Session | null | undefined = undefined;
     // getSession works both server-side and client-side but we want to avoid any calls to /api/auth/session
     // on page load, so we only call it server-side.
-    if (appContext.ctx.req) session = await getSession(appContext.ctx);
+    //  if (window && typeof window !== "undefined") session = await getSession(appContext.ctx);
     const appProps = await App.getInitialProps(appContext);
     return {
         ...appProps,
-        ...(session !== undefined ? { session } : {}),
+        //  ...(session !== undefined ? { session } : {}),
         colorScheme: getCookie("mantine-color-scheme", appContext.ctx) || "dark"
     };
 };

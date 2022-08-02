@@ -11,7 +11,6 @@ export async function getServerSideProps(ctx: any) {
             dayjs.utc(session.user.exp * 1000).isBefore(dayjs.utc()) ||
             dayjs.utc(session.expires).isBefore(dayjs.utc()))
     ) {
-        await signOut();
         return {
             redirect: {
                 destination: "/auth/signin",
@@ -19,14 +18,7 @@ export async function getServerSideProps(ctx: any) {
             }
         };
     }
-    if (ctx.req.url.includes("/manage") && session && !session.user.allowedRoles.includes("manager")) {
-        return {
-            redirect: {
-                destination: "/404",
-                permanent: false
-            }
-        };
-    }
+
     return {
         props: {
             session

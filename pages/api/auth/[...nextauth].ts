@@ -107,7 +107,7 @@ export const authOptions: NextAuthOptions = {
                             }
                         )
                         .toPromise();
-                    console.log(result);
+                    //   console.log(result);
                     if (result.error) {
                         console.error("telegram auth", result.error);
                         throw result.error;
