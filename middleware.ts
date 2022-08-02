@@ -19,8 +19,8 @@ export default withAuth(
                     if (!token.user) return false;
                     const exp = token.exp as number;
                     const user = token.user as UserAuthData;
-                    console.log(dayjs.utc(user.exp * 1000).toISOString());
-                    console.log(dayjs.utc(exp * 1000).toISOString());
+                    //    console.log(dayjs.utc(user.exp * 1000).toISOString());
+                    //console.log(dayjs.utc(exp * 1000).toISOString());
                     if (user.exp * 1000 < dayjs.utc().valueOf() || exp * 1000 < dayjs.utc().valueOf()) return false;
                     if (req.nextUrl.pathname.startsWith("/manage") && !user.allowedRoles.includes("manager"))
                         return false;

@@ -106,15 +106,16 @@ export default NextAuth({
                             }
                         )
                         .toPromise();
-
+                    console.log(result);
                     if (result.error) {
                         throw result.error;
                     }
 
                     const accessToken = result?.data?.result.accessToken;
+
                     if (accessToken) {
                         const token = jwt.decode(accessToken) as jwt.JwtPayload;
-
+                        console.log(token);
                         return {
                             id: token.userId,
                             accessToken,
