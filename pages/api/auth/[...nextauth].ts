@@ -1,11 +1,11 @@
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { gql } from "urql";
 import jwt from "jsonwebtoken";
 import { UserAuthData } from "@cryptuoso/helpers";
 import { gqlPublicClient } from "@cryptuoso/libs/graphql";
 
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
     providers: [
         CredentialsProvider({
             id: "email",
@@ -221,4 +221,5 @@ export default NextAuth({
         maxAge: 60 //60 * 60 * 24 * 6 // 6 days
     }
     // debug: true
-});
+};
+export default NextAuth(authOptions);
