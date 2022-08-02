@@ -50,6 +50,7 @@ export default NextAuth({
                             ...token
                         } as UserAuthData;
                     }
+                    console.error("Failed to authorize.", result);
                     throw new Error("Failed to authorize. Please try again later.");
                 } catch (err) {
                     console.error(err);
@@ -123,6 +124,7 @@ export default NextAuth({
                             ...token
                         } as UserAuthData;
                     }
+                    console.error("Failed to authorize.", result);
                     throw new Error("Failed to authorize. Please try again later.");
                 } catch (err) {
                     console.error(err);
