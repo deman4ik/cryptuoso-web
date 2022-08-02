@@ -212,10 +212,10 @@ export default NextAuth({
         }
     },
     session: {
-        maxAge: 60 * 60 * 24 * 7 // 7 days
+        maxAge: 60 //60 * 60 * 24 * 6 // 6 days
     },
     jwt: {
-        maxAge: 60 * 60 * 24 * 7 // 7 days
+        maxAge: 60 //60 * 60 * 24 * 6 // 6 days
     }
     // debug: true
 });

@@ -43,14 +43,14 @@ const useClient = (options?: RequestInit) => {
                 }),
                 cacheExchange,
                 errorExchange({
-                    onError: (error) => {
+                    onError: async (error) => {
                         // we only get an auth error here when the auth exchange had attempted to refresh auth and getting an auth error again for the second time
                         const isAuthError = error.graphQLErrors.some(
                             (e) => e.extensions?.code === "FORBIDDEN" || e.message.includes("JWTExpired")
                         );
-
+                        console.error(error);
                         if (isAuthError) {
-                            signOut();
+                            await signOut();
                         }
                     }
                 }),
