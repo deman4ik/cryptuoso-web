@@ -31,7 +31,8 @@ export function About() {
                         If nobody can offer you a product you need - make it by yourself...{" "}
                     </Text>
                     <Text color="dimmed">
-                        We started long ago by trading on the stock exchange and was always looking for opportunities to{" "}
+                        We started long ago by trading on the stock exchange and were always looking for opportunities
+                        to{" "}
                         <Text
                             variant="gradient"
                             gradient={{ from: theme.primaryColor, to: "violet", deg: 45 }}
@@ -52,8 +53,8 @@ export function About() {
                     </Text>
                     <Text color="dimmed">
                         Advanced traders know about services where you can create your own trading strategy and automate
-                        it with a robot. We tried to trade through them, but there is a problem that these robots have a
-                        very limited functionality. So in order to really control your trading, you need a tailor-made
+                        it with a robot. We tried to trade through them, but there is a challenge that these robots have
+                        a very limited functionality. So in order to really control your trading, you need a tailor-made
                         solution developed from scratch.
                     </Text>
                     <Text color="dimmed">
@@ -89,8 +90,8 @@ export function About() {
                         </Text>{" "}
                         should be useful for other crypto-enthusiasts - both for beginners and experienced traders.
                     </Text>
-                    <Text size="lg" weight={700}>
-                        We are warmly welcome you in the community of a product created by traders and for traders.
+                    <Text size="lg" weight={700} transform="uppercase">
+                        We warmly welcome you to test the product created by traders and for traders.
                     </Text>
                 </Group>
                 <Grid gutter="md" grow>
@@ -119,7 +120,7 @@ export function About() {
                                 "More than 13 years experience in enterprise IT-industry",
                                 "Developed and maintained high-loaded services and infrastructure",
                                 "Teamlead for other Cryptuoso developers",
-                                "Made 300% of profit using Cryptuoso robots in 2019"
+                                "Made 300% of profit using Cryptuoso robots in 2019-2021"
                             ]}
                         />
                     </Grid.Col>
