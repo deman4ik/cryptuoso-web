@@ -58,7 +58,7 @@ export function About() {
                         solution developed from scratch.
                     </Text>
                     <Text color="dimmed">
-                        That&apos;s how and why we created{" "}
+                        That&apos;s how and why we have created{" "}
                         <Text
                             component="span"
                             variant="gradient"
